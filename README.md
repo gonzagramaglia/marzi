@@ -6,8 +6,8 @@ Sitio web oficial y gestor de contenidos (CMS) para **Consultorios Marzi Dall'Oc
 
 ## 📊 Estado del Proyecto
 
-- **Estado Actual**: Fase 2 en Curso (Desarrollo Frontend & CMS)
-- **Próximos pasos**: Páginas de Contacto y Preguntas Frecuentes, revisión final con el cliente.
+- **Estado Actual**: Fase 2 Completada / Fase 3 en Curso (Testing & Revisión)
+- **Próximos pasos**: Revisión final con el cliente y preparación de despliegue.
 
 ---
 
@@ -32,10 +32,10 @@ Sitio web oficial y gestor de contenidos (CMS) para **Consultorios Marzi Dall'Oc
   - Listado de artículos y vista individual en MDX.
   - Artículos médicos iniciales cargados.
 - [x] **Página 404**: Vista personalizada en español.
+- [x] **Página de Contacto (`/contacto`)**: Perfiles del equipo profesional, canales de atención directa (WhatsApp, teléfonos, email, redes) y mapa con loader dinámico.
+- [x] **Página de Preguntas Frecuentes (`/faq`)**: Carrusel interactivo de servicios, acordeón dinámico de preguntas frecuentes gestionables desde TinaCMS y llamada a la acción.
 - [x] **Footer**: Enlaces de navegación, redes sociales y ubicación.
 - [x] **TinaCMS**: Configuración de esquemas y campos editables en tiempo real.
-- [ ] **Página de Contacto (`/contacto`)**: Canales de atención y formulario.
-- [ ] **Página de Preguntas Frecuentes (`/faq`)**: Respuestas a dudas frecuentes.
 
 ### Fase 3: Pruebas & Revisión
 - [x] Optimización de compilación y rendimiento en producción.

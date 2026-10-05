@@ -1,0 +1,228 @@
+---
+import Base from '../layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
+import { getConfig } from '../lib/data';
+
+const config = (await getConfig()).data?.config ?? null;
+const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
+
+const team = [
+	{
+		name: 'Juan J. Marzi',
+		role: 'Lic. en Kinesiología y Fisioterapia, Diplomado en Osteopatía (M.P. 2403)',
+		image: '/assets/man.jpg',
+		bio: 'Más de 30 años de trayectoria acompañando a sus pacientes en osteopatía, kinesiología y fisioterapia, con un enfoque personalizado en cada tratamiento.',
+	},
+	{
+		name: 'Tiziana Marzi',
+		role: 'Lic. en Kinesiología y Fisioterapia',
+		image: '/assets/woman.jpg',
+		bio: 'Profesional del equipo que colabora en los tratamientos de kinesiología, fisioterapia y drenaje linfático, con capacitación continua en nuevas técnicas.',
+	},
+];
+---
+
+<Base
+	title={`Contacto | ${config?.seo?.title ?? "Marzi Dall'Occhio Consultorio"}`}
+	description="Escribinos por WhatsApp o coordiná tu turno con nuestro equipo de profesionales dedicados a tu salud en Córdoba."
+>
+	<!-- Hero Banner -->
+	<section class="w-full bg-[#824f91] py-16 sm:py-20 md:py-24 px-6 text-center text-white">
+		<div class="mx-auto max-w-3xl">
+			<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
+				Contacto
+			</h1>
+			<p class="text-white/90 text-sm sm:text-base md:text-lg max-w-2xl mx-auto font-normal leading-relaxed text-balance">
+				Escribinos por WhatsApp o coordiná tu turno con nuestro equipo de profesionales con vocación y formación continua en salud.
+			</p>
+		</div>
+	</section>
+
+	<!-- Equipo Cards Section (Directo y elegante) -->
+	<section class="w-full bg-white pt-14 sm:pt-18 md:pt-20 pb-12 sm:pb-16 px-6 sm:px-8">
+		<div class="mx-auto max-w-6xl">
+			<!-- Team Cards Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+				{team.map((member) => (
+					<div class="flex flex-col bg-neutral-50/70 rounded-3xl p-6 sm:p-8 border border-neutral-100 transition-all hover:shadow-md">
+						<div class="overflow-hidden rounded-2xl bg-neutral-200 aspect-16/10 sm:aspect-16/9 mb-6 shadow-xs">
+							<img
+								src={member.image}
+								alt={member.name}
+								class="h-full w-full object-cover object-top"
+								loading="lazy"
+							/>
+						</div>
+						
+						<h3 class="text-xl sm:text-2xl font-bold text-[#161616] mb-1">
+							{member.name}
+						</h3>
+						
+						<span class="text-xs sm:text-sm font-semibold text-[#188a7e] mb-4 block">
+							{member.role}
+						</span>
+						
+						<p class="text-sm sm:text-base text-neutral-600 leading-relaxed mt-auto">
+							{member.bio}
+						</p>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- Main Contact Content (Google Maps & Info) -->
+	<main class="w-full bg-[#fcfaf5] py-14 sm:py-18 md:py-24 px-6 sm:px-8 border-t border-neutral-100">
+		<div class="mx-auto max-w-6xl">
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+				
+				<!-- Left Column: Map with Premium Loader -->
+				<div class="lg:col-span-7">
+					<div id="map-wrapper" class="relative w-full rounded-3xl overflow-hidden shadow-md border border-neutral-100 aspect-4/3 sm:aspect-5/4 lg:aspect-auto lg:h-[580px] bg-neutral-100">
+						
+						<!-- Skeleton Loader / Spinner -->
+						<div id="map-loader" class="absolute inset-0 z-10 flex flex-col items-center justify-center bg-neutral-100/90 backdrop-blur-xs text-neutral-400 gap-3 transition-opacity duration-500">
+							<div class="relative flex items-center justify-center">
+								<div class="size-12 rounded-full border-3 border-[#824f91]/20 border-t-[#824f91] animate-spin"></div>
+								<Icon name="tabler:map-pin" class="size-5 text-[#824f91] absolute" />
+							</div>
+							<span class="text-xs font-medium text-neutral-500 tracking-wide animate-pulse">
+								Cargando ubicación del consultorio...
+							</span>
+						</div>
+
+						<!-- Embedded Map Iframe -->
+						<iframe
+							id="google-map-iframe"
+							title="Ubicación Consultorios Marzi Dall'Occhio"
+							src="https://maps.google.com/maps?q=Virgen+de+la+Merced+3019,+B%C2%BA+Alto+Verde,+C%C3%B3rdoba,+Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+							class="w-full h-full border-0 opacity-0 transition-opacity duration-700 ease-out"
+							loading="lazy"
+							allowfullscreen
+							referrerpolicy="no-referrer-when-downgrade"
+						></iframe>
+					</div>
+				</div>
+
+				<!-- Right Column: Info & Actions -->
+				<div class="lg:col-span-5 flex flex-col space-y-8">
+					
+					<!-- WhatsApp Highlight Card -->
+					<div class="rounded-2xl bg-[#eef8f6] border border-[#58b8ab]/30 p-6 sm:p-7 shadow-2xs flex flex-col items-start gap-4">
+						<div>
+							<span class="text-[11px] sm:text-xs font-bold tracking-wider text-[#188a7e] uppercase block mb-1">
+								Hablanos por WhatsApp
+							</span>
+							<h2 class="text-sm sm:text-base lg:text-[17px] font-semibold text-[#188a7e] leading-snug">
+								La forma más rápida de coordinar tu turno
+							</h2>
+						</div>
+
+						<a
+							href={whatsappLink}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="inline-flex items-center gap-2.5 rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#188a7e] shadow-xs hover:bg-neutral-50 transition-all"
+						>
+							<span>Escribir por WhatsApp</span>
+							<Icon name="tabler:brand-whatsapp" class="size-5" />
+						</a>
+					</div>
+
+					<!-- Details List -->
+					<div class="space-y-6 text-[#1c1c1c]">
+						<!-- Dirección -->
+						<div>
+							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
+								Dirección
+							</span>
+							<p class="text-sm sm:text-base font-medium leading-relaxed">
+								Virgen de la Merced 3019<br />
+								Bº Alto Verde, Córdoba Capital
+							</p>
+						</div>
+
+						<!-- Horarios -->
+						<div>
+							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
+								Horarios
+							</span>
+							<p class="text-sm sm:text-base font-medium leading-relaxed">
+								Lunes a Viernes de 08:00 a 19:30 hs
+							</p>
+						</div>
+
+						<!-- Teléfonos -->
+						<div>
+							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
+								Teléfonos
+							</span>
+							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5">
+								<a href="tel:+5493516186275" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+									<Icon name="tabler:phone" class="size-4 text-[#824f91]" />
+									<span>351 6 186 275</span>
+								</a>
+								<span class="text-neutral-300">•</span>
+								<a href="tel:+5493515121154" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+									<Icon name="tabler:phone" class="size-4 text-[#824f91]" />
+									<span>351 5 121 154</span>
+								</a>
+							</div>
+						</div>
+
+						<!-- Email -->
+						<div>
+							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
+								Email
+							</span>
+							<p class="text-sm sm:text-base font-medium leading-relaxed">
+								<a href="mailto:consultorio@juanmarzi.com.ar" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+									<Icon name="tabler:mail" class="size-4 text-[#824f91]" />
+									<span>consultorio@juanmarzi.com.ar</span>
+								</a>
+							</p>
+						</div>
+
+						<!-- Redes Sociales -->
+						<div>
+							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
+								Redes Sociales
+							</span>
+							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5 pt-0.5">
+								<a href="https://www.instagram.com/consultoriosmarzi" target="_blank" rel="noopener noreferrer" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+									<Icon name="tabler:brand-instagram" class="size-4 text-[#824f91]" />
+									<span>@consultoriosmarzi</span>
+								</a>
+								<span class="text-neutral-300">•</span>
+								<a href="https://www.facebook.com/ConsultoriosMarzi" target="_blank" rel="noopener noreferrer" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+									<Icon name="tabler:brand-facebook" class="size-4 text-[#824f91]" />
+									<span>ConsultoriosMarzi</span>
+								</a>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</main>
+</Base>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		const iframe = document.getElementById('google-map-iframe');
+		const loader = document.getElementById('map-loader');
+
+		if (iframe && loader) {
+			iframe.addEventListener('load', () => {
+				loader.classList.add('opacity-0', 'pointer-events-none');
+				iframe.classList.remove('opacity-0');
+				iframe.classList.add('opacity-100');
+				setTimeout(() => {
+					loader.remove();
+				}, 500);
+			});
+		}
+	});
+</script>

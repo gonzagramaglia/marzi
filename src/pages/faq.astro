@@ -1,0 +1,414 @@
+---
+import Base from '../layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
+import { tinaField } from '@tinacms/astro/tina-field';
+import { getConfig } from '../lib/data';
+
+const config = (await getConfig()).data?.config ?? null;
+const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
+
+const services = [
+	{
+		title: 'Kinesiología',
+		image: '/assets/enfoque-kinesiologia.jpg',
+		description: 'Rehabilitación y recuperación de la movilidad en cada etapa.',
+	},
+	{
+		title: 'Osteopatía',
+		image: '/assets/enfoque-osteopatia.jpg',
+		description: 'Abordaje integral del cuerpo para restaurar el equilibrio funcional.',
+	},
+	{
+		title: 'Fisioterapia',
+		image: '/assets/enfoque-fisioterapia.jpg',
+		description: 'Tratamientos físicos enfocados en aliviar el dolor y recuperar función.',
+	},
+	{
+		title: 'Drenaje Linfático',
+		image: '/assets/enfoque-drenaje-linfatico.jpg',
+		description: 'Técnicas manuales para mejorar la circulación y reducir la inflamación.',
+	},
+];
+
+const rawFaqs = config?.faqs;
+const faqs = (rawFaqs && rawFaqs.length > 0)
+	? rawFaqs.filter(Boolean)
+	: [
+		{
+			question: '¿Necesito una orden médica para sacar turno?',
+			answer: 'No es excluyente, pero si contás con una orden médica o indicación de tu profesional de cabecera, es útil traerla a la primera consulta para orientar mejor el tratamiento.',
+		},
+		{
+			question: '¿Atienden con obra social o prepaga?',
+			answer: 'Trabajamos de manera particular y emitimos factura oficial para que puedas tramitar el reintegro correspondiente ante tu obra social o prepaga.',
+		},
+		{
+			question: '¿Cuánto dura una sesión?',
+			answer: 'Cada sesión dura aproximadamente entre 45 y 60 minutos, según el tratamiento y las necesidades particulares de cada paciente.',
+		},
+		{
+			question: '¿Atienden niños y bebés?',
+			answer: 'Sí, realizamos abordajes especializados de osteopatía pediátrica y estimulación para bebés, niños y adolescentes.',
+		},
+		{
+			question: '¿Cómo es la primera consulta?',
+			answer: 'Comenzamos con una entrevista clínica y evaluación funcional personalizada para identificar el origen del dolor o molestia y planificar el tratamiento.',
+		},
+		{
+			question: '¿Cuál es el horario de atención?',
+			answer: 'Atendemos de Lunes a Viernes de 08:00 a 19:30 hs, siempre con turno previo coordinado por WhatsApp o teléfono.',
+		},
+	];
+---
+
+<Base
+	title={`Preguntas Frecuentes | ${config?.seo?.title ?? "Marzi Dall'Occhio Consultorio"}`}
+	description="Respondemos las dudas más comunes sobre tratamientos, turnos, osteopatía y kinesiología en Consultorios Marzi."
+>
+	<!-- Hero Banner -->
+	<section class="w-full bg-[#824f91] py-16 sm:py-20 md:py-24 px-6 text-center text-white">
+		<div class="mx-auto max-w-3xl">
+			<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
+				Preguntas Frecuentes
+			</h1>
+			<p class="text-white/90 text-sm sm:text-base md:text-lg max-w-xl mx-auto font-normal leading-relaxed text-balance">
+				Todo lo que necesitás saber sobre nuestras sesiones y modalidades de atención.
+			</p>
+		</div>
+	</section>
+
+	<!-- Nuestros Servicios (Carousel similar to Testimonials) -->
+	<section id="servicios" class="w-full bg-[#fcfaf5] py-16 sm:py-20 md:py-24 px-6 sm:px-8 overflow-hidden">
+		<div class="mx-auto max-w-6xl">
+			<div class="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+				<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-[#161616] mb-4">
+					Nuestros Servicios
+				</h2>
+				<p class="text-neutral-600 text-sm sm:text-base leading-relaxed text-balance">
+					Abordajes personalizados para recuperar el bienestar y la funcionalidad del cuerpo.
+				</p>
+			</div>
+
+			<!-- Services Carousel Container -->
+			<div id="services-carousel" class="relative select-none" data-count={services.length}>
+				<!-- Slides Viewport -->
+				<div class="overflow-hidden">
+					<div
+						id="services-track"
+						class="flex transition-transform duration-500 ease-out"
+					>
+						{services.map((service) => (
+							<div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 flex flex-col">
+								<div class="group bg-white rounded-2xl p-5 flex flex-col h-full shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-neutral-100/80">
+									<div class="aspect-4/3 w-full overflow-hidden rounded-xl bg-neutral-100 mb-4">
+										<img
+											src={service.image}
+											alt={service.title}
+											class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+											loading="lazy"
+										/>
+									</div>
+									<h3 class="text-lg font-bold text-[#1c1c1c] mb-2 group-hover:text-[#824f91] transition-colors">
+										{service.title}
+									</h3>
+									<p class="text-xs sm:text-sm text-neutral-500 leading-relaxed line-clamp-2 min-h-[2.5rem] mt-auto">
+										{service.description}
+									</p>
+								</div>
+							</div>
+						))}
+					</div>
+				</div>
+
+				<!-- Slider Controls -->
+				<div class="mt-10 flex items-center justify-center gap-4">
+					<!-- Prev Button -->
+					<button
+						id="services-prev"
+						type="button"
+						aria-label="Servicio anterior"
+						class="inline-flex size-9 cursor-pointer items-center justify-center rounded-full border border-[#824f91]/30 text-[#824f91] hover:border-[#824f91] hover:bg-[#824f91] hover:text-white transition-all shadow-2xs"
+					>
+						<Icon name="tabler:chevron-left" class="size-5" />
+					</button>
+
+					<!-- Dots Indicator Container -->
+					<div id="services-dots" class="flex items-center gap-2">
+						<!-- Generated by client script -->
+					</div>
+
+					<!-- Next Button -->
+					<button
+						id="services-next"
+						type="button"
+						aria-label="Siguiente servicio"
+						class="inline-flex size-9 cursor-pointer items-center justify-center rounded-full border border-[#824f91]/30 text-[#824f91] hover:border-[#824f91] hover:bg-[#824f91] hover:text-white transition-all shadow-2xs"
+					>
+						<Icon name="tabler:chevron-right" class="size-5" />
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- FAQs Accordion Section -->
+	<section class="w-full bg-white py-16 sm:py-20 md:py-24 px-6 sm:px-8">
+		<div class="mx-auto max-w-3xl">
+			<div class="text-center max-w-2xl mx-auto mb-10 md:mb-14">
+				<h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#161616] mb-3">
+					Información Útil
+				</h2>
+				<p class="text-neutral-500 text-sm sm:text-base text-balance">
+					Detalles sobre turnos, coberturas, duración de sesiones y dinámica de atención.
+				</p>
+			</div>
+
+			<div class="divide-y divide-neutral-200 border-y border-neutral-200" id="faq-accordion">
+				{faqs.map((faq, index) => (
+					<div class="faq-item py-6 transition-colors" data-tina-field={tinaField(faq)}>
+						<button
+							type="button"
+							class="faq-trigger flex w-full items-center justify-between gap-4 text-left cursor-pointer group"
+							aria-expanded={index === 0 ? "true" : "false"}
+							aria-controls={`faq-answer-${index}`}
+						>
+							<span
+								class="text-base sm:text-lg font-semibold text-[#1c1c1c] group-hover:text-[#824f91] transition-colors"
+								data-tina-field={tinaField(faq, 'question')}
+							>
+								{faq.question}
+							</span>
+							<span class="faq-icon flex size-7 shrink-0 items-center justify-center rounded-full text-[#824f91]">
+								<Icon
+									name="tabler:plus"
+									class={`size-5 faq-icon-plus ${index === 0 ? 'hidden' : 'block'}`}
+								/>
+								<Icon
+									name="tabler:minus"
+									class={`size-5 faq-icon-minus ${index === 0 ? 'block' : 'hidden'}`}
+								/>
+							</span>
+						</button>
+						<div
+							id={`faq-answer-${index}`}
+							class={`faq-content mt-4 text-sm sm:text-base text-neutral-600 leading-relaxed ${index === 0 ? '' : 'hidden'}`}
+							data-tina-field={tinaField(faq, 'answer')}
+						>
+							<p>{faq.answer}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Banner: Agendar turno -->
+	<section class="relative w-full overflow-hidden py-20 sm:py-24 px-6 text-white text-center">
+		<div class="absolute inset-0 z-0">
+			<img
+				src="/assets/consultas-banner.jpg"
+				alt="Consultas Consultorios Marzi"
+				class="h-full w-full object-cover object-center"
+				loading="lazy"
+			/>
+			<div class="absolute inset-0 bg-[#7c4d8c]/85 mix-blend-multiply"></div>
+			<div class="absolute inset-0 bg-gradient-to-t from-[#693977]/90 via-[#824f91]/80 to-[#693977]/90"></div>
+		</div>
+
+		<div class="relative z-10 mx-auto max-w-2xl">
+			<h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider text-white mb-4 uppercase">
+				Agendá tu turno
+			</h2>
+			<p class="text-white/90 text-sm sm:text-base leading-relaxed mb-8 max-w-lg mx-auto">
+				Escribinos por WhatsApp asi coordinamos tu<br />
+				primera cita de manera personalizada.
+			</p>
+			<div class="flex justify-center">
+				<a
+					href={whatsappLink}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center rounded-md bg-white px-6 py-2.5 text-xs sm:text-sm font-medium text-neutral-900 shadow-xs transition-all duration-200 hover:bg-neutral-100"
+				>
+					Hablemos ahora
+				</a>
+			</div>
+		</div>
+	</section>
+</Base>
+
+<script is:inline>
+	document.addEventListener('DOMContentLoaded', () => {
+		// Services Carousel
+		const carousel = document.getElementById('services-carousel');
+		if (carousel) {
+			const track = document.getElementById('services-track');
+			const prevBtn = document.getElementById('services-prev');
+			const nextBtn = document.getElementById('services-next');
+			const dotsContainer = document.getElementById('services-dots');
+			const totalItems = parseInt(carousel.dataset.count || '0', 10);
+
+			if (track && prevBtn && nextBtn && dotsContainer && totalItems > 0) {
+				let currentIndex = 0;
+
+				function getVisibleCount() {
+					if (window.innerWidth >= 1024) return 3;
+					if (window.innerWidth >= 640) return 2;
+					return 1;
+				}
+
+				function getMaxIndex() {
+					const visible = getVisibleCount();
+					return Math.max(0, totalItems - visible);
+				}
+
+				function getPagesCount() {
+					const visible = getVisibleCount();
+					return Math.max(1, totalItems - visible + 1);
+				}
+
+				function renderDots() {
+					dotsContainer.innerHTML = '';
+					const pages = getPagesCount();
+					if (pages <= 1) {
+						dotsContainer.style.display = 'none';
+						prevBtn.style.display = 'none';
+						nextBtn.style.display = 'none';
+						return;
+					} else {
+						dotsContainer.style.display = 'flex';
+						prevBtn.style.display = 'inline-flex';
+						nextBtn.style.display = 'inline-flex';
+					}
+
+					for (let i = 0; i < pages; i++) {
+						const dot = document.createElement('button');
+						dot.type = 'button';
+						dot.setAttribute('aria-label', `Ir a servicio ${i + 1}`);
+						dot.className =
+							'size-2.5 rounded-full transition-all duration-300 cursor-pointer ' +
+							(i === currentIndex ? 'bg-[#824f91] scale-125' : 'bg-neutral-300 hover:bg-neutral-400');
+						dot.addEventListener('click', () => {
+							currentIndex = i;
+							updateCarousel();
+						});
+						dotsContainer.appendChild(dot);
+					}
+				}
+
+				function updateCarousel() {
+					const visible = getVisibleCount();
+					const percentage = 100 / visible;
+					track.style.transform = `translateX(-${currentIndex * percentage}%)`;
+
+					const dots = dotsContainer.querySelectorAll('button');
+					dots.forEach((dot, idx) => {
+						if (idx === currentIndex) {
+							dot.className = 'size-2.5 rounded-full transition-all duration-300 cursor-pointer bg-[#824f91] scale-125';
+						} else {
+							dot.className = 'size-2.5 rounded-full transition-all duration-300 cursor-pointer bg-neutral-300 hover:bg-neutral-400';
+						}
+					});
+				}
+
+				prevBtn.addEventListener('click', () => {
+					const maxIndex = getMaxIndex();
+					if (currentIndex > 0) {
+						currentIndex -= 1;
+					} else {
+						currentIndex = maxIndex;
+					}
+					updateCarousel();
+				});
+
+				nextBtn.addEventListener('click', () => {
+					const maxIndex = getMaxIndex();
+					if (currentIndex < maxIndex) {
+						currentIndex += 1;
+					} else {
+						currentIndex = 0;
+					}
+					updateCarousel();
+				});
+
+				// Touch swipe support
+				let startX = 0;
+				let isTouching = false;
+
+				track.addEventListener('touchstart', (e) => {
+					startX = e.touches[0].clientX;
+					isTouching = true;
+				}, { passive: true });
+
+				track.addEventListener('touchend', (e) => {
+					if (!isTouching) return;
+					const endX = e.changedTouches[0].clientX;
+					const diff = startX - endX;
+					if (Math.abs(diff) > 40) {
+						if (diff > 0) {
+							nextBtn.click();
+						} else {
+							prevBtn.click();
+						}
+					}
+					isTouching = false;
+				}, { passive: true });
+
+				let resizeTimeout;
+				window.addEventListener('resize', () => {
+					clearTimeout(resizeTimeout);
+					resizeTimeout = setTimeout(() => {
+						const maxIndex = getMaxIndex();
+						if (currentIndex > maxIndex) {
+							currentIndex = maxIndex;
+						}
+						renderDots();
+						updateCarousel();
+					}, 100);
+				});
+
+				renderDots();
+				updateCarousel();
+			}
+		}
+
+		// FAQs Accordion (Single open behavior with + and - toggle)
+		const triggers = document.querySelectorAll('.faq-trigger');
+		triggers.forEach((trigger) => {
+			trigger.addEventListener('click', () => {
+				const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
+				const contentId = trigger.getAttribute('aria-controls');
+				const content = document.getElementById(contentId);
+				const plusIcon = trigger.querySelector('.faq-icon-plus');
+				const minusIcon = trigger.querySelector('.faq-icon-minus');
+
+				if (isExpanded) {
+					// Collapse the clicked item
+					trigger.setAttribute('aria-expanded', 'false');
+					if (content) content.classList.add('hidden');
+					if (plusIcon) plusIcon.classList.remove('hidden');
+					if (minusIcon) minusIcon.classList.add('hidden');
+				} else {
+					// Close all other open accordion items
+					triggers.forEach((otherTrigger) => {
+						const otherContentId = otherTrigger.getAttribute('aria-controls');
+						const otherContent = document.getElementById(otherContentId);
+						const otherPlus = otherTrigger.querySelector('.faq-icon-plus');
+						const otherMinus = otherTrigger.querySelector('.faq-icon-minus');
+
+						otherTrigger.setAttribute('aria-expanded', 'false');
+						if (otherContent) otherContent.classList.add('hidden');
+						if (otherPlus) otherPlus.classList.remove('hidden');
+						if (otherMinus) otherMinus.classList.add('hidden');
+					});
+
+					// Open the clicked item
+					trigger.setAttribute('aria-expanded', 'true');
+					if (content) content.classList.remove('hidden');
+					if (plusIcon) plusIcon.classList.add('hidden');
+					if (minusIcon) minusIcon.classList.remove('hidden');
+				}
+			});
+		});
+	});
+</script>

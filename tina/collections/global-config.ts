@@ -137,5 +137,33 @@ export const GlobalConfigCollection: Collection = {
         },
       ],
     },
+    {
+      name: "faqs",
+      label: "Preguntas Frecuentes (FAQ)",
+      type: "object",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: item?.question || "Pregunta",
+        }),
+      },
+      fields: [
+        {
+          name: "question",
+          label: "Pregunta",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "answer",
+          label: "Respuesta",
+          type: "string",
+          ui: {
+            component: "textarea",
+          },
+          required: true,
+        },
+      ],
+    },
   ],
 };

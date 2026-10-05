@@ -109,7 +109,7 @@ const action = data?.action;
 				{action?.label && (
 					<div>
 						<a
-							href={action.link || '#contacto'}
+							href={action.link || '/contacto'}
 							class="inline-flex items-center justify-center rounded-md bg-[#824f91] px-6 py-2.5 text-xs sm:text-sm font-medium text-white shadow-xs transition-all duration-200 hover:bg-[#6e3f7d]"
 							data-tina-field={data?.action ? tinaField(data.action, 'label') : undefined}
 						>

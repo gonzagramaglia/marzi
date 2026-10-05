@@ -48,13 +48,39 @@
   "contactLinks": [
     {
       "title": "Instagram",
-      "link": "https://instagram.com",
+      "link": "https://www.instagram.com/consultoriosmarzi",
       "icon": "tabler:brand-instagram"
     },
     {
       "title": "Facebook",
-      "link": "https://facebook.com",
+      "link": "https://www.facebook.com/ConsultoriosMarzi",
       "icon": "tabler:brand-facebook"
+    }
+  ],
+  "faqs": [
+    {
+      "question": "¿Necesito una orden médica para sacar turno?",
+      "answer": "No es excluyente, pero si contás con una orden médica o indicación de tu profesional de cabecera, es útil traerla a la primera consulta para orientar mejor el tratamiento."
+    },
+    {
+      "question": "¿Atienden con obra social o prepaga?",
+      "answer": "Trabajamos de manera particular y emitimos factura oficial para que puedas tramitar el reintegro correspondiente ante tu obra social o prepaga."
+    },
+    {
+      "question": "¿Cuánto dura una sesión?",
+      "answer": "Cada sesión dura aproximadamente entre 45 y 60 minutos, según el tratamiento y las necesidades particulares de cada paciente."
+    },
+    {
+      "question": "¿Atienden niños y bebés?",
+      "answer": "Sí, realizamos abordajes especializados de osteopatía pediátrica y estimulación para bebés, niños y adolescentes."
+    },
+    {
+      "question": "¿Cómo es la primera consulta?",
+      "answer": "Comenzamos con una entrevista clínica y evaluación funcional personalizada para identificar el origen del dolor o molestia y planificar el tratamiento."
+    },
+    {
+      "question": "¿Cuál es el horario de atención?",
+      "answer": "Atendemos de Lunes a Viernes de 08:00 a 19:30 hs, siempre con turno previo coordinado por WhatsApp o teléfono."
     }
   ]
 }
