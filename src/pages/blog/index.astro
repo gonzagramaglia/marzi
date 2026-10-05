@@ -1,36 +1,92 @@
 ---
 import Base from '../../layouts/Base.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
 import { getConfig, listBlogs } from '../../lib/data';
 
 const posts = await listBlogs();
 const config = (await getConfig()).data?.config ?? null;
+
+function formatCustomDate(pubDateStr?: string | null) {
+	if (!pubDateStr) return 'Sin fecha';
+	const date = new Date(pubDateStr);
+	if (isNaN(date.getTime())) return 'Sin fecha';
+	const day = String(date.getUTCDate()).padStart(2, '0');
+	const months = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'];
+	const month = months[date.getUTCMonth()];
+	return `${day} ${month}`;
+}
 ---
 
 <Base
-	title={config?.seo?.title ?? 'Blog'}
-	description={config?.seo?.description ?? 'Welcome to my website!'}
+	title={`Blog | ${config?.seo?.title ?? "Marzi Dall'Occhio Consultorio"}`}
+	description="Notas y consejos de nuestro equipo sobre salud, osteopatía y kinesiología."
 >
-	<main class="mx-auto max-w-5xl px-6 py-12">
-		<h1 class="mb-8 text-4xl font-semibold tracking-tight">Blog</h1>
-		<ul class="grid list-none gap-6 p-0 sm:grid-cols-2">
-			{posts.map((post) => (
-				<li>
-					<a href={`/blog/${post._sys.filename}/`} class="group block overflow-hidden rounded-xl border bg-card shadow-sm transition-shadow hover:shadow-md">
-						{post.heroImage && (
-							<img width={720} height={360} src={post.heroImage} alt={post.title ?? ''} class="aspect-video w-full object-cover" />
-						)}
-						<div class="p-6">
-							<h2 class="font-semibold group-hover:underline">{post.title}</h2>
-							{post.pubDate && (
-								<p class="mt-1 text-sm text-muted-foreground">
-									<FormattedDate date={new Date(post.pubDate)} />
-								</p>
+	<!-- Hero Banner -->
+	<section class="w-full bg-[#824f91] py-16 sm:py-20 md:py-24 px-6 text-center text-white">
+		<div class="mx-auto max-w-4xl">
+			<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4 text-white">
+				Material de Lectura
+			</h1>
+			<p class="text-white/90 text-sm sm:text-base md:text-lg max-w-xl mx-auto font-normal">
+				Notas y consejos de nuestro equipo sobre salud y bienestar
+			</p>
+		</div>
+	</section>
+
+	<!-- Blog Posts Grid -->
+	<main class="w-full bg-white py-16 md:py-20 px-6 sm:px-8">
+		<div class="mx-auto max-w-6xl">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+				{posts.map((post) => (
+					<article class="group flex flex-col items-start text-left">
+						<a
+							href={`/blog/${post._sys.filename}`}
+							class="w-full overflow-hidden rounded-3xl bg-neutral-100 mb-4 aspect-16/10 shadow-xs"
+						>
+							{post.heroImage ? (
+								<img
+									src={post.heroImage}
+									alt={post.title ?? ''}
+									class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+									loading="lazy"
+								/>
+							) : (
+								<div class="h-full w-full bg-neutral-200 flex items-center justify-center text-neutral-400">
+									Sin imagen
+								</div>
 							)}
+						</a>
+
+						<!-- Meta date -->
+						<div class="flex items-center gap-1.5 text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">
+							<span class="size-1.5 rounded-full bg-[#188a7e]"></span>
+							<span>{formatCustomDate(post.pubDate)}</span>
 						</div>
-					</a>
-				</li>
-			))}
-		</ul>
+
+						<!-- Title -->
+						<h2 class="text-lg sm:text-xl font-bold text-[#1a1a1a] mb-2 leading-snug group-hover:text-[#824f91] transition-colors">
+							<a href={`/blog/${post._sys.filename}`}>
+								{post.title}
+							</a>
+						</h2>
+
+						<!-- Description -->
+						{post.description && (
+							<p class="text-sm text-neutral-600 leading-relaxed mb-4 line-clamp-3">
+								{post.description}
+							</p>
+						)}
+
+						<!-- Link -->
+						<a
+							href={`/blog/${post._sys.filename}`}
+							class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-[#824f91] hover:underline"
+						>
+							<span>Leer más</span>
+							<span class="transition-transform group-hover:translate-x-1">→</span>
+						</a>
+					</article>
+				))}
+			</div>
+		</div>
 	</main>
 </Base>

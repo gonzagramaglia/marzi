@@ -1,15 +1,19 @@
 ---
 import { tinaField } from '@tinacms/astro/tina-field';
+import Hero from './Hero.astro';
+import Enfoques from './Enfoques.astro';
+import Activities from './Activities.astro';
+import AboutTeam from './AboutTeam.astro';
+import Reels from './Reels.astro';
+import Testimonial from './Testimonial.astro';
+import CtaBanner from './CtaBanner.astro';
 import Callout from './Callout.astro';
 import Content from './Content.astro';
 import Cta from './Cta.astro';
 import Features from './Features.astro';
-import Hero from './Hero.astro';
 import Split from './Split.astro';
 import Stats from './Stats.astro';
-import Testimonial from './Testimonial.astro';
 import Video from './Video.astro';
-import ConstellationDivider from '../space/ConstellationDivider.astro';
 import type { CmsPage } from '../../lib/data';
 
 interface Props {
@@ -19,24 +23,26 @@ interface Props {
 const { data } = Astro.props;
 const blocks = (data?.blocks ?? []).filter(b => b !== null);
 ---
-{blocks.map((block, i) => {
+{blocks.map((block) => {
 	const rendered = (() => {
 		switch (block.__typename) {
+			case 'PageBlocksHero': return <Hero data={block} />;
+			case 'PageBlocksEnfoques': return <Enfoques data={block} />;
+			case 'PageBlocksActivities': return <Activities data={block} />;
+			case 'PageBlocksAboutTeam': return <AboutTeam data={block} />;
+			case 'PageBlocksReels': return <Reels data={block} />;
+			case 'PageBlocksTestimonial': return <Testimonial data={block} />;
+			case 'PageBlocksCtaBanner': return <CtaBanner data={block} />;
 			case 'PageBlocksCallout': return <Callout data={block} />;
 			case 'PageBlocksContent': return <Content data={block} />;
 			case 'PageBlocksCta': return <Cta data={block} />;
 			case 'PageBlocksFeatures': return <Features data={block} />;
-			case 'PageBlocksHero': return <Hero data={block} />;
 			case 'PageBlocksSplit': return <Split data={block} />;
 			case 'PageBlocksStats': return <Stats data={block} />;
-			case 'PageBlocksTestimonial': return <Testimonial data={block} />;
 			case 'PageBlocksVideo': return <Video data={block} />;
 		}
 	})();
 	return (
-		<>
-			<div data-tina-field={tinaField(block)}>{rendered}</div>
-			{i < blocks.length - 1 && <ConstellationDivider class="my-2 opacity-70" />}
-		</>
+		<div data-tina-field={tinaField(block)}>{rendered}</div>
 	);
 })}

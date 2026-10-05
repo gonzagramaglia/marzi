@@ -49,12 +49,17 @@ export type PageBlock = NonNullable<NonNullable<CmsPage['blocks']>[number]>;
 export type PageBlockTypename = PageBlock['__typename'];
 
 export type HeroBlock = Extract<PageBlock, { __typename: 'PageBlocksHero' }>;
+export type EnfoquesBlock = Extract<PageBlock, { __typename: 'PageBlocksEnfoques' }>;
+export type ActivitiesBlock = Extract<PageBlock, { __typename: 'PageBlocksActivities' }>;
+export type AboutTeamBlock = Extract<PageBlock, { __typename: 'PageBlocksAboutTeam' }>;
+export type ReelsBlock = Extract<PageBlock, { __typename: 'PageBlocksReels' }>;
+export type TestimonialBlock = Extract<PageBlock, { __typename: 'PageBlocksTestimonial' }>;
+export type CtaBannerBlock = Extract<PageBlock, { __typename: 'PageBlocksCtaBanner' }>;
 export type CalloutBlock = Extract<PageBlock, { __typename: 'PageBlocksCallout' }>;
 export type FeaturesBlock = Extract<PageBlock, { __typename: 'PageBlocksFeatures' }>;
 export type StatsBlock = Extract<PageBlock, { __typename: 'PageBlocksStats' }>;
 export type CtaBlock = Extract<PageBlock, { __typename: 'PageBlocksCta' }>;
 export type ContentBlock = Extract<PageBlock, { __typename: 'PageBlocksContent' }>;
-export type TestimonialBlock = Extract<PageBlock, { __typename: 'PageBlocksTestimonial' }>;
 export type VideoBlock = Extract<PageBlock, { __typename: 'PageBlocksVideo' }>;
 export type SplitBlock = Extract<PageBlock, { __typename: 'PageBlocksSplit' }>;
 

@@ -2,7 +2,6 @@
 import TinaMarkdown from '@tinacms/astro/TinaMarkdown.astro';
 import { tinaField } from '@tinacms/astro/tina-field';
 import type { CmsBlog } from '../../lib/data';
-import FormattedDate from '../FormattedDate.astro';
 import { mdxComponents } from '../mdx/components';
 
 interface Props {
@@ -10,29 +9,126 @@ interface Props {
 }
 
 const { data } = Astro.props;
+
+function formatArticleDate(pubDateStr?: string | null) {
+	if (!pubDateStr) return '';
+	const date = new Date(pubDateStr);
+	if (isNaN(date.getTime())) return '';
+	const day = date.getUTCDate();
+	const months = [
+		'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+		'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+	];
+	const month = months[date.getUTCMonth()];
+	const year = date.getUTCFullYear();
+	return `${day} de ${month} de ${year}`;
+}
+
+const dateFormatted = formatArticleDate(data?.pubDate);
+const authorText = (data as any)?.author || 'Lic. Juan J. Marzi (M.P. 2403)';
+const categoryText = (data as any)?.category || 'OSTEOPATÍA';
 ---
-{data?.heroImage && (
-	<div data-tina-field={tinaField(data, 'heroImage')} class="mx-auto max-w-4xl px-6">
-		<img width={1020} height={510} src={data.heroImage} alt="" class="w-full rounded-2xl border shadow-lg" />
-	</div>
-)}
+
 {data && (
-	<div class="mx-auto max-w-3xl px-6 py-12">
-		<div class="mb-8 text-center">
-			{data.pubDate && (
-				<div data-tina-field={tinaField(data, 'pubDate')} class="text-sm text-muted-foreground">
-					<FormattedDate date={new Date(data.pubDate)} />
-					{data.updatedDate && (
-						<span data-tina-field={tinaField(data, 'updatedDate')} class="italic"> · Last updated <FormattedDate date={new Date(data.updatedDate)} /></span>
-					)}
+	<article class="w-full bg-white pt-10 pb-16 px-6 sm:px-8">
+		<div class="mx-auto max-w-4xl">
+			<!-- Header Meta & Title -->
+			<div class="text-center max-w-3xl mx-auto mb-10">
+				{categoryText && (
+					<span
+						class="inline-block text-xs sm:text-sm font-semibold tracking-widest text-[#188a7e] uppercase mb-4"
+						data-tina-field={tinaField(data as any, 'category')}
+					>
+						{categoryText}
+					</span>
+				)}
+
+				<h1
+					class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[#161616] mb-6 leading-tight"
+					data-tina-field={tinaField(data, 'title')}
+				>
+					{data.title}
+				</h1>
+
+				<div class="text-xs sm:text-sm text-neutral-500 font-medium flex items-center justify-center gap-2">
+					{dateFormatted && <span data-tina-field={tinaField(data, 'pubDate')}>{dateFormatted}</span>}
+					{dateFormatted && authorText && <span>·</span>}
+					{authorText && <span data-tina-field={tinaField(data as any, 'author')}>{authorText}</span>}
+				</div>
+			</div>
+
+			<!-- Featured Hero Image -->
+			{data.heroImage && (
+				<div
+					class="mb-12 overflow-hidden rounded-3xl bg-neutral-100 shadow-md aspect-16/9 sm:aspect-21/9"
+					data-tina-field={tinaField(data, 'heroImage')}
+				>
+					<img
+						src={data.heroImage}
+						alt={data.title ?? ''}
+						class="h-full w-full object-cover object-center"
+						loading="eager"
+					/>
 				</div>
 			)}
-			{data.title && <h1 data-tina-field={tinaField(data, 'title')} class="mt-2 text-4xl font-semibold tracking-tight lg:text-5xl">{data.title}</h1>}
-		</div>
-		{data.body && (
-			<div data-tina-field={tinaField(data, 'body')} class="prose prose-lg max-w-none">
-				<TinaMarkdown content={data.body} components={mdxComponents} />
+
+			<!-- Article Body -->
+			<div class="mx-auto max-w-2xl sm:max-w-3xl text-[#2d2d2d] leading-relaxed">
+				{data.body && (
+					<div
+						class="prose prose-neutral max-w-none text-base sm:text-lg leading-relaxed
+						prose-blockquote:not-italic prose-blockquote:bg-neutral-50 prose-blockquote:rounded-2xl
+						prose-blockquote:p-6 sm:prose-blockquote:p-8 prose-blockquote:my-8 prose-blockquote:border
+						prose-blockquote:border-neutral-100 prose-blockquote:text-neutral-800 prose-blockquote:font-medium
+						prose-blockquote:text-base sm:prose-blockquote:text-lg"
+						data-tina-field={tinaField(data, 'body')}
+					>
+						<TinaMarkdown content={data.body} components={mdxComponents} />
+					</div>
+				)}
 			</div>
-		)}
-	</div>
+
+			<!-- Post Footer Actions -->
+			<div class="mt-14 pt-8 border-t border-neutral-100 flex flex-col sm:flex-row items-center justify-between gap-6 max-w-3xl mx-auto">
+				<a
+					href="/blog"
+					class="text-sm font-semibold text-[#824f91] hover:underline flex items-center gap-1.5 transition-colors"
+				>
+					<span>←</span>
+					<span>Volver a Material de Lectura</span>
+				</a>
+
+				<a
+					href="https://wa.me/5493510000000"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center rounded-lg bg-[#824f91] px-6 py-2.5 text-sm font-medium text-white shadow-xs transition-all duration-200 hover:bg-[#6e3f7d] hover:shadow-md"
+				>
+					Reservar turno
+				</a>
+			</div>
+		</div>
+	</article>
 )}
+
+<!-- Bottom Banner: ¿Querés saber más? -->
+<section class="w-full bg-[#824f91] py-16 sm:py-20 px-6 text-center text-white">
+	<div class="mx-auto max-w-2xl">
+		<h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
+			¿Querés saber más?
+		</h2>
+		<p class="text-white/90 text-sm sm:text-base mb-8">
+			Escribinos y te ayudamos a resolver tus dudas.
+		</p>
+		<div class="flex justify-center">
+			<a
+				href="https://wa.me/5493510000000"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 text-sm font-semibold text-[#1c1c1c] shadow-md transition-all duration-200 hover:bg-neutral-100 hover:scale-105"
+			>
+				Hablemos ahora
+			</a>
+		</div>
+	</div>
+</section>

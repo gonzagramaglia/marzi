@@ -1,23 +1,13 @@
 @import 'tailwindcss';
-@import '@fontsource-variable/inter';
+@import '@fontsource-variable/dm-sans';
 @plugin '@tailwindcss/typography';
 
 /* Drive the dark: variant from the .dark class (toggled by ThemeToggle),
    not the prefers-color-scheme media query. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Metric-matched Arial fallback so the Inter swap doesn't reflow text (CLS). */
-@font-face {
-	font-family: 'Inter Fallback';
-	src: local('Arial');
-	ascent-override: 90.44%;
-	descent-override: 22.52%;
-	line-gap-override: 0%;
-	size-adjust: 107.12%;
-}
-
 @theme inline {
-	--font-sans: 'Inter Variable', 'Inter Fallback', system-ui, sans-serif;
+	--font-sans: 'DM Sans Variable', system-ui, -apple-system, sans-serif;
 	--radius-sm: calc(var(--radius) - 4px);
 	--radius-md: calc(var(--radius) - 2px);
 	--radius-lg: var(--radius);
@@ -96,6 +86,9 @@
 }
 
 @layer base {
+	html {
+		scroll-behavior: smooth;
+	}
 	* {
 		border-color: var(--border);
 	}
@@ -104,7 +97,7 @@
 		color: var(--foreground);
 		font-family: var(--font-sans);
 		margin: 0;
-		padding-top: 5rem;
+		padding-top: 3.75rem;
 	}
 	.bg-default {
 		background-color: var(--background);

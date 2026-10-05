@@ -1,0 +1,67 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface VideoItem {
+	src?: string | null;
+	title?: string | null;
+	poster?: string | null;
+}
+
+interface Props {
+	data?: {
+		title?: string | null;
+		videos?: (VideoItem | null)[] | null;
+	} | null;
+}
+
+const { data } = Astro.props;
+const title = data?.title ?? 'Conocé más de nuestro trabajo';
+const videos = (data?.videos ?? []).filter((v): v is VideoItem => Boolean(v));
+---
+
+<section class="w-full bg-white py-16 px-6 sm:px-8 md:py-24 text-[#222222]">
+	<div class="mx-auto max-w-6xl">
+		<!-- Section Title -->
+		<div class="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+			<h2
+				class="text-3xl sm:text-4xl font-bold tracking-tight text-[#161616]"
+				data-tina-field={data ? tinaField(data, 'title') : undefined}
+			>
+				{title}
+			</h2>
+		</div>
+
+		<!-- Videos Grid -->
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+			{videos.map((video, index) => (
+				<div
+					class="group flex flex-col bg-white border border-neutral-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300"
+					data-tina-field={tinaField(video)}
+				>
+					<div class="relative aspect-9/16 w-full bg-neutral-900 overflow-hidden flex items-center justify-center">
+						{video.src && (
+							<video
+								src={video.src}
+								poster={video.poster || undefined}
+								playsinline
+								muted
+								loop
+								controls
+								preload="metadata"
+								class="h-full w-full object-cover"
+							/>
+						)}
+					</div>
+					<div class="p-4 bg-white text-center border-t border-neutral-100 flex items-center justify-center min-h-[64px]">
+						<h3
+							class="text-sm sm:text-base font-semibold text-[#1c1c1c] leading-snug"
+							data-tina-field={tinaField(video, 'title')}
+						>
+							{video.title}
+						</h3>
+					</div>
+				</div>
+			))}
+		</div>
+	</div>
+</section>

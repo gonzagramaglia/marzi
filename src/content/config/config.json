@@ -1,13 +1,17 @@
 {
   "seo": {
-    "title": "TinaCMS + Astro",
-    "description": "Welcome to my website!",
-    "siteOwner": "TinaCMS",
-    "logo": "/orange-llama.svg"
+    "title": "Marzi Dall'Occhio Consultorio",
+    "description": "Más de 30 años acompañando tu salud con osteopatía, kinesiología y fisioterapia en Córdoba.",
+    "siteOwner": "Consultorios Marzi",
+    "logo": "/assets/logo-header.png",
+    "footerLogo": "/assets/logo-footer.png",
+    "address": "Consultorios Marzi Virgen de la Merced 3019, Bº Alto Verde, Córdoba",
+    "whatsappLink": "https://wa.me/5493510000000",
+    "whatsappLabel": "Contactanos"
   },
   "nav": [
     {
-      "title": "Home",
+      "title": "Inicio",
       "link": "/"
     },
     {
@@ -15,30 +19,42 @@
       "link": "/blog"
     },
     {
-      "title": "About",
-      "link": "/about"
+      "title": "Contacto",
+      "link": "/contacto"
+    },
+    {
+      "title": "Preguntas Frecuentes",
+      "link": "/faq"
+    }
+  ],
+  "footerNav": [
+    {
+      "title": "Inicio",
+      "link": "/"
+    },
+    {
+      "title": "Blog",
+      "link": "/blog"
+    },
+    {
+      "title": "Contacto",
+      "link": "/contacto"
+    },
+    {
+      "title": "Preguntas Frecuentes",
+      "link": "/faq"
     }
   ],
   "contactLinks": [
     {
-      "title": "X",
-      "link": "https://x.com/tinacms",
-      "icon": "tabler:brand-x"
+      "title": "Instagram",
+      "link": "https://instagram.com",
+      "icon": "tabler:brand-instagram"
     },
     {
-      "title": "Docs",
-      "link": "https://tina.io/docs",
-      "icon": "tabler:book-2"
-    },
-    {
-      "title": "GitHub",
-      "link": "https://github.com/tinacms/tinacms",
-      "icon": "tabler:brand-github"
-    },
-    {
-      "title": "Discord",
-      "link": "https://tina.io/discord",
-      "icon": "tabler:brand-discord"
+      "title": "Facebook",
+      "link": "https://facebook.com",
+      "icon": "tabler:brand-facebook"
     }
   ]
 }

@@ -1,0 +1,94 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface CardItem {
+	image?: {
+		src?: string | null;
+		alt?: string | null;
+	} | null;
+	title?: string | null;
+	link?: string | null;
+}
+
+interface Props {
+	data?: {
+		headline?: string | null;
+		tagline?: string | null;
+		cards?: (CardItem | null)[] | null;
+		action?: {
+			label?: string | null;
+			link?: string | null;
+		} | null;
+	} | null;
+}
+
+const { data } = Astro.props;
+const headline = data?.headline ?? 'Enfoques';
+const tagline = data?.tagline ?? 'Más de 30 años acompañando tu salud con osteopatía, kinesiología y fisioterapia en Córdoba.';
+const cards = (data?.cards ?? []).filter((c): c is CardItem => Boolean(c));
+const action = data?.action;
+---
+
+<section id="enfoques" class="w-full bg-[#824f91] py-16 px-6 sm:px-8 md:py-24 text-white scroll-mt-20">
+	<div class="mx-auto max-w-6xl">
+		<!-- Header -->
+		<div class="text-center max-w-2xl mx-auto mb-12 md:mb-16">
+			<h2
+				class="text-3xl sm:text-4xl md:text-5xl font-medium tracking-tight mb-4 text-white"
+				data-tina-field={data ? tinaField(data, 'headline') : undefined}
+			>
+				{headline}
+			</h2>
+			<p
+				class="text-white/90 text-sm sm:text-base leading-relaxed whitespace-pre-line"
+				data-tina-field={data ? tinaField(data, 'tagline') : undefined}
+			>
+				{tagline}
+			</p>
+		</div>
+
+		<!-- Cards Grid -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+			{cards.map((card) => (
+				<a
+					href={card.link || '#'}
+					class="group bg-white rounded-2xl p-3 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-[#222222]"
+					data-tina-field={tinaField(card)}
+				>
+					<div class="aspect-4/3 w-full overflow-hidden rounded-xl bg-neutral-100 mb-3.5">
+						{card.image?.src && (
+							<img
+								src={card.image.src}
+								alt={card.image.alt || card.title || ''}
+								class="h-full w-full object-cover object-center grayscale contrast-105 transition-transform duration-500 group-hover:scale-105"
+								loading="lazy"
+								data-tina-field={tinaField(card.image, 'src')}
+							/>
+						)}
+					</div>
+					<div class="px-2 pb-2 pt-1">
+						<h3
+							class="text-base font-semibold text-[#1c1c1c] tracking-tight group-hover:text-[#824f91] transition-colors"
+							data-tina-field={tinaField(card, 'title')}
+						>
+							{card.title}
+						</h3>
+					</div>
+				</a>
+			))}
+		</div>
+
+		<!-- Bottom Action -->
+		{action?.label && (
+			<div class="flex justify-center">
+				<a
+					href={action.link || '/servicios'}
+					class="inline-flex items-center justify-center rounded-md border border-white/80 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-medium text-white transition-all duration-200 hover:bg-white hover:text-[#824f91]"
+					data-tina-field={data?.action ? tinaField(data.action, 'label') : undefined}
+				>
+					{action.label}
+				</a>
+			</div>
+		)}
+	</div>
+</section>

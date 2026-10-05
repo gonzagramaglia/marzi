@@ -2,9 +2,8 @@ import type { Collection } from "tinacms";
 import { youTubeEmbedTemplate } from "../../src/components/mdx/YouTubeEmbed.template";
 
 export const BlogCollection: Collection = {
-
   name: "blog",
-  label: "Blogs",
+  label: "Blogs / Artículos",
   path: "src/content/blog",
   format: "mdx",
   ui: {
@@ -16,36 +15,44 @@ export const BlogCollection: Collection = {
     {
       type: "string",
       name: "title",
-      label: "Title",
+      label: "Título",
       isTitle: true,
       required: true,
     },
     {
-      name: "description",
-      label: "Description",
+      name: "category",
+      label: "Categoría (ej. OSTEOPATÍA, KINESIOLOGÍA)",
       type: "string",
     },
     {
-      name: "pubDate",
-      label: "Publication Date",
-      type: "datetime",
+      name: "author",
+      label: "Autor / Profesional (ej. Lic. Juan J. Marzi - M.P. 2403)",
+      type: "string",
     },
     {
-      name: "updatedDate",
-      label: "Updated Date",
+      name: "description",
+      label: "Descripción corta / Resumen",
+      type: "string",
+      ui: {
+        component: "textarea",
+      },
+    },
+    {
+      name: "pubDate",
+      label: "Fecha de Publicación",
       type: "datetime",
     },
     {
       name: "heroImage",
-      label: "Hero Image",
+      label: "Imagen Principal",
       type: "image",
     },
     {
       type: "rich-text",
       name: "body",
-      label: "Body",
+      label: "Contenido del Artículo",
       isBody: true,
       templates: [youTubeEmbedTemplate],
     },
   ],
-}
+};

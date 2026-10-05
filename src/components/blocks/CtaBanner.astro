@@ -1,0 +1,72 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface Props {
+	data?: {
+		image?: {
+			src?: string | null;
+			alt?: string | null;
+		} | null;
+		headline?: string | null;
+		description?: string | null;
+		action?: {
+			label?: string | null;
+			link?: string | null;
+		} | null;
+	} | null;
+}
+
+const { data } = Astro.props;
+const image = data?.image;
+const headline = data?.headline ?? '¿CONSULTAS?';
+const description = data?.description ?? 'Si tenés dudas sobre nuestros tratamientos o querés agendar tu primera consulta, estamos para ayudarte.';
+const action = data?.action;
+const bgImageSrc = image?.src || '/assets/contact.jpg';
+---
+
+<section id="contacto" class="relative w-full overflow-hidden py-24 sm:py-28 px-6 text-white text-center">
+	<!-- Background Image with Overlay -->
+	<div class="absolute inset-0 z-0">
+		<img
+			src={bgImageSrc}
+			alt={image?.alt || headline}
+			class="h-full w-full object-cover object-center"
+			loading="lazy"
+			data-tina-field={data?.image ? tinaField(data.image, 'src') : undefined}
+		/>
+		<!-- Purple Gradient Overlay -->
+		<div class="absolute inset-0 bg-[#7c4d8c]/85 mix-blend-multiply"></div>
+		<div class="absolute inset-0 bg-gradient-to-t from-[#693977]/90 via-[#824f91]/80 to-[#693977]/90"></div>
+	</div>
+
+	<!-- Content -->
+	<div class="relative z-10 mx-auto max-w-2xl">
+		<h2
+			class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-wider text-white mb-4 uppercase"
+			data-tina-field={data ? tinaField(data, 'headline') : undefined}
+		>
+			{headline}
+		</h2>
+
+		<p
+			class="text-white/90 text-sm sm:text-base leading-relaxed mb-8 max-w-lg mx-auto"
+			data-tina-field={data ? tinaField(data, 'description') : undefined}
+		>
+			{description}
+		</p>
+
+		{action?.label && (
+			<div class="flex justify-center">
+				<a
+					href={action.link || 'https://wa.me/5493510000000'}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-flex items-center justify-center rounded-md bg-white px-6 py-2.5 text-xs sm:text-sm font-medium text-neutral-900 shadow-xs transition-all duration-200 hover:bg-neutral-100"
+					data-tina-field={data?.action ? tinaField(data.action, 'label') : undefined}
+				>
+					{action.label}
+				</a>
+			</div>
+		)}
+	</div>
+</section>

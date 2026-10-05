@@ -1,0 +1,123 @@
+---
+import { tinaField } from '@tinacms/astro/tina-field';
+
+interface ActivityItem {
+	month?: string | null;
+	day?: string | null;
+	title?: string | null;
+	details?: string | null;
+}
+
+interface Props {
+	data?: {
+		image?: {
+			src?: string | null;
+			alt?: string | null;
+		} | null;
+		tag?: string | null;
+		title?: string | null;
+		description?: string | null;
+		subheading?: string | null;
+		items?: (ActivityItem | null)[] | null;
+		action?: {
+			label?: string | null;
+			link?: string | null;
+		} | null;
+	} | null;
+}
+
+const { data } = Astro.props;
+const image = data?.image;
+const tag = data?.tag ?? 'NUESTROS ESPACIOS';
+const title = data?.title ?? 'Salón Multiusos';
+const description = data?.description ?? 'Un espacio amplio y versátil para talleres, clases grupales y actividades de salud y bienestar.';
+const subheading = data?.subheading ?? 'PRÓXIMAS ACTIVIDADES';
+const items = (data?.items ?? []).filter((i): i is ActivityItem => Boolean(i));
+const action = data?.action;
+---
+
+<section class="w-full bg-white py-16 px-6 sm:px-8 md:py-24 text-[#222222]">
+	<div class="mx-auto max-w-6xl">
+		<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+			<!-- Image column -->
+			<div class="lg:col-span-6">
+				<div class="relative overflow-hidden rounded-3xl shadow-lg bg-neutral-100 aspect-4/3 sm:aspect-5/4 lg:aspect-auto lg:h-[540px]">
+					{image?.src && (
+						<img
+							src={image.src}
+							alt={image.alt || title}
+							class="h-full w-full object-cover object-center"
+							loading="lazy"
+							data-tina-field={data?.image ? tinaField(data.image, 'src') : undefined}
+						/>
+					)}
+				</div>
+			</div>
+
+			<!-- Content column -->
+			<div class="lg:col-span-6 flex flex-col">
+				<span
+					class="text-xs sm:text-sm font-semibold tracking-wider text-[#188a7e] uppercase mb-2"
+					data-tina-field={data ? tinaField(data, 'tag') : undefined}
+				>
+					{tag}
+				</span>
+				
+				<h2
+					class="text-3xl sm:text-4xl font-bold tracking-tight text-[#161616] mb-4"
+					data-tina-field={data ? tinaField(data, 'title') : undefined}
+				>
+					{title}
+				</h2>
+
+				<p
+					class="text-neutral-600 text-sm sm:text-base leading-relaxed mb-8"
+					data-tina-field={data ? tinaField(data, 'description') : undefined}
+				>
+					{description}
+				</p>
+
+				{subheading && (
+					<h3
+						class="text-xs sm:text-sm font-bold tracking-wider text-[#161616] uppercase mb-5 border-t border-neutral-100 pt-6"
+						data-tina-field={data ? tinaField(data, 'subheading') : undefined}
+					>
+						{subheading}
+					</h3>
+				)}
+
+				<!-- Activities list -->
+				<div class="space-y-4 mb-8">
+					{items.map((item) => (
+						<div
+							class="flex items-center gap-4 py-2 border-b border-neutral-100 last:border-b-0"
+							data-tina-field={tinaField(item)}
+						>
+							<div class="flex flex-col items-center justify-center min-w-[50px] text-center">
+								<span class="text-[11px] font-bold text-neutral-600 uppercase tracking-wider">{item.month}</span>
+								<span class="text-2xl font-bold text-[#161616] leading-none">{item.day}</span>
+							</div>
+							<div class="flex flex-col">
+								<h4 class="text-sm sm:text-base font-semibold text-[#1c1c1c]">{item.title}</h4>
+								<p class="text-xs sm:text-sm text-neutral-500">{item.details}</p>
+							</div>
+						</div>
+					))}
+				</div>
+
+				<!-- Action button -->
+				{action?.label && (
+					<div>
+						<a
+							href={action.link || '#contacto'}
+							class="inline-flex items-center justify-center rounded-md bg-[#824f91] px-6 py-2.5 text-xs sm:text-sm font-medium text-white shadow-xs transition-all duration-200 hover:bg-[#6e3f7d]"
+							data-tina-field={data?.action ? tinaField(data.action, 'label') : undefined}
+						>
+							{action.label}
+						</a>
+					</div>
+				)}
+			</div>
+		</div>
+	</div>
+</section>

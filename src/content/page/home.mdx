@@ -1,81 +1,132 @@
 ---
-seoTitle: TinaCMS + Astro
+seoTitle: Marzi Dall'Occhio Consultorio - Osteopatía y Fisioterapia
 blocks:
-  - headline: The fastest way to build content-driven Astro sites
-    tagline: 'Astro ships your pages with zero JavaScript by default. TinaCMS lets you edit them visually, backed by Git. Build it fast, edit it in context, own your content.'
-    actions:
-      - label: Get Started
-        type: button
-        icon: rocket
-        link: 'https://tina.io/docs/frameworks/astro'
-      - label: View source
-        type: link
-        icon: brand-github
-        link: 'https://github.com/tinacms/tina-astro-starter'
-    image:
-      src: /tinanaut.png
-    starfield: true
+  - image:
+      src: /assets/hero.jpg
+      alt: Marzi Dall'Occhio Consultorio - Kinesiología, Osteopatía y Fisioterapia
+    headline: Marzi Dall'Occhio Consultorio
     _template: hero
-  - text: 'Now with React-free visual editing, powered by @tinacms/astro'
-    url: 'https://tina.io/blog/astro-is-becoming-the-default-tinacms-starter'
-    _template: callout
-  - title: 'Built for content, built for speed'
-    description: Astro's server-first performance meets TinaCMS's visual editing.
+  - headline: Enfoques
+    tagline: |-
+      Más de 30 años acompañando tu salud con osteopatía,
+      kinesiología y fisioterapia en Córdoba.
+    cards:
+      - image:
+          src: /assets/enfoque-kinesiologia.jpg
+          alt: Kinesiología
+        title: Kinesiología
+        link: '#enfoques'
+      - image:
+          src: /assets/enfoque-osteopatia.jpg
+          alt: Osteopatía
+        title: Osteopatía
+        link: '#enfoques'
+      - image:
+          src: /assets/enfoque-fisioterapia.jpg
+          alt: Fisioterapia
+        title: Fisioterapia
+        link: '#enfoques'
+      - image:
+          src: /assets/enfoque-drenaje-linfatico.jpg
+          alt: Drenaje Linfático
+        title: Drenaje Linfático
+        link: '#enfoques'
+    action:
+      label: Conocé Todos
+      link: '#enfoques'
+    _template: enfoques
+  - image:
+      src: /assets/salon-multiusos.jpg
+      alt: Salón Multiusos
+    tag: NUESTROS ESPACIOS
+    title: Salón Multiusos
+    description: 'Un espacio amplio y versátil para talleres, clases grupales y actividades de salud y bienestar.'
+    subheading: PRÓXIMAS ACTIVIDADES
     items:
-      - icon: bolt
-        title: Server-first performance
-        text: |
-          Render on the server and send lightweight HTML to the browser, with zero unnecessary JavaScript overhead.
-      - icon: edit
-        title: Visual editing for developers
-        text: |
-          An open-source, headless CMS with built-in Git version control. Edit content visually while keeping full developer control.
-      - icon: brand-git
-        title: Git-native content
-        text: |
-          Your content lives in your repository as Markdown. Version it, review it, own it.
-    _template: features
-  - title: Performance you can measure
-    description: 'Astro leads the web on Core Web Vitals, and TinaCMS is trusted by thousands of developers.'
-    stats:
-      - stat: '#1'
-        type: framework for Core Web Vitals pass rate
-      - stat: 0 KB
-        type: JavaScript by default
-      - stat: 13K+
-        type: Stars on TinaCMS' GitHub
-    _template: stats
-  - body: |
-      ## Markdown is the answer
-
-      LLMs think in it. Your CMS should too. TinaCMS stores everything as Markdown in Git, so your content stays open, portable, and ready for whatever comes next.
-    _template: content
-  - title: Loved by developers and editors
-    description: The teams who ship on Astro and TinaCMS keep coming back for the same reason. A fast site their whole team can actually edit.
+      - month: SEP
+        day: '12'
+        title: Taller de estiramiento y movilidad
+        details: 10:00 - 11:30 hs · Cupo limitado
+      - month: SEP
+        day: '19'
+        title: 'Charla: prevención de lesiones frecuentes'
+        details: 18:30 - 19:30 hs · Entrada libre
+      - month: SEP
+        day: '26'
+        title: Clase grupal de bienestar postural
+        details: 09:00 - 10:00 hs · Con inscripción
+    action:
+      label: Contactanos
+      link: '#contacto'
+    _template: activities
+  - tag: QUIÉNES SOMOS
+    title: Un equipo dedicado a tu salud desde hace más de 30 años
+    description: >-
+      Brindamos a cada paciente un tratamiento personalizado, con un equipo que
+      se capacita día a día. Realizamos rehabilitaciones pre y post-quirúrgicas,
+      abordajes estéticos y tratamientos para adultos mayores, bebés, niños y
+      adolescentes.
+    action:
+      label: Conocé más
+      link: '#quienes-somos'
+    image:
+      src: /assets/equipo-marzi.jpg
+      alt: Equipo Marzi Dall'Occhio
+    _template: aboutTeam
+  - title: Conocé más de nuestro trabajo
+    videos:
+      - src: /assets/video-cuerpo-y-mente.mp4
+        title: 'Cuerpo y mente, ¿Cómo funcionan?'
+      - src: /assets/video-que-es-la-osteopatia.mp4
+        title: ¿Qué es la Osteopatía?
+      - src: /assets/video-los-dolores-de-hoy.mp4
+        title: Los dolores de hoy
+    _template: reels
+  - title: Testimonios de Nuestros Pacientes
     testimonials:
-      - quote: 'I made a whole website and I don''t even have computer hacking skills. You just click the words right on the page and type new ones. Gosh, it''s flippin'' sweet.'
-        author: Napoleon Dynamite
-        role: 'Student, Preston High'
-      - quote: 'I love technology, and this is the sweetest setup I''ve found online. The content lives in Git, so nothing ever gets lost, not even my chat logs with LaFawnduh.'
-        author: Kip Dynamite
-        role: Online entrepreneur
-      - quote: 'I built my whole campaign site in one night. If you want all your wildest dreams to come true, ship it on Astro and TinaCMS.'
-        author: Pedro Sánchez
-        role: Class president
+      - quote: >-
+          El equipo de Consultorios Marzi me acompañó en toda mi recuperación
+          con muchísima calidez y profesionalismo. Hoy me siento mejor que
+          nunca.
+        author: María Fernández
+        role: paciente
+      - quote: >-
+          Llegué con una molestia recurrente en la rodilla y gracias al
+          tratamiento osteopático y kinesiológico pude retomar mis entrenamientos
+          sin dolor.
+        author: Lucas Giménez
+        role: deportista
+      - quote: >-
+          Llevé a mi bebé para osteopatía pediátrica por tensiones en la
+          lactancia. El trato fue sumamente delicado y los cambios se notaron
+          desde la primera sesión.
+        author: Carolina Benítez
+        role: mamá de Mateo
+      - quote: >-
+          Los ejercicios y la atención personalizada me devolvieron la movilidad
+          de la columna y la tranquilidad en mi día a día.
+        author: Roberto Valenzuela
+        role: paciente
+      - quote: >-
+          Excelente rehabilitación tras mi cirugía de ligamentos. El salón y el
+          seguimiento profesional son impecables.
+        author: Florencia Navarro
+        role: paciente post-quirúrgica
+      - quote: >-
+          Tenía dolores cervicales constantes por trabajar frente a la
+          computadora. El cambio postural y el alivio fueron totales.
+        author: Esteban Morales
+        role: paciente
     _template: testimonial
-  - url: 'https://www.youtube.com/watch?v=j8egYW7Jpgk'
-    _template: video
-  - title: Start building today
-    description: 'Spin up this starter with one command, then make it your own in the visual editor.'
-    actions:
-      - label: Set up the starter
-        type: button
-        icon: rocket
-        link: 'https://tina.io/docs/frameworks/astro'
-      - label: Star TinaCMS
-        type: link
-        icon: brand-github
-        link: 'https://github.com/tinacms/tinacms'
-    _template: cta
+  - image:
+      src: /assets/consultas-banner.jpg
+      alt: Consultas Consultorios Marzi
+    headline: ¿CONSULTAS?
+    description: >-
+      Si tenés dudas sobre nuestros tratamientos o querés agendar tu primera
+      consulta, estamos para ayudarte.
+    action:
+      label: Hablemos ahora
+      link: 'https://wa.me/5493510000000'
+    _template: ctaBanner
 ---
-

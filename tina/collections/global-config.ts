@@ -12,8 +12,6 @@ export const GlobalConfigCollection: Collection = {
     {
       name: "seo",
       label: "Site Identity & SEO",
-      description:
-        "Site-wide identity. These values appear on every page — the Site Name is shown in the header navigation and used as the default browser title; the Description is the default for search results and social shares.",
       type: "object",
       fields: [
         {
@@ -21,105 +19,123 @@ export const GlobalConfigCollection: Collection = {
           label: "Site Name",
           type: "string",
           required: true,
-          description:
-            "Shown in the header navigation on every page. Lives in Global Config because it's the same site-wide — each page sets its own browser title via the Meta Title field on the page, and this Site Name is used as the fallback if a page is ever missing one.",
         },
         {
           name: "description",
           label: "Default Meta Description (SEO)",
           type: "string",
           required: true,
-          description:
-            "Default description shown in search results and social-sharing previews when a page does not provide its own.",
         },
         {
           name: "siteOwner",
-          label: "Site Owner (shown in footer)",
+          label: "Site Owner",
           required: true,
           type: "string",
-          description: "Your name or company name. Displayed in the site footer.",
-          ui: {
-            defaultValue: "Your name here"
-          },
         },
         {
-          name: 'logo',
-          label: 'Logo',
-          type: 'image',
-          description: 'Shown next to the Site Name in the header navigation.',
-        }
-        //Add more site settings here...
+          name: "logo",
+          label: "Header Logo",
+          type: "image",
+        },
+        {
+          name: "footerLogo",
+          label: "Footer Logo",
+          type: "image",
+        },
+        {
+          name: "address",
+          label: "Address / Location",
+          type: "string",
+        },
+        {
+          name: "whatsappLink",
+          label: "WhatsApp URL",
+          type: "string",
+        },
+        {
+          name: "whatsappLabel",
+          label: "WhatsApp Button Label",
+          type: "string",
+        },
       ],
     },
     {
       name: "nav",
-      label: "Navigation Menu",
-      description:
-        "Links shown in the header navigation. Reorder, add, or remove items below. The Site Name shown to the left of these links is set in Site Identity & SEO above.",
+      label: "Header Navigation Menu",
       type: "object",
       list: true,
       ui: {
-        itemProps: (item) => {
-          return {
-            label: item.title
-          };
-        },
+        itemProps: (item) => ({
+          label: item?.title || "Nav Item",
+        }),
       },
       fields: [
         {
           name: "title",
           label: "Link Label",
-          description: "The text shown in the nav for this link.",
           type: "string",
-          required: true
+          required: true,
         },
         {
           name: "link",
           label: "Link URL",
-          description: "Where this nav item points (e.g. /about or https://example.com).",
           type: "string",
-          required: true
-
-        }
-      ]
+          required: true,
+        },
+      ],
     },
     {
-      name: "contactLinks",
-      label: "Contact Links",
+      name: "footerNav",
+      label: "Footer Navigation Menu",
       type: "object",
       list: true,
       ui: {
-        itemProps: (item) => {
-          return {
-            label: item.title
-          }
+        itemProps: (item) => ({
+          label: item?.title || "Footer Link",
+        }),
+      },
+      fields: [
+        {
+          name: "title",
+          label: "Link Label",
+          type: "string",
+          required: true,
         },
+        {
+          name: "link",
+          label: "Link URL",
+          type: "string",
+          required: true,
+        },
+      ],
+    },
+    {
+      name: "contactLinks",
+      label: "Social / Contact Links",
+      type: "object",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: item?.title || "Link",
+        }),
       },
       fields: [
         {
           name: "title",
           label: "Title",
-          type: "string"
+          type: "string",
         },
         {
           name: "link",
           label: "Link",
-          type: "string"
+          type: "string",
         },
         {
           name: "icon",
-          label: "Icon",
-          description: "Any Tabler icon name, e.g. tabler:brand-x, tabler:book-2, tabler:brand-github. Browse at https://icones.js.org/collection/tabler",
-          type: "string"
-        }
+          label: "Icon (Tabler name, e.g. tabler:brand-instagram)",
+          type: "string",
+        },
       ],
     },
-    {
-      name: "footerStarfield",
-      label: "Show starfield in footer",
-      type: "boolean",
-    }
-
-    // Add other config fields here...
-  ]
-}
+  ],
+};

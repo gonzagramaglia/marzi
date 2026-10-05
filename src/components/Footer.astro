@@ -1,8 +1,7 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { tinaField } from "@tinacms/astro/tina-field";
-import type { CmsConfig, CmsConfigContactLink } from '../lib/data';
-import IconLink from "./IconLink.astro";
-import Starfield from './space/Starfield.astro';
+import type { CmsConfig } from '../lib/data';
 
 interface Props {
 	config?: CmsConfig | null;
@@ -10,40 +9,73 @@ interface Props {
 
 const { config } = Astro.props;
 const seo = config?.seo ?? null;
-const contactLinks = (config?.contactLinks ?? []).filter(
-	(item): item is CmsConfigContactLink => item !== null,
-);
-const today = new Date();
+const footerNav = (config?.footerNav ?? [
+	{ title: 'Inicio', link: '/' },
+	{ title: 'Blog', link: '/blog' },
+	{ title: 'Contacto', link: '/contacto' },
+	{ title: 'Preguntas Frecuentes', link: '/faq' },
+]).filter(item => item !== null);
+
+const contactLinks = (config?.contactLinks ?? []).filter(item => item !== null);
+const footerLogoSrc = seo?.footerLogo || '/assets/logo-footer.png';
+const address = seo?.address || 'Consultorios Marzi Virgen de la Merced 3019, Bº Alto Verde, Córdoba';
 ---
-<footer class="border-t bg-background py-12 text-center text-sm text-muted-foreground relative overflow-hidden">
-	{config?.footerStarfield !== false && <Starfield count={50} class="text-foreground/15" />}
-	<div class="relative flex flex-col items-center gap-6">
-		{contactLinks.length > 0 && (
-			<div class="flex justify-center gap-4">
-				{contactLinks.map((link) => (
-					<IconLink
-						title={link.title}
-						link={link.link}
-						icon={link.icon}
-						data-tina-field={tinaField(link, "title")}
-					/>
+
+<footer class="w-full bg-[#141414] py-14 px-6 text-center text-white">
+	<div class="mx-auto max-w-5xl flex flex-col items-center gap-8">
+		<!-- Navigation Links -->
+		{footerNav.length > 0 && (
+			<div class="flex flex-wrap justify-center items-center gap-6 sm:gap-10 text-xs sm:text-sm font-medium text-neutral-300">
+				{footerNav.map((item) => (
+					<a
+						href={item.link}
+						class="transition-colors hover:text-white"
+						data-tina-field={tinaField(item, "title")}
+					>
+						{item.title}
+					</a>
 				))}
 			</div>
 		)}
-		<p>
-			&copy; {today.getFullYear()}
-			<span data-tina-field={seo ? tinaField(seo, "siteOwner") : undefined}>{seo?.siteOwner}</span>. All rights reserved.
-		</p>
-		<a
-			href="https://tina.io"
-			target="_blank"
-			rel="noopener noreferrer"
-			class="group inline-flex items-center gap-2.5 rounded-full border bg-card/60 py-1.5 pl-1.5 pr-4 text-xs font-medium text-muted-foreground shadow-xs transition-colors duration-200 hover:border-primary/40 hover:text-foreground focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50"
-		>
-			<span class="flex size-6 items-center justify-center rounded-full bg-primary transition-transform duration-300 group-hover:scale-105">
-				<img src="/llama.svg" alt="" aria-hidden="true" class="size-3.5" />
-			</span>
-			<span>Powered by <span class="font-semibold text-foreground">TinaCMS</span></span>
-		</a>
+
+		<!-- Center Logo -->
+		<div class="py-2">
+			<a href="/" class="inline-block" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
+				<img
+					src={footerLogoSrc}
+					alt={seo?.title || "Marzi Dall'Occhio Consultorio"}
+					class="h-14 sm:h-16 md:h-18 w-auto object-contain"
+					data-tina-field={seo ? tinaField(seo, "footerLogo") : undefined}
+				/>
+			</a>
+		</div>
+
+		<!-- Social Icons -->
+		{contactLinks.length > 0 && (
+			<div class="flex justify-center items-center gap-4 text-neutral-400">
+				{contactLinks.map((link) => (
+					<a
+						href={link.link}
+						target="_blank"
+						rel="noopener noreferrer"
+						aria-label={link.title || 'Social link'}
+						class="flex size-9 items-center justify-center rounded-full text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
+						data-tina-field={tinaField(link, "title")}
+					>
+						{link.icon ? <Icon name={link.icon} class="size-5" /> : <span>{link.title}</span>}
+					</a>
+				))}
+			</div>
+		)}
+
+		<!-- Address / Location Note -->
+		{address && (
+			<p
+				class="text-[11px] sm:text-xs text-neutral-500 tracking-wide max-w-lg leading-relaxed"
+				data-tina-field={seo ? tinaField(seo, "address") : undefined}
+			>
+				{address}
+			</p>
+		)}
 	</div>
 </footer>
