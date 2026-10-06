@@ -58,6 +58,14 @@ Sitio web oficial y gestor de contenidos (CMS) para **Consultorios Marzi Dall'Oc
 
 ---
 
+## 📚 Manual del Cliente (CMS)
+
+La guía paso a paso para el uso del panel de administración (**TinaCMS**), edición en vivo, creación de posts de blog y gestión de FAQs se encuentra disponible en:
+
+👉 **[Manual de Administración y Gestión Web](CLIENT_ADMIN_MANUAL.md)**
+
+---
+
 ## 🛠️ Comandos
 
 ```bash

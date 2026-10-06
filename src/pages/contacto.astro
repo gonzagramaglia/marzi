@@ -210,19 +210,33 @@ const team = [
 </Base>
 
 <script is:inline>
-	document.addEventListener('DOMContentLoaded', () => {
+	function initContactoPage() {
 		const iframe = document.getElementById('google-map-iframe');
 		const loader = document.getElementById('map-loader');
 
 		if (iframe && loader) {
-			iframe.addEventListener('load', () => {
+			function hideLoader() {
 				loader.classList.add('opacity-0', 'pointer-events-none');
 				iframe.classList.remove('opacity-0');
 				iframe.classList.add('opacity-100');
 				setTimeout(() => {
 					loader.remove();
 				}, 500);
-			});
+			}
+
+			iframe.onload = hideLoader;
+
+			// If iframe is already complete (cached)
+			if (iframe.contentDocument?.readyState === 'complete' || iframe.complete) {
+				hideLoader();
+			}
 		}
-	});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initContactoPage);
+	} else {
+		initContactoPage();
+	}
+	document.addEventListener('astro:page-load', initContactoPage);
 </script>

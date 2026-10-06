@@ -238,7 +238,7 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 </Base>
 
 <script is:inline>
-	document.addEventListener('DOMContentLoaded', () => {
+	function initFaqPage() {
 		// Services Carousel
 		const carousel = document.getElementById('services-carousel');
 		if (carousel) {
@@ -288,10 +288,10 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 						dot.className =
 							'size-2.5 rounded-full transition-all duration-300 cursor-pointer ' +
 							(i === currentIndex ? 'bg-[#824f91] scale-125' : 'bg-neutral-300 hover:bg-neutral-400');
-						dot.addEventListener('click', () => {
+						dot.onclick = () => {
 							currentIndex = i;
 							updateCarousel();
-						});
+						};
 						dotsContainer.appendChild(dot);
 					}
 				}
@@ -311,7 +311,7 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 					});
 				}
 
-				prevBtn.addEventListener('click', () => {
+				prevBtn.onclick = () => {
 					const maxIndex = getMaxIndex();
 					if (currentIndex > 0) {
 						currentIndex -= 1;
@@ -319,9 +319,9 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 						currentIndex = maxIndex;
 					}
 					updateCarousel();
-				});
+				};
 
-				nextBtn.addEventListener('click', () => {
+				nextBtn.onclick = () => {
 					const maxIndex = getMaxIndex();
 					if (currentIndex < maxIndex) {
 						currentIndex += 1;
@@ -329,7 +329,7 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 						currentIndex = 0;
 					}
 					updateCarousel();
-				});
+				};
 
 				// Touch swipe support
 				let startX = 0;
@@ -375,7 +375,7 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 		// FAQs Accordion (Single open behavior with + and - toggle)
 		const triggers = document.querySelectorAll('.faq-trigger');
 		triggers.forEach((trigger) => {
-			trigger.addEventListener('click', () => {
+			trigger.onclick = () => {
 				const isExpanded = trigger.getAttribute('aria-expanded') === 'true';
 				const contentId = trigger.getAttribute('aria-controls');
 				const content = document.getElementById(contentId);
@@ -408,7 +408,14 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 					if (plusIcon) plusIcon.classList.add('hidden');
 					if (minusIcon) minusIcon.classList.remove('hidden');
 				}
-			});
+			};
 		});
-	});
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initFaqPage);
+	} else {
+		initFaqPage();
+	}
+	document.addEventListener('astro:page-load', initFaqPage);
 </script>

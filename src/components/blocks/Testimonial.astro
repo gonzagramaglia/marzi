@@ -108,7 +108,7 @@ const testimonials = (data?.testimonials ?? []).filter((t): t is TestimonialItem
 </section>
 
 <script is:inline>
-	(function () {
+	function initTestimonialsCarousel() {
 		const carousel = document.getElementById('testimonials-carousel');
 		if (!carousel) return;
 
@@ -188,28 +188,27 @@ const testimonials = (data?.testimonials ?? []).filter((t): t is TestimonialItem
 			updateCarousel();
 		}
 
-		prevBtn.addEventListener('click', () => {
+		// Avoid duplicate listeners
+		prevBtn.onclick = () => {
 			const visible = getVisibleCount();
 			if (currentIndex > 0) {
 				currentIndex = Math.max(0, currentIndex - (visible === 1 ? 1 : 2));
 			} else {
-				// Wrap around to end
 				currentIndex = getMaxIndex();
 			}
 			updateCarousel();
-		});
+		};
 
-		nextBtn.addEventListener('click', () => {
+		nextBtn.onclick = () => {
 			const maxIndex = getMaxIndex();
 			const visible = getVisibleCount();
 			if (currentIndex < maxIndex) {
 				currentIndex = Math.min(maxIndex, currentIndex + (visible === 1 ? 1 : 2));
 			} else {
-				// Wrap around to start
 				currentIndex = 0;
 			}
 			updateCarousel();
-		});
+		};
 
 		// Touch swipe support
 		let startX = 0;
@@ -252,5 +251,12 @@ const testimonials = (data?.testimonials ?? []).filter((t): t is TestimonialItem
 		// Initial render
 		renderDots();
 		updateCarousel();
-	})();
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initTestimonialsCarousel);
+	} else {
+		initTestimonialsCarousel();
+	}
+	document.addEventListener('astro:page-load', initTestimonialsCarousel);
 </script>
