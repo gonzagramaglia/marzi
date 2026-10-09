@@ -49,11 +49,11 @@ const logoSrc = seo?.logo || '/assets/logo-header.png';
 
 			<!-- Center: Logo (Centered on both mobile & desktop) -->
 			<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-				<a href="/" class="flex items-center py-1" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
+				<a href="/" class="flex items-center py-1 pt-1.5 sm:pt-1" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
 					<img
 						src={logoSrc}
 						alt={seo?.title || "Marzi Dall'Occhio Consultorio"}
-						class="h-9 sm:h-11 md:h-13 w-auto object-contain transition-all"
+						class="h-12 sm:h-13 md:h-14 w-auto object-contain transition-all"
 						data-tina-field={seo ? tinaField(seo, "logo") : undefined}
 					/>
 				</a>

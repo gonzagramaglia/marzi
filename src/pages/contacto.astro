@@ -12,12 +12,20 @@ const team = [
 		role: 'Lic. en Kinesiología y Fisioterapia, Diplomado en Osteopatía (M.P. 2403)',
 		image: '/assets/man.jpg',
 		bio: 'Más de 30 años de trayectoria acompañando a sus pacientes en osteopatía, kinesiología y fisioterapia, con un enfoque personalizado en cada tratamiento.',
+		action: {
+			label: 'Hacer consulta a Juan',
+			link: 'https://wa.me/5493516186275?text=Hola%20Juan,%20quisiera%20consultar%20por%20un%20turno%20en%20el%20consultorio',
+		},
 	},
 	{
 		name: 'Tiziana Marzi',
 		role: 'Lic. en Kinesiología y Fisioterapia',
 		image: '/assets/woman.jpg',
 		bio: 'Profesional del equipo que colabora en los tratamientos de kinesiología, fisioterapia y drenaje linfático, con capacitación continua en nuevas técnicas.',
+		action: {
+			label: 'Hacer consulta a Tiziana',
+			link: 'https://wa.me/5493515121154?text=Hola%20Tiziana,%20quisiera%20consultar%20por%20un%20turno%20en%20el%20consultorio',
+		},
 	},
 ];
 ---
@@ -62,9 +70,23 @@ const team = [
 							{member.role}
 						</span>
 						
-						<p class="text-sm sm:text-base text-neutral-600 leading-relaxed mt-auto">
+						<p class="text-sm sm:text-base text-neutral-600 leading-relaxed mb-6">
 							{member.bio}
 						</p>
+
+						{member.action && (
+							<div class="mt-auto pt-4 border-t border-neutral-200/60 flex items-center justify-start">
+								<a
+									href={member.action.link}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="inline-flex items-center gap-2 rounded-xl bg-white border border-[#824f91] px-4.5 py-2.5 text-xs sm:text-sm font-semibold text-[#824f91] shadow-2xs hover:bg-[#824f91] hover:text-white transition-all duration-200"
+								>
+									<Icon name="tabler:brand-whatsapp" class="size-4 shrink-0" />
+									<span>{member.action.label}</span>
+								</a>
+							</div>
+						)}
 					</div>
 				))}
 			</div>
@@ -157,12 +179,11 @@ const team = [
 							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
 								Teléfonos
 							</span>
-							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5">
+							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-5 gap-y-2">
 								<a href="tel:+5493516186275" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
 									<Icon name="tabler:phone" class="size-4 text-[#824f91]" />
 									<span>351 6 186 275</span>
 								</a>
-								<span class="text-neutral-300">•</span>
 								<a href="tel:+5493515121154" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
 									<Icon name="tabler:phone" class="size-4 text-[#824f91]" />
 									<span>351 5 121 154</span>
@@ -188,12 +209,11 @@ const team = [
 							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
 								Redes Sociales
 							</span>
-							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-4 sm:gap-x-5 gap-y-1.5 pt-0.5">
+							<div class="text-sm sm:text-base font-medium leading-relaxed flex flex-wrap items-center gap-x-5 gap-y-2 pt-0.5">
 								<a href="https://www.instagram.com/consultoriosmarzi" target="_blank" rel="noopener noreferrer" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
 									<Icon name="tabler:brand-instagram" class="size-4 text-[#824f91]" />
 									<span>@consultoriosmarzi</span>
 								</a>
-								<span class="text-neutral-300">•</span>
 								<a href="https://www.facebook.com/ConsultoriosMarzi" target="_blank" rel="noopener noreferrer" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
 									<Icon name="tabler:brand-facebook" class="size-4 text-[#824f91]" />
 									<span>ConsultoriosMarzi</span>
