@@ -25,6 +25,10 @@
     {
       "title": "Preguntas Frecuentes",
       "link": "/faq"
+    },
+    {
+      "title": "Nosotros",
+      "link": "/nosotros"
     }
   ],
   "footerNav": [
@@ -43,6 +47,10 @@
     {
       "title": "Preguntas Frecuentes",
       "link": "/faq"
+    },
+    {
+      "title": "Nosotros",
+      "link": "/nosotros"
     }
   ],
   "contactLinks": [

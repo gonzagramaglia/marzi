@@ -5,29 +5,6 @@ import { getConfig } from '../lib/data';
 
 const config = (await getConfig()).data?.config ?? null;
 const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
-
-const team = [
-	{
-		name: 'Juan J. Marzi',
-		role: 'Lic. en Kinesiología y Fisioterapia, Diplomado en Osteopatía (M.P. 2403)',
-		image: '/assets/man.jpg',
-		bio: 'Más de 30 años de trayectoria acompañando a sus pacientes en osteopatía, kinesiología y fisioterapia, con un enfoque personalizado en cada tratamiento.',
-		action: {
-			label: 'Hacer consulta a Juan',
-			link: 'https://wa.me/5493516186275?text=Hola%20Juan,%20quisiera%20consultar%20por%20un%20turno%20en%20el%20consultorio',
-		},
-	},
-	{
-		name: 'Tiziana Marzi',
-		role: 'Lic. en Kinesiología y Fisioterapia',
-		image: '/assets/woman.jpg',
-		bio: 'Profesional del equipo que colabora en los tratamientos de kinesiología, fisioterapia y drenaje linfático, con capacitación continua en nuevas técnicas.',
-		action: {
-			label: 'Hacer consulta a Tiziana',
-			link: 'https://wa.me/5493515121154?text=Hola%20Tiziana,%20quisiera%20consultar%20por%20un%20turno%20en%20el%20consultorio',
-		},
-	},
-];
 ---
 
 <Base
@@ -46,55 +23,8 @@ const team = [
 		</div>
 	</section>
 
-	<!-- Equipo Cards Section (Directo y elegante) -->
-	<section class="w-full bg-white pt-14 sm:pt-18 md:pt-20 pb-12 sm:pb-16 px-6 sm:px-8">
-		<div class="mx-auto max-w-6xl">
-			<!-- Team Cards Grid -->
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-				{team.map((member) => (
-					<div class="flex flex-col bg-neutral-50/70 rounded-3xl p-6 sm:p-8 border border-neutral-100 transition-all hover:shadow-md">
-						<div class="overflow-hidden rounded-2xl bg-neutral-200 aspect-16/10 sm:aspect-16/9 mb-6 shadow-xs">
-							<img
-								src={member.image}
-								alt={member.name}
-								class="h-full w-full object-cover object-top"
-								loading="lazy"
-							/>
-						</div>
-						
-						<h3 class="text-xl sm:text-2xl font-bold text-[#161616] mb-1">
-							{member.name}
-						</h3>
-						
-						<span class="text-xs sm:text-sm font-semibold text-[#188a7e] mb-4 block">
-							{member.role}
-						</span>
-						
-						<p class="text-sm sm:text-base text-neutral-600 leading-relaxed mb-6">
-							{member.bio}
-						</p>
-
-						{member.action && (
-							<div class="mt-auto pt-4 border-t border-neutral-200/60 flex items-center justify-start">
-								<a
-									href={member.action.link}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="inline-flex items-center gap-2 rounded-xl bg-white border border-[#824f91] px-4.5 py-2.5 text-xs sm:text-sm font-semibold text-[#824f91] shadow-2xs hover:bg-[#824f91] hover:text-white transition-all duration-200"
-								>
-									<Icon name="tabler:brand-whatsapp" class="size-4 shrink-0" />
-									<span>{member.action.label}</span>
-								</a>
-							</div>
-						)}
-					</div>
-				))}
-			</div>
-		</div>
-	</section>
-
 	<!-- Main Contact Content (Google Maps & Info) -->
-	<main class="w-full bg-[#fcfaf5] py-14 sm:py-18 md:py-24 px-6 sm:px-8 border-t border-neutral-100">
+	<main class="w-full bg-[#fcfaf5] py-14 sm:py-18 md:py-24 px-6 sm:px-8">
 		<div class="mx-auto max-w-6xl">
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
 				
