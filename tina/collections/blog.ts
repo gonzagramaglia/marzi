@@ -21,8 +21,17 @@ export const BlogCollection: Collection = {
     },
     {
       name: "category",
-      label: "Categoría (ej. OSTEOPATÍA, KINESIOLOGÍA)",
+      label: "Categoría Principal (ej. OSTEOPATÍA, KINESIOLOGÍA)",
       type: "string",
+    },
+    {
+      name: "tags",
+      label: "Etiquetas / Tags adicionales",
+      type: "string",
+      list: true,
+      ui: {
+        component: "tags",
+      },
     },
     {
       name: "author",

@@ -16,13 +16,13 @@ export async function getStaticPaths() {
 const slug = (Astro.params.slug ?? '').toString();
 const page = await getPage(slug);
 const data = page.data?.page;
-if (!data) return new Response('Not Found', { status: 404 });
+if (!data) return new Response('Página no encontrada', { status: 404 });
 const config = (await getConfig()).data?.config ?? null;
 ---
 
 <Base
-	title={data.seoTitle || config?.seo?.title || 'TinaCMS + Astro'}
-	description={config?.seo?.description ?? 'Welcome to my website!'}
+	title={data.seoTitle || config?.seo?.title || "Marzi Dall'Occhio Consultorio"}
+	description={config?.seo?.description ?? "Más de 30 años acompañando tu salud con osteopatía, kinesiología y fisioterapia en Córdoba."}
 >
 	<TinaIsland name="page" wrapper={islands.page.wrapper} params={{ slug }} primary>
 		<PageBody data={data} />

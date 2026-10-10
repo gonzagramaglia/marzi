@@ -2,14 +2,14 @@ import type { Template } from "tinacms";
 
 export const youTubeEmbedTemplate: Template = {
   name: "YouTubeEmbed",
-  label: "YouTube Embed",
+  label: "Video de YouTube (Incrustado)",
   fields: [
     {
       name: "videoId",
-      label: "YouTube video ID",
+      label: "ID del Video de YouTube",
       type: "string",
       required: true,
-      description: "The 11-character ID from a YouTube URL (e.g. dQw4w9WgXcQ)",
+      description: "El identificador de 11 caracteres del video de YouTube (ej. dQw4w9WgXcQ)",
     },
   ],
 };

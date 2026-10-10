@@ -2,13 +2,13 @@ import type { Template } from 'tinacms';
 
 export const contentBlockSchema: Template = {
 	name: 'content',
-	label: 'Content',
+	label: 'Contenido Enriquecido (Texto Libre)',
 	fields: [
-		{ type: 'rich-text', label: 'Body', name: 'body' },
+		{ type: 'rich-text', label: 'Cuerpo del Texto', name: 'body' },
 	],
 	ui: {
 		defaultItem: {
-			body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio.',
+			body: 'Escribí aquí el contenido del texto.',
 		},
 	},
 };

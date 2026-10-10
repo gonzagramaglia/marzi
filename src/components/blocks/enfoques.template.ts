@@ -2,41 +2,41 @@ import type { Template } from 'tinacms';
 
 export const enfoquesBlockSchema: Template = {
 	name: 'enfoques',
-	label: 'Enfoques (Specialties Cards)',
+	label: 'Enfoques (Tarjetas de Especialidades)',
 	fields: [
-		{ type: 'string', label: 'Headline', name: 'headline' },
-		{ type: 'string', label: 'Tagline', name: 'tagline' },
+		{ type: 'string', label: 'Título Principal (Headline)', name: 'headline' },
+		{ type: 'string', label: 'Bajada / Descripción (Tagline)', name: 'tagline' },
 		{
 			type: 'object',
-			label: 'Specialty Cards',
+			label: 'Tarjetas de Especialidades',
 			name: 'cards',
 			list: true,
 			ui: {
 				itemProps: (item) => ({
-					label: item?.title || 'Specialty Card',
+					label: item?.title || 'Especialidad',
 				}),
 			},
 			fields: [
 				{
 					type: 'object',
-					label: 'Image',
+					label: 'Imagen',
 					name: 'image',
 					fields: [
-						{ name: 'src', label: 'Image Source', type: 'image' },
-						{ name: 'alt', label: 'Alt Text', type: 'string' },
+						{ name: 'src', label: 'Archivo de Imagen', type: 'image' },
+						{ name: 'alt', label: 'Texto Alternativo (Alt)', type: 'string' },
 					],
 				},
-				{ type: 'string', label: 'Title', name: 'title' },
-				{ type: 'string', label: 'Link', name: 'link' },
+				{ type: 'string', label: 'Título', name: 'title' },
+				{ type: 'string', label: 'Enlace', name: 'link' },
 			],
 		},
 		{
 			type: 'object',
-			label: 'Action Button',
+			label: 'Botón de Acción',
 			name: 'action',
 			fields: [
-				{ type: 'string', label: 'Label', name: 'label' },
-				{ type: 'string', label: 'Link', name: 'link' },
+				{ type: 'string', label: 'Texto del Botón', name: 'label' },
+				{ type: 'string', label: 'Enlace del Botón', name: 'link' },
 			],
 		},
 	],

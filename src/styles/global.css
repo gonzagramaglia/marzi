@@ -97,7 +97,12 @@
 		color: var(--foreground);
 		font-family: var(--font-sans);
 		margin: 0;
-		padding-top: 3.75rem;
+		padding-top: 4.5rem;
+	}
+	@media (min-width: 768px) {
+		body {
+			padding-top: 5rem;
+		}
 	}
 	.bg-default {
 		background-color: var(--background);

@@ -2,26 +2,26 @@ import type { Template } from 'tinacms';
 
 export const ctaBannerBlockSchema: Template = {
 	name: 'ctaBanner',
-	label: 'Banner de Consulta / CTA',
+	label: 'Banner de Consulta / Llamado a la Acción (CTA)',
 	fields: [
 		{
 			type: 'object',
-			label: 'Background Image',
+			label: 'Imagen de Fondo',
 			name: 'image',
 			fields: [
-				{ name: 'src', label: 'Image Source', type: 'image' },
-				{ name: 'alt', label: 'Alt Text', type: 'string' },
+				{ name: 'src', label: 'Archivo de Imagen', type: 'image' },
+				{ name: 'alt', label: 'Texto Alternativo (Alt)', type: 'string' },
 			],
 		},
-		{ type: 'string', label: 'Headline / Title', name: 'headline' },
-		{ type: 'string', label: 'Description', name: 'description', ui: { component: 'textarea' } },
+		{ type: 'string', label: 'Título Principal (ej. ¿CONSULTAS?)', name: 'headline' },
+		{ type: 'string', label: 'Descripción', name: 'description', ui: { component: 'textarea' } },
 		{
 			type: 'object',
-			label: 'Action Button',
+			label: 'Botón de Acción',
 			name: 'action',
 			fields: [
-				{ type: 'string', label: 'Label', name: 'label' },
-				{ type: 'string', label: 'Link', name: 'link' },
+				{ type: 'string', label: 'Texto del Botón', name: 'label' },
+				{ type: 'string', label: 'Enlace del Botón', name: 'link' },
 			],
 		},
 	],

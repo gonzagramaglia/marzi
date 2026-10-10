@@ -3,32 +3,32 @@ import type { Action } from '../../lib/data';
 
 export const ctaBlockSchema: Template = {
 	name: 'cta',
-	label: 'CTA',
+	label: 'Llamado a la Acción (CTA)',
 	fields: [
-		{ type: 'string', label: 'Title', name: 'title' },
-		{ type: 'string', label: 'Description', name: 'description', ui: { component: 'textarea' } },
+		{ type: 'string', label: 'Título', name: 'title' },
+		{ type: 'string', label: 'Descripción', name: 'description', ui: { component: 'textarea' } },
 		{
-			type: 'object', label: 'Actions', name: 'actions', list: true,
+			type: 'object', label: 'Acciones / Botones', name: 'actions', list: true,
 			ui: {
-				defaultItem: { label: 'Get Started', type: 'button', link: '/' },
+				defaultItem: { label: 'Contactar', type: 'button', link: '/contacto' },
 				itemProps: (item: Action) => ({ label: item.label ?? '' }),
 			},
 			fields: [
-				{ type: 'string', label: 'Label', name: 'label' },
-				{ type: 'string', label: 'Type', name: 'type', options: [
-					{ label: 'Button', value: 'button' }, { label: 'Link', value: 'link' } ] },
-				{ type: 'string', label: 'Icon (Tabler name)', name: 'icon' },
-				{ type: 'string', label: 'Link', name: 'link' },
+				{ type: 'string', label: 'Texto del Botón', name: 'label' },
+				{ type: 'string', label: 'Tipo', name: 'type', options: [
+					{ label: 'Botón', value: 'button' }, { label: 'Enlace simple', value: 'link' } ] },
+				{ type: 'string', label: 'Ícono (Nombre Tabler)', name: 'icon' },
+				{ type: 'string', label: 'Enlace', name: 'link' },
 			],
 		},
 	],
 	ui: {
 		defaultItem: {
-			title: 'Start Building',
-			description: 'Get started with TinaCMS today and take your content management to the next level.',
+			title: '¿Necesitás una consulta?',
+			description: 'Ponete en contacto con nosotros para coordinar tu cita y comenzar tu tratamiento.',
 			actions: [
-				{ label: 'Get Started', type: 'button', link: '/' },
-				{ label: 'Book Demo', type: 'link', link: '/' },
+				{ label: 'Escribir por WhatsApp', type: 'button', link: 'https://wa.me/5493510000000' },
+				{ label: 'Ver Preguntas Frecuentes', type: 'link', link: '/faq' },
 			],
 		},
 	},

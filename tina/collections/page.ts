@@ -16,7 +16,7 @@ import { splitBlockSchema } from '../../src/components/blocks/split.template';
 
 export const PageCollection: Collection = {
 	name: 'page',
-	label: 'Pages',
+	label: 'Páginas',
 	path: 'src/content/page',
 	format: 'mdx',
 	ui: {
@@ -25,7 +25,7 @@ export const PageCollection: Collection = {
 	fields: [
 		{
 			name: 'seoTitle',
-			label: 'Meta Title (SEO)',
+			label: 'Título SEO (Pestaña del navegador)',
 			type: 'string',
 			isTitle: true,
 			required: true,
@@ -34,7 +34,7 @@ export const PageCollection: Collection = {
 			type: 'object',
 			list: true,
 			name: 'blocks',
-			label: 'Page Sections',
+			label: 'Secciones de la Página',
 			templates: [
 				heroBlockSchema,
 				enfoquesBlockSchema,

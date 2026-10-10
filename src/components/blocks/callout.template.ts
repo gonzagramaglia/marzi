@@ -2,12 +2,12 @@ import type { Template } from 'tinacms';
 
 export const calloutBlockSchema: Template = {
 	name: 'callout',
-	label: 'Callout',
+	label: 'Destacado / Aviso (Callout)',
 	fields: [
-		{ type: 'string', label: 'Text', name: 'text' },
-		{ type: 'string', label: 'Url', name: 'url' },
+		{ type: 'string', label: 'Texto del Aviso', name: 'text' },
+		{ type: 'string', label: 'Enlace (URL)', name: 'url' },
 	],
 	ui: {
-		defaultItem: { url: 'https://tina.io/editorial-workflow', text: 'Support for live editing and editorial workflow' },
+		defaultItem: { url: '/contacto', text: 'Atendemos con turno previo en nuestro consultorio de Alto Verde.' },
 	},
 };

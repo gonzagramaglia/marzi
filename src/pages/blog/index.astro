@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
 import { getConfig, listBlogs } from '../../lib/data';
 
 const posts = await listBlogs();
@@ -14,6 +15,31 @@ function formatCustomDate(pubDateStr?: string | null) {
 	const month = months[date.getUTCMonth()];
 	return `${day} ${month}`;
 }
+
+function getPostTags(post: any): string[] {
+	const tags: string[] = [];
+	if (post.category && typeof post.category === 'string') {
+		tags.push(post.category.trim());
+	}
+	if (Array.isArray(post.tags)) {
+		post.tags.forEach((t: any) => {
+			if (typeof t === 'string' && t.trim() && !tags.includes(t.trim())) {
+				tags.push(t.trim());
+			}
+		});
+	}
+	return tags;
+}
+
+// Calculate all unique tags with post counts
+const tagCounts = new Map<string, number>();
+posts.forEach((post) => {
+	const tags = getPostTags(post);
+	tags.forEach((t) => {
+		tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+	});
+});
+const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 ---
 
 <Base
@@ -32,61 +58,316 @@ function formatCustomDate(pubDateStr?: string | null) {
 		</div>
 	</section>
 
+	<!-- Filter & Search Controls Section -->
+	<section class="w-full bg-[#fcfaf5] border-b border-neutral-200/70 py-8 px-6 sm:px-8">
+		<div class="mx-auto max-w-6xl flex flex-col gap-6">
+			
+			<!-- Search Bar (Centered) -->
+			<div class="flex flex-col items-center justify-center w-full">
+				<!-- Search Input -->
+				<div class="relative w-full max-w-lg">
+					<Icon name="tabler:search" class="absolute left-4 top-1/2 -translate-y-1/2 size-4.5 text-neutral-400 pointer-events-none" />
+					<input
+						id="blog-search-input"
+						type="text"
+						placeholder="Buscar por tema, palabra o título..."
+						class="w-full rounded-2xl border border-neutral-200 bg-white py-3 pl-11 pr-11 text-sm text-neutral-800 placeholder:text-neutral-400 focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 outline-none transition-all shadow-2xs"
+					/>
+					<button
+						id="blog-search-clear"
+						type="button"
+						aria-label="Borrar búsqueda"
+						class="hidden absolute right-3.5 top-1/2 -translate-y-1/2 size-5 text-neutral-400 hover:text-neutral-600 cursor-pointer"
+					>
+						<Icon name="tabler:x" class="size-4" />
+					</button>
+				</div>
+			</div>
+
+			<!-- Tags Filter Pills -->
+			{allTags.length > 0 && (
+				<div class="flex flex-col items-center gap-2.5 pt-1">
+					<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase text-center">
+						Filtrar por tema:
+					</span>
+					<div class="flex flex-wrap items-center justify-center gap-2" id="tags-filter-container">
+						<!-- "Todos" Button -->
+						<button
+							type="button"
+							class="tag-filter-btn active rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer shadow-2xs bg-[#824f91] text-white"
+							data-tag="all"
+						>
+							Todos ({posts.length})
+						</button>
+
+						<!-- Dynamic Tag Buttons -->
+						{allTags.map((tag) => (
+							<button
+								type="button"
+								class="tag-filter-btn rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer bg-white border border-neutral-200 text-neutral-600 hover:border-[#824f91] hover:text-[#824f91]"
+								data-tag={tag.toLowerCase()}
+							>
+								{tag} ({tagCounts.get(tag)})
+							</button>
+						))}
+					</div>
+				</div>
+			)}
+
+		</div>
+	</section>
+
 	<!-- Blog Posts Grid -->
-	<main class="w-full bg-white py-16 md:py-20 px-6 sm:px-8">
+	<main class="w-full bg-white py-14 sm:py-16 md:py-20 px-6 sm:px-8">
 		<div class="mx-auto max-w-6xl">
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
-				{posts.map((post) => (
-					<article class="group flex flex-col items-start text-left">
-						<a
-							href={`/blog/${post._sys.filename}`}
-							class="w-full overflow-hidden rounded-3xl bg-neutral-100 mb-4 aspect-16/10 shadow-xs"
+			
+			<!-- No Results State -->
+			<div id="no-results-state" class="hidden text-center py-16 px-4">
+				<div class="inline-flex size-14 items-center justify-center rounded-full bg-[#824f91]/10 text-[#824f91] mb-4">
+					<Icon name="tabler:search-off" class="size-7" />
+				</div>
+				<h3 class="text-xl font-bold text-neutral-800 mb-2">
+					No encontramos notas para tu búsqueda
+				</h3>
+				<p class="text-sm text-neutral-500 max-w-md mx-auto mb-6">
+					Probá buscando con otros términos o seleccionando otra categoría.
+				</p>
+				<button
+					id="reset-filters-btn"
+					type="button"
+					class="inline-flex items-center gap-2 rounded-xl bg-[#824f91] px-5 py-2.5 text-xs sm:text-sm font-semibold text-white hover:bg-[#6e3f7d] transition-colors cursor-pointer shadow-xs"
+				>
+					<Icon name="tabler:refresh" class="size-4" />
+					<span>Ver todas las notas</span>
+				</button>
+			</div>
+
+			<!-- Posts Grid -->
+			<div id="blog-posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
+				{posts.map((post) => {
+					const tags = getPostTags(post);
+					const searchPayload = [
+						post.title ?? '',
+						post.description ?? '',
+						(post as any)?.author ?? '',
+						tags.join(' ')
+					].join(' ').toLowerCase();
+
+					return (
+						<article
+							class="blog-card group flex flex-col items-start text-left transition-all duration-300"
+							data-search={searchPayload}
+							data-tags={tags.map(t => t.toLowerCase()).join(',')}
 						>
-							{post.heroImage ? (
-								<img
-									src={post.heroImage}
-									alt={post.title ?? ''}
-									class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-									loading="lazy"
-								/>
-							) : (
-								<div class="h-full w-full bg-neutral-200 flex items-center justify-center text-neutral-400">
-									Sin imagen
-								</div>
-							)}
-						</a>
-
-						<!-- Meta date -->
-						<div class="flex items-center gap-1.5 text-xs font-semibold text-neutral-500 uppercase tracking-wider mb-2">
-							<span class="size-1.5 rounded-full bg-[#188a7e]"></span>
-							<span>{formatCustomDate(post.pubDate)}</span>
-						</div>
-
-						<!-- Title -->
-						<h2 class="text-lg sm:text-xl font-bold text-[#1a1a1a] mb-2 leading-snug group-hover:text-[#824f91] transition-colors">
-							<a href={`/blog/${post._sys.filename}`}>
-								{post.title}
+							<a
+								href={`/blog/${post._sys.filename}`}
+								class="w-full overflow-hidden rounded-3xl bg-neutral-100 mb-4 aspect-16/10 shadow-xs"
+							>
+								{post.heroImage ? (
+									<img
+										src={post.heroImage}
+										alt={post.title ?? ''}
+										class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+										loading="lazy"
+									/>
+								) : (
+									<div class="h-full w-full bg-neutral-200 flex items-center justify-center text-neutral-400">
+										Sin imagen
+									</div>
+								)}
 							</a>
-						</h2>
 
-						<!-- Description -->
-						{post.description && (
-							<p class="text-sm text-neutral-600 leading-relaxed mb-4 line-clamp-3">
-								{post.description}
-							</p>
-						)}
+							<!-- Tags (Left) & Date (Right) with space between pushing to opposite sides -->
+							<div class="w-full flex items-center justify-between gap-3 mb-3">
+								<div class="flex flex-wrap items-center justify-start gap-1.5">
+									{tags.map((tag) => (
+										<button
+											type="button"
+											class="blog-tag-badge inline-flex items-center rounded-full bg-[#824f91]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#824f91] hover:bg-[#824f91] hover:text-white transition-colors cursor-pointer"
+											data-tag={tag.toLowerCase()}
+										>
+											{tag}
+										</button>
+									))}
+								</div>
 
-						<!-- Link -->
-						<a
-							href={`/blog/${post._sys.filename}`}
-							class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-[#824f91] hover:underline"
-						>
-							<span>Leer más</span>
-							<span class="transition-transform group-hover:translate-x-1">→</span>
-						</a>
-					</article>
-				))}
+								<time class="text-xs font-semibold text-neutral-500 uppercase tracking-wider shrink-0 text-right">
+									{formatCustomDate(post.pubDate)}
+								</time>
+							</div>
+
+							<!-- Title -->
+							<h2 class="text-lg sm:text-xl font-bold text-[#1a1a1a] mb-2 leading-snug group-hover:text-[#824f91] transition-colors">
+								<a href={`/blog/${post._sys.filename}`}>
+									{post.title}
+								</a>
+							</h2>
+
+							<!-- Description -->
+							{post.description && (
+								<p class="text-sm text-neutral-600 leading-relaxed mb-4 line-clamp-3">
+									{post.description}
+								</p>
+							)}
+
+							<!-- Link -->
+							<a
+								href={`/blog/${post._sys.filename}`}
+								class="mt-auto inline-flex items-center gap-1 text-sm font-semibold text-[#824f91] hover:underline"
+							>
+								<span>Leer más</span>
+								<span class="transition-transform group-hover:translate-x-1">→</span>
+							</a>
+						</article>
+					);
+				})}
 			</div>
 		</div>
 	</main>
 </Base>
+
+<script is:inline>
+	function initBlogFilters() {
+		const searchInput = document.getElementById('blog-search-input');
+		const clearBtn = document.getElementById('blog-search-clear');
+		const counterEl = document.getElementById('blog-counter');
+		const tagButtons = document.querySelectorAll('.tag-filter-btn');
+		const tagBadges = document.querySelectorAll('.blog-tag-badge');
+		const cards = document.querySelectorAll('.blog-card');
+		const grid = document.getElementById('blog-posts-grid');
+		const noResults = document.getElementById('no-results-state');
+		const resetBtn = document.getElementById('reset-filters-btn');
+
+		if (!cards.length) return;
+
+		let activeTag = 'all';
+		let searchQuery = '';
+
+		function applyFilters() {
+			let visibleCount = 0;
+			const query = searchQuery.trim().toLowerCase();
+
+			cards.forEach((card) => {
+				const cardTags = (card.getAttribute('data-tags') || '').split(',');
+				const cardSearchData = (card.getAttribute('data-search') || '').toLowerCase();
+
+				const matchesTag = activeTag === 'all' || cardTags.includes(activeTag);
+				const matchesQuery = !query || cardSearchData.includes(query);
+
+				if (matchesTag && matchesQuery) {
+					card.classList.remove('hidden');
+					visibleCount++;
+				} else {
+					card.classList.add('hidden');
+				}
+			});
+
+			// Update counter text
+			if (counterEl) {
+				if (visibleCount === 0) {
+					counterEl.textContent = 'Sin resultados';
+				} else if (visibleCount === 1) {
+					counterEl.textContent = 'Mostrando 1 nota';
+				} else {
+					counterEl.textContent = `Mostrando ${visibleCount} notas`;
+				}
+			}
+
+			// Show/hide no results state
+			if (noResults && grid) {
+				if (visibleCount === 0) {
+					noResults.classList.remove('hidden');
+					grid.classList.add('hidden');
+				} else {
+					noResults.classList.add('hidden');
+					grid.classList.remove('hidden');
+				}
+			}
+
+			// Update active states on tag buttons
+			tagButtons.forEach((btn) => {
+				const btnTag = btn.getAttribute('data-tag');
+				if (btnTag === activeTag) {
+					btn.className = 'tag-filter-btn active rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer shadow-2xs bg-[#824f91] text-white';
+				} else {
+					btn.className = 'tag-filter-btn rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer bg-white border border-neutral-200 text-neutral-600 hover:border-[#824f91] hover:text-[#824f91]';
+				}
+			});
+
+			// Show/hide clear search button
+			if (clearBtn) {
+				clearBtn.style.display = searchQuery ? 'block' : 'none';
+			}
+		}
+
+		// Search input listener
+		if (searchInput) {
+			searchInput.addEventListener('input', (e) => {
+				searchQuery = e.target.value;
+				applyFilters();
+			});
+		}
+
+		// Clear search button
+		if (clearBtn && searchInput) {
+			clearBtn.addEventListener('click', () => {
+				searchInput.value = '';
+				searchQuery = '';
+				searchInput.focus();
+				applyFilters();
+			});
+		}
+
+		// Tag filter buttons
+		tagButtons.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				activeTag = btn.getAttribute('data-tag') || 'all';
+				applyFilters();
+			});
+		});
+
+		// Clicking tag badges on post cards sets filter
+		tagBadges.forEach((badge) => {
+			badge.addEventListener('click', (e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				const selected = badge.getAttribute('data-tag');
+				if (selected) {
+					activeTag = selected;
+					applyFilters();
+					window.scrollTo({ top: 300, behavior: 'smooth' });
+				}
+			});
+		});
+
+		// Reset filters button
+		if (resetBtn) {
+			resetBtn.addEventListener('click', () => {
+				activeTag = 'all';
+				searchQuery = '';
+				if (searchInput) searchInput.value = '';
+				applyFilters();
+			});
+		}
+
+		// Initial check from URL parameters (e.g. ?tag=osteopatía)
+		const params = new URLSearchParams(window.location.search);
+		const tagParam = params.get('tag');
+		const queryParam = params.get('q');
+		if (tagParam) activeTag = tagParam.toLowerCase();
+		if (queryParam && searchInput) {
+			searchQuery = queryParam;
+			searchInput.value = queryParam;
+		}
+
+		applyFilters();
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', initBlogFilters);
+	} else {
+		initBlogFilters();
+	}
+	document.addEventListener('astro:page-load', initBlogFilters);
+</script>
+

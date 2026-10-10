@@ -2,18 +2,18 @@ import type { Template } from 'tinacms';
 
 export const heroBlockSchema: Template = {
 	name: 'hero',
-	label: 'Hero Image Banner',
+	label: 'Banner Principal (Hero)',
 	fields: [
 		{
 			type: 'object',
-			label: 'Image',
+			label: 'Imagen Principal',
 			name: 'image',
 			fields: [
-				{ name: 'src', label: 'Image Source', type: 'image' },
-				{ name: 'alt', label: 'Alt Text', type: 'string' },
+				{ name: 'src', label: 'Archivo de Imagen', type: 'image' },
+				{ name: 'alt', label: 'Texto Alternativo (Alt)', type: 'string' },
 			],
 		},
-		{ type: 'string', label: 'Optional Headline (Screen Readers / Title)', name: 'headline' },
+		{ type: 'string', label: 'Título Opcional (Lectores de pantalla / Accesibilidad)', name: 'headline' },
 	],
 	ui: {
 		defaultItem: {

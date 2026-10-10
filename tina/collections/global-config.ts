@@ -2,7 +2,7 @@ import type { Collection } from "tinacms";
 
 export const GlobalConfigCollection: Collection = {
   name: "config",
-  label: "Global Config",
+  label: "Configuración General",
   path: "src/content/config",
   format: "json",
   ui: {
@@ -11,74 +11,74 @@ export const GlobalConfigCollection: Collection = {
   fields: [
     {
       name: "seo",
-      label: "Site Identity & SEO",
+      label: "Identidad del Sitio y SEO",
       type: "object",
       fields: [
         {
           name: "title",
-          label: "Site Name",
+          label: "Nombre del Sitio",
           type: "string",
           required: true,
         },
         {
           name: "description",
-          label: "Default Meta Description (SEO)",
+          label: "Descripción Meta (SEO)",
           type: "string",
           required: true,
         },
         {
           name: "siteOwner",
-          label: "Site Owner",
+          label: "Titular / Responsable del Sitio",
           required: true,
           type: "string",
         },
         {
           name: "logo",
-          label: "Header Logo",
+          label: "Logo del Encabezado (Header)",
           type: "image",
         },
         {
           name: "footerLogo",
-          label: "Footer Logo",
+          label: "Logo del Pie de Página (Footer)",
           type: "image",
         },
         {
           name: "address",
-          label: "Address / Location",
+          label: "Dirección / Ubicación",
           type: "string",
         },
         {
           name: "whatsappLink",
-          label: "WhatsApp URL",
+          label: "Enlace de WhatsApp",
           type: "string",
         },
         {
           name: "whatsappLabel",
-          label: "WhatsApp Button Label",
+          label: "Texto del Botón de WhatsApp",
           type: "string",
         },
       ],
     },
     {
       name: "nav",
-      label: "Header Navigation Menu",
+      label: "Menú de Navegación (Header)",
       type: "object",
       list: true,
       ui: {
         itemProps: (item) => ({
-          label: item?.title || "Nav Item",
+          label: item?.title || "Elemento de Menú",
         }),
       },
       fields: [
         {
           name: "title",
-          label: "Link Label",
+          label: "Texto del Enlace",
           type: "string",
           required: true,
         },
         {
           name: "link",
-          label: "Link URL",
+          label: "Dirección URL del Enlace",
           type: "string",
           required: true,
         },
@@ -86,24 +86,24 @@ export const GlobalConfigCollection: Collection = {
     },
     {
       name: "footerNav",
-      label: "Footer Navigation Menu",
+      label: "Menú del Pie de Página (Footer)",
       type: "object",
       list: true,
       ui: {
         itemProps: (item) => ({
-          label: item?.title || "Footer Link",
+          label: item?.title || "Enlace de Footer",
         }),
       },
       fields: [
         {
           name: "title",
-          label: "Link Label",
+          label: "Texto del Enlace",
           type: "string",
           required: true,
         },
         {
           name: "link",
-          label: "Link URL",
+          label: "Dirección URL del Enlace",
           type: "string",
           required: true,
         },
@@ -111,28 +111,28 @@ export const GlobalConfigCollection: Collection = {
     },
     {
       name: "contactLinks",
-      label: "Social / Contact Links",
+      label: "Redes Sociales y Enlaces de Contacto",
       type: "object",
       list: true,
       ui: {
         itemProps: (item) => ({
-          label: item?.title || "Link",
+          label: item?.title || "Red Social",
         }),
       },
       fields: [
         {
           name: "title",
-          label: "Title",
+          label: "Nombre / Red Social",
           type: "string",
         },
         {
           name: "link",
-          label: "Link",
+          label: "Dirección URL",
           type: "string",
         },
         {
           name: "icon",
-          label: "Icon (Tabler name, e.g. tabler:brand-instagram)",
+          label: "Ícono (ej. tabler:brand-instagram)",
           type: "string",
         },
       ],

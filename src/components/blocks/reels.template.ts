@@ -4,7 +4,7 @@ export const reelsBlockSchema: Template = {
 	name: 'reels',
 	label: 'Conocé más de nuestro trabajo (Videos / Reels)',
 	fields: [
-		{ type: 'string', label: 'Title', name: 'title' },
+		{ type: 'string', label: 'Título', name: 'title' },
 		{
 			type: 'object',
 			label: 'Videos',
@@ -16,9 +16,9 @@ export const reelsBlockSchema: Template = {
 				}),
 			},
 			fields: [
-				{ type: 'string', label: 'Video Source URL / File', name: 'src' },
-				{ type: 'string', label: 'Video Title', name: 'title' },
-				{ type: 'image', label: 'Poster / Thumbnail (Optional)', name: 'poster' },
+				{ type: 'string', label: 'Enlace o Archivo de Video', name: 'src' },
+				{ type: 'string', label: 'Título del Video', name: 'title' },
+				{ type: 'image', label: 'Portada / Miniatura (Opcional)', name: 'poster' },
 			],
 		},
 	],

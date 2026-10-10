@@ -3,33 +3,33 @@ import type { Action } from '../../lib/data';
 
 export const splitBlockSchema: Template = {
 	name: 'split',
-	label: 'Split (Text + Image)',
+	label: 'Columna Dividida (Texto + Imagen)',
 	fields: [
-		{ type: 'string', label: 'Title', name: 'title' },
-		{ type: 'rich-text', label: 'Body', name: 'body' },
+		{ type: 'string', label: 'Título', name: 'title' },
+		{ type: 'rich-text', label: 'Texto', name: 'body' },
 		{
-			type: 'object', label: 'Image', name: 'image',
+			type: 'object', label: 'Imagen', name: 'image',
 			fields: [
-				{ name: 'src', label: 'Image Source', type: 'image' },
-				{ name: 'alt', label: 'Alt Text', type: 'string' },
+				{ name: 'src', label: 'Archivo de Imagen', type: 'image' },
+				{ name: 'alt', label: 'Texto Alternativo (Alt)', type: 'string' },
 			],
 		},
-		{ type: 'boolean', label: 'Image on left', name: 'reverse' },
+		{ type: 'boolean', label: 'Imagen a la izquierda (invertir orden)', name: 'reverse' },
 		{
-			type: 'object', label: 'Actions', name: 'actions', list: true,
-			ui: { defaultItem: { label: 'Learn more', type: 'button', link: '/' }, itemProps: (i: Action) => ({ label: i.label ?? '' }) },
+			type: 'object', label: 'Botones / Acciones', name: 'actions', list: true,
+			ui: { defaultItem: { label: 'Conocer más', type: 'button', link: '/' }, itemProps: (i: Action) => ({ label: i.label ?? '' }) },
 			fields: [
-				{ type: 'string', label: 'Label', name: 'label' },
-				{ type: 'string', label: 'Type', name: 'type', options: [{ label: 'Button', value: 'button' }, { label: 'Link', value: 'link' }] },
-				{ type: 'string', label: 'Icon (Tabler name)', name: 'icon' },
-				{ type: 'string', label: 'Link', name: 'link' },
+				{ type: 'string', label: 'Texto del Botón', name: 'label' },
+				{ type: 'string', label: 'Tipo', name: 'type', options: [{ label: 'Botón', value: 'button' }, { label: 'Enlace simple', value: 'link' }] },
+				{ type: 'string', label: 'Ícono (Nombre Tabler)', name: 'icon' },
+				{ type: 'string', label: 'Enlace', name: 'link' },
 			],
 		},
 	],
 	ui: {
 		defaultItem: {
-			title: 'A headline that sits beside your image',
-			body: 'Describe the feature or story here, with a supporting image right alongside it.',
+			title: 'Un enfoque dedicado a tu salud',
+			body: 'Contamos con profesionales altamente capacitados para acompañarte en tu recuperación y bienestar.',
 		},
 	},
 };

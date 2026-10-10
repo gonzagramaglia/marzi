@@ -17,14 +17,14 @@ const logoSrc = seo?.logo || '/assets/logo-header.png';
 ---
 
 <header class="fixed top-0 z-40 w-full border-b border-neutral-100 bg-white/95 backdrop-blur-md">
-	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
-		<nav class="relative flex items-center justify-between min-h-[44px]">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-2 sm:py-2.5">
+		<nav class="relative flex items-center justify-between min-h-[50px] sm:min-h-[56px] md:min-h-[64px]">
 			<!-- Mobile: Menu Toggle Button (Left aligned on mobile) -->
 			<div class="flex items-center justify-start lg:hidden z-10">
 				<button
 					id="mobile-menu-toggle"
 					type="button"
-					aria-label="Toggle navigation menu"
+					aria-label="Abrir o cerrar menú de navegación"
 					aria-controls="mobile-menu-panel"
 					aria-expanded="false"
 					class="inline-flex size-10 cursor-pointer items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 focus-visible:outline-none"
@@ -49,11 +49,11 @@ const logoSrc = seo?.logo || '/assets/logo-header.png';
 
 			<!-- Center: Logo (Centered on both mobile & desktop) -->
 			<div class="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 flex items-center justify-center pointer-events-auto">
-				<a href="/" class="flex items-center py-1 pt-1.5 sm:pt-1" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
+				<a href="/" class="flex items-center py-0.5 translate-y-1 sm:translate-y-0" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
 					<img
 						src={logoSrc}
 						alt={seo?.title || "Marzi Dall'Occhio Consultorio"}
-						class="h-12 sm:h-13 md:h-14 w-auto object-contain transition-all"
+						class="h-14 sm:h-15 md:h-16 lg:h-17 w-auto object-contain transition-all"
 						data-tina-field={seo ? tinaField(seo, "logo") : undefined}
 					/>
 				</a>
@@ -68,7 +68,7 @@ const logoSrc = seo?.logo || '/assets/logo-header.png';
 							href={link.link}
 							target="_blank"
 							rel="noopener noreferrer"
-							aria-label={link.title || 'Social link'}
+							aria-label={link.title || 'Red social'}
 							class="flex size-8 items-center justify-center rounded-full text-neutral-700 hover:text-[#824f91] hover:bg-neutral-100 transition-colors"
 							data-tina-field={tinaField(link, "title")}
 						>
