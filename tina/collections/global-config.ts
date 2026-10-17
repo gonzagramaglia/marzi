@@ -165,5 +165,39 @@ export const GlobalConfigCollection: Collection = {
         },
       ],
     },
+    {
+      name: "services",
+      label: "Servicios (Carrusel en /faq)",
+      type: "object",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: item?.title || "Servicio",
+        }),
+      },
+      fields: [
+        {
+          name: "title",
+          label: "Título del Servicio",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "image",
+          label: "Imagen",
+          type: "image",
+        },
+        {
+          name: "description",
+          label: "Descripción",
+          type: "string",
+        },
+        {
+          name: "link",
+          label: "Enlace externo (se abre en nueva pestaña)",
+          type: "string",
+        },
+      ],
+    },
   ],
 };

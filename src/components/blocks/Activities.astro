@@ -1,4 +1,5 @@
 ---
+import { Icon } from 'astro-icon/components';
 import { tinaField } from '@tinacms/astro/tina-field';
 
 interface ActivityItem {
@@ -6,6 +7,15 @@ interface ActivityItem {
 	day?: string | null;
 	title?: string | null;
 	details?: string | null;
+	image?: string | { src?: string | null; alt?: string | null } | null;
+	date?: string | null;
+	tag?: string | null;
+	description?: string | null;
+	time?: string | null;
+	location?: string | null;
+	modality?: string | null;
+	whatsappLink?: string | null;
+	whatsappMessage?: string | null;
 }
 
 interface Props {
@@ -34,6 +44,67 @@ const description = data?.description ?? 'Un espacio amplio y versátil para tal
 const subheading = data?.subheading ?? 'PRÓXIMAS ACTIVIDADES';
 const items = (data?.items ?? []).filter((i): i is ActivityItem => Boolean(i));
 const action = data?.action;
+
+const formatMonth = (month?: string | null): string => {
+	if (!month) return '';
+	const m = month.trim().toUpperCase();
+	const map: Record<string, string> = {
+		ENE: 'enero',
+		FEB: 'febrero',
+		MAR: 'marzo',
+		ABR: 'abril',
+		MAY: 'mayo',
+		JUN: 'junio',
+		JUL: 'julio',
+		AGO: 'agosto',
+		SEP: 'septiembre',
+		SET: 'septiembre',
+		OCT: 'octubre',
+		NOV: 'noviembre',
+		DIC: 'diciembre',
+	};
+	return map[m] || month.toLowerCase();
+};
+
+const preparedItems = items.map((item) => {
+	const monthStr = formatMonth(item.month);
+	const autoDate = item.day && monthStr ? `${item.day} de ${monthStr}` : (item.day || '');
+	const fullDate = item.date || autoDate || 'Fecha a confirmar';
+	const dateBadge = fullDate;
+	const itemTag = item.tag || 'ACTIVIDAD EN EL SALÓN MULTIUSOS';
+	const itemTitle = item.title || 'Actividad';
+	const itemDesc = item.description || 'Una actividad grupal para aprender técnicas simples de elongación y movilidad que podés sumar a tu rutina para cuidar tu cuerpo todos los días.';
+
+	let itemTime = item.time;
+	let itemModality = item.modality;
+	if (!itemTime && item.details) {
+		const parts = item.details.split('·');
+		itemTime = parts[0]?.trim() || '';
+		if (!itemModality && parts.length > 1) {
+			itemModality = parts[1]?.trim() || '';
+		}
+	}
+	itemTime = itemTime || '10:00 a 11:30 hs';
+	itemModality = itemModality || 'Cupo limitado, con inscripción previa';
+	const itemLocation = item.location || 'Salón Multiusos, Virgen de la Merced 3019';
+
+	const imageSrc = typeof item.image === 'string' ? item.image : (item.image?.src || '');
+	const defaultMessage = `Hola! Quería consultar sobre la actividad: ${itemTitle}`;
+	const whatsappUrl = item.whatsappLink || `https://wa.me/5493510000000?text=${encodeURIComponent(item.whatsappMessage || defaultMessage)}`;
+
+	return {
+		title: itemTitle,
+		dateBadge,
+		tag: itemTag,
+		description: itemDesc,
+		date: fullDate,
+		time: itemTime,
+		location: itemLocation,
+		modality: itemModality,
+		image: imageSrc,
+		whatsappUrl,
+	};
+});
 ---
 
 <section class="w-full bg-white py-16 px-6 sm:px-8 md:py-24 text-[#222222]">
@@ -87,21 +158,29 @@ const action = data?.action;
 				)}
 
 				<!-- Activities list -->
-				<div class="space-y-4 mb-8">
-					{items.map((item) => (
-						<div
-							class="flex items-center gap-4 py-2 border-b border-neutral-100 last:border-b-0"
+				<div class="space-y-2.5 mb-8">
+					{items.map((item, index) => (
+						<button
+							type="button"
+							class="activity-item-trigger w-full text-left flex items-center justify-between gap-4 py-3 px-3.5 -mx-3.5 rounded-2xl border-b border-neutral-100 last:border-b-0 hover:bg-neutral-50/90 transition-all duration-200 cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#188a7e]"
+							data-activity-index={index}
 							data-tina-field={tinaField(item)}
+							aria-label={`Ver detalles de ${item.title}`}
 						>
-							<div class="flex flex-col items-center justify-center min-w-[50px] text-center">
-								<span class="text-[11px] font-bold text-neutral-600 uppercase tracking-wider">{item.month}</span>
-								<span class="text-2xl font-bold text-[#161616] leading-none">{item.day}</span>
+							<div class="flex items-center gap-4">
+								<div class="flex flex-col items-center justify-center min-w-[50px] text-center">
+									<span class="text-[11px] font-bold text-neutral-600 uppercase tracking-wider">{item.month}</span>
+									<span class="text-2xl font-bold text-[#161616] leading-none group-hover:text-[#188a7e] transition-colors">{item.day}</span>
+								</div>
+								<div class="flex flex-col">
+									<h4 class="text-sm sm:text-base font-semibold text-[#1c1c1c] group-hover:text-[#188a7e] transition-colors">{item.title}</h4>
+									<p class="text-xs sm:text-sm text-neutral-500">{item.details}</p>
+								</div>
 							</div>
-							<div class="flex flex-col">
-								<h4 class="text-sm sm:text-base font-semibold text-[#1c1c1c]">{item.title}</h4>
-								<p class="text-xs sm:text-sm text-neutral-500">{item.details}</p>
+							<div class="text-neutral-400 group-hover:text-[#188a7e] group-hover:translate-x-0.5 transition-all shrink-0">
+								<Icon name="tabler:chevron-right" class="size-5" />
 							</div>
-						</div>
+						</button>
 					))}
 				</div>
 
@@ -120,4 +199,250 @@ const action = data?.action;
 			</div>
 		</div>
 	</div>
+
+	<!-- Activities Pop-up Modal -->
+	<div
+		id="activity-modal"
+		class="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 transition-all duration-300 opacity-0 pointer-events-none"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="activity-modal-title"
+	>
+		<!-- Backdrop -->
+		<div
+			id="activity-modal-backdrop"
+			class="fixed inset-0 bg-neutral-900/60 backdrop-blur-xs transition-opacity duration-300 cursor-pointer"
+		></div>
+
+		<!-- Dialog Container -->
+		<div
+			id="activity-modal-card"
+			class="relative z-10 w-full max-w-4xl max-h-[92vh] bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-95 transition-all duration-300 ease-out my-auto border border-neutral-100"
+		>
+			<!-- Left side ("parte morada" / Event image container) -->
+			<div
+				id="activity-modal-image-col"
+				class="w-full md:w-5/12 min-h-[200px] sm:min-h-[240px] md:min-h-[470px] bg-[#3a1526] relative overflow-hidden flex items-center justify-center shrink-0"
+			>
+				<!-- Uploaded TinaCMS event flyer/image -->
+				<img
+					id="activity-modal-img"
+					src=""
+					alt=""
+					class="w-full h-full object-cover object-center absolute inset-0 hidden transition-opacity duration-300"
+				/>
+				<!-- Solid purple brand background fallback when no image is loaded -->
+				<div
+					id="activity-modal-purple-fallback"
+					class="w-full h-full min-h-[200px] md:min-h-[470px] bg-[#3a1526]"
+				></div>
+			</div>
+
+			<!-- Right side (event info & actions) -->
+			<div class="flex-1 p-6 sm:p-8 md:p-10 flex flex-col justify-between bg-white overflow-y-auto">
+				<div>
+					<!-- Top row: date pill + close button -->
+					<div class="flex items-center justify-between gap-4 mb-3 sm:mb-4">
+						<span
+							id="activity-modal-badge"
+							class="inline-flex items-center px-4 py-1.5 rounded-full text-xs sm:text-[13px] font-semibold text-white bg-[#188a7e] shadow-xs"
+						>
+							12 de septiembre
+						</span>
+						<button
+							type="button"
+							id="activity-modal-close-btn"
+							aria-label="Cerrar modal"
+							class="size-8 sm:size-9 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 hover:text-neutral-900 transition-colors flex items-center justify-center cursor-pointer shrink-0"
+						>
+							<Icon name="tabler:x" class="size-5" />
+						</button>
+					</div>
+
+					<!-- Category / Tag -->
+					<span
+						id="activity-modal-tag"
+						class="block text-[11px] sm:text-xs font-bold tracking-wider text-[#188a7e] uppercase mb-2"
+					>
+						ACTIVIDAD EN EL SALÓN MULTIUSOS
+					</span>
+
+					<!-- Title -->
+					<h3
+						id="activity-modal-title"
+						class="text-2xl sm:text-3xl font-bold text-[#1c1c1c] tracking-tight mb-3 leading-snug"
+					>
+						Taller de estiramiento y movilidad
+					</h3>
+
+					<!-- Description -->
+					<p
+						id="activity-modal-desc"
+						class="text-xs sm:text-sm text-neutral-600 leading-relaxed mb-6 sm:mb-8"
+					>
+						Una actividad grupal para aprender técnicas simples de elongación y movilidad que podés sumar a tu rutina para cuidar tu cuerpo todos los días.
+					</p>
+
+					<!-- 2x2 Details Grid -->
+					<div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4 sm:gap-y-5 mb-8">
+						<div>
+							<div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#188a7e] uppercase mb-0.5">FECHA</div>
+							<div id="activity-modal-fecha" class="text-xs sm:text-sm font-semibold text-[#1c1c1c]">
+								12 de septiembre
+							</div>
+						</div>
+						<div>
+							<div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#188a7e] uppercase mb-0.5">HORARIO</div>
+							<div id="activity-modal-horario" class="text-xs sm:text-sm font-semibold text-[#1c1c1c]">
+								10:00 a 11:30 hs
+							</div>
+						</div>
+						<div>
+							<div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#188a7e] uppercase mb-0.5">LUGAR</div>
+							<div id="activity-modal-lugar" class="text-xs sm:text-sm font-semibold text-[#1c1c1c]">
+								Salón Multiusos, Virgen de la Merced 3019
+							</div>
+						</div>
+						<div>
+							<div class="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#188a7e] uppercase mb-0.5">MODALIDAD</div>
+							<div id="activity-modal-modalidad" class="text-xs sm:text-sm font-semibold text-[#1c1c1c]">
+								Cupo limitado, con inscripción previa
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Action button -->
+				<div class="pt-2">
+					<a
+						id="activity-modal-action"
+						href="https://wa.me/5493510000000"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-flex items-center gap-2.5 px-5 py-2.5 sm:px-6 sm:py-3 rounded-xl border border-[#188a7e] text-[#188a7e] hover:bg-[#188a7e] hover:text-white text-xs sm:text-sm font-medium transition-all duration-200 shadow-xs group"
+					>
+						<span>Escribir por WhatsApp</span>
+						<Icon name="tabler:brand-whatsapp" class="size-4.5 sm:size-5 transition-transform group-hover:scale-110" />
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Data for client script -->
+	<script id="activities-data" type="application/json" set:html={JSON.stringify(preparedItems)} />
 </section>
+
+<script is:inline>
+	(() => {
+		const initActivityModal = () => {
+			const modal = document.getElementById('activity-modal');
+			const card = document.getElementById('activity-modal-card');
+			const backdrop = document.getElementById('activity-modal-backdrop');
+			const closeBtn = document.getElementById('activity-modal-close-btn');
+			const dataScript = document.getElementById('activities-data');
+
+			if (!modal || !dataScript) return;
+
+			let activities = [];
+			try {
+				activities = JSON.parse(dataScript.textContent || '[]');
+			} catch (e) {
+				console.error('Error parsing activities data', e);
+				return;
+			}
+
+			// DOM Elements
+			const badgeEl = document.getElementById('activity-modal-badge');
+			const tagEl = document.getElementById('activity-modal-tag');
+			const titleEl = document.getElementById('activity-modal-title');
+			const descEl = document.getElementById('activity-modal-desc');
+			const fechaEl = document.getElementById('activity-modal-fecha');
+			const horarioEl = document.getElementById('activity-modal-horario');
+			const lugarEl = document.getElementById('activity-modal-lugar');
+			const modalidadEl = document.getElementById('activity-modal-modalidad');
+			const actionEl = document.getElementById('activity-modal-action');
+			const imgEl = document.getElementById('activity-modal-img');
+			const fallbackEl = document.getElementById('activity-modal-purple-fallback');
+
+			let activeTrigger = null;
+
+			const openModal = (index, trigger) => {
+				const item = activities[index];
+				if (!item) return;
+
+				activeTrigger = trigger;
+
+				if (badgeEl) badgeEl.textContent = item.dateBadge || item.date || '';
+				if (tagEl) tagEl.textContent = item.tag || 'ACTIVIDAD EN EL SALÓN MULTIUSOS';
+				if (titleEl) titleEl.textContent = item.title || '';
+				if (descEl) descEl.textContent = item.description || '';
+				if (fechaEl) fechaEl.textContent = item.date || '';
+				if (horarioEl) horarioEl.textContent = item.time || '';
+				if (lugarEl) lugarEl.textContent = item.location || '';
+				if (modalidadEl) modalidadEl.textContent = item.modality || '';
+				if (actionEl) actionEl.href = item.whatsappUrl || 'https://wa.me/5493510000000';
+
+				// Handle image / purple column
+				if (imgEl && fallbackEl) {
+					if (item.image && typeof item.image === 'string' && item.image.trim() !== '') {
+						imgEl.src = item.image;
+						imgEl.alt = item.title || 'Actividad';
+						imgEl.classList.remove('hidden');
+						fallbackEl.classList.add('hidden');
+					} else {
+						imgEl.src = '';
+						imgEl.classList.add('hidden');
+						fallbackEl.classList.remove('hidden');
+					}
+				}
+
+				// Animate in
+				modal.classList.remove('pointer-events-none', 'opacity-0');
+				modal.classList.add('pointer-events-auto', 'opacity-100');
+				if (card) {
+					card.classList.remove('scale-95');
+					card.classList.add('scale-100');
+				}
+				document.documentElement.style.overflow = 'hidden';
+			};
+
+			const closeModal = () => {
+				modal.classList.remove('pointer-events-auto', 'opacity-100');
+				modal.classList.add('pointer-events-none', 'opacity-0');
+				if (card) {
+					card.classList.remove('scale-100');
+					card.classList.add('scale-95');
+				}
+				document.documentElement.style.overflow = '';
+				if (activeTrigger) {
+					activeTrigger.focus();
+					activeTrigger = null;
+				}
+			};
+
+			// Attach triggers
+			document.querySelectorAll('.activity-item-trigger').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const idx = parseInt(btn.getAttribute('data-activity-index') || '0', 10);
+					openModal(idx, btn);
+				});
+			});
+
+			if (closeBtn) closeBtn.addEventListener('click', closeModal);
+			if (backdrop) backdrop.addEventListener('click', closeModal);
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !modal.classList.contains('pointer-events-none')) {
+					closeModal();
+				}
+			});
+		};
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initActivityModal);
+		} else {
+			initActivityModal();
+		}
+	})();
+</script>

@@ -243,16 +243,70 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 		let activeTag = 'all';
 		let searchQuery = '';
 
-		function applyFilters() {
+		function normalize(str) {
+			return (str || '')
+				.toLowerCase()
+				.normalize('NFD')
+				.replace(/[\u0300-\u036f]/g, '');
+		}
+
+		function updateMetadata(tag, query) {
+			const baseTitle = "Blog | Marzi Dall'Occhio Consultorio";
+			let dynamicTitle = baseTitle;
+			let dynamicDesc = "Artículos, consejos y novedades sobre osteopatía, kinesiología y salud integral.";
+
+			const cleanQuery = query.trim();
+			if (tag && tag !== 'all') {
+				const capitalized = tag.charAt(0).toUpperCase() + tag.slice(1);
+				dynamicTitle = `Notas sobre ${capitalized} | Blog | Marzi Dall'Occhio`;
+				dynamicDesc = `Explorá los artículos sobre ${capitalized} en el consultorio Marzi Dall'Occhio.`;
+			} else if (cleanQuery) {
+				dynamicTitle = `Búsqueda: "${cleanQuery}" | Blog | Marzi Dall'Occhio`;
+				dynamicDesc = `Resultados de búsqueda para "${cleanQuery}" en el blog de Consultorios Marzi.`;
+			}
+
+			document.title = dynamicTitle;
+
+			const metaDesc = document.querySelector('meta[name="description"]');
+			if (metaDesc) metaDesc.setAttribute('content', dynamicDesc);
+
+			const ogTitle = document.querySelector('meta[property="og:title"]');
+			if (ogTitle) ogTitle.setAttribute('content', dynamicTitle);
+
+			const ogDesc = document.querySelector('meta[property="og:description"]');
+			if (ogDesc) ogDesc.setAttribute('content', dynamicDesc);
+		}
+
+		function syncUrl() {
+			const url = new URL(window.location.href);
+			if (activeTag && activeTag !== 'all') {
+				url.searchParams.set('tag', activeTag);
+			} else {
+				url.searchParams.delete('tag');
+			}
+
+			const trimmedQuery = searchQuery.trim();
+			if (trimmedQuery) {
+				url.searchParams.set('q', trimmedQuery);
+			} else {
+				url.searchParams.delete('q');
+			}
+
+			window.history.replaceState({ tag: activeTag, q: trimmedQuery }, '', url.toString());
+			updateMetadata(activeTag, trimmedQuery);
+		}
+
+		function applyFilters(shouldSync = true) {
 			let visibleCount = 0;
-			const query = searchQuery.trim().toLowerCase();
+			const queryNorm = normalize(searchQuery.trim());
+			const activeTagNorm = normalize(activeTag);
 
 			cards.forEach((card) => {
-				const cardTags = (card.getAttribute('data-tags') || '').split(',');
-				const cardSearchData = (card.getAttribute('data-search') || '').toLowerCase();
+				const cardTags = (card.getAttribute('data-tags') || '').split(',').map(normalize);
+				const cardSearchData = normalize(card.getAttribute('data-search') || '');
 
-				const matchesTag = activeTag === 'all' || cardTags.includes(activeTag);
-				const matchesQuery = !query || cardSearchData.includes(query);
+				const matchesTag = activeTag === 'all' || cardTags.includes(activeTagNorm);
+				const matchesQuery = !queryNorm || cardSearchData.includes(queryNorm);
 
 				if (matchesTag && matchesQuery) {
 					card.classList.remove('hidden');
@@ -286,8 +340,8 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 
 			// Update active states on tag buttons
 			tagButtons.forEach((btn) => {
-				const btnTag = btn.getAttribute('data-tag');
-				if (btnTag === activeTag) {
+				const btnTag = btn.getAttribute('data-tag') || '';
+				if (normalize(btnTag) === activeTagNorm) {
 					btn.className = 'tag-filter-btn active rounded-full px-4 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer shadow-2xs bg-[#824f91] text-white';
 				} else {
 					btn.className = 'tag-filter-btn rounded-full px-3.5 py-1.5 text-xs font-semibold transition-all duration-200 cursor-pointer bg-white border border-neutral-200 text-neutral-600 hover:border-[#824f91] hover:text-[#824f91]';
@@ -298,13 +352,17 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 			if (clearBtn) {
 				clearBtn.style.display = searchQuery ? 'block' : 'none';
 			}
+
+			if (shouldSync) {
+				syncUrl();
+			}
 		}
 
 		// Search input listener
 		if (searchInput) {
 			searchInput.addEventListener('input', (e) => {
 				searchQuery = e.target.value;
-				applyFilters();
+				applyFilters(true);
 			});
 		}
 
@@ -314,7 +372,7 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 				searchInput.value = '';
 				searchQuery = '';
 				searchInput.focus();
-				applyFilters();
+				applyFilters(true);
 			});
 		}
 
@@ -322,7 +380,7 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 		tagButtons.forEach((btn) => {
 			btn.addEventListener('click', () => {
 				activeTag = btn.getAttribute('data-tag') || 'all';
-				applyFilters();
+				applyFilters(true);
 			});
 		});
 
@@ -334,7 +392,7 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 				const selected = badge.getAttribute('data-tag');
 				if (selected) {
 					activeTag = selected;
-					applyFilters();
+					applyFilters(true);
 					window.scrollTo({ top: 300, behavior: 'smooth' });
 				}
 			});
@@ -346,21 +404,31 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 				activeTag = 'all';
 				searchQuery = '';
 				if (searchInput) searchInput.value = '';
-				applyFilters();
+				applyFilters(true);
 			});
 		}
+
+		// Browser history back/forward support
+		window.addEventListener('popstate', () => {
+			const currentParams = new URLSearchParams(window.location.search);
+			activeTag = currentParams.get('tag') || 'all';
+			searchQuery = currentParams.get('q') || '';
+			if (searchInput) searchInput.value = searchQuery;
+			applyFilters(false);
+		});
 
 		// Initial check from URL parameters (e.g. ?tag=osteopatía)
 		const params = new URLSearchParams(window.location.search);
 		const tagParam = params.get('tag');
 		const queryParam = params.get('q');
 		if (tagParam) activeTag = tagParam.toLowerCase();
-		if (queryParam && searchInput) {
+		if (queryParam) {
 			searchQuery = queryParam;
-			searchInput.value = queryParam;
+			if (searchInput) searchInput.value = queryParam;
 		}
 
-		applyFilters();
+		applyFilters(false);
+		updateMetadata(activeTag, searchQuery);
 	}
 
 	if (document.readyState === 'loading') {

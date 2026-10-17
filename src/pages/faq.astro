@@ -7,28 +7,37 @@ import { getConfig } from '../lib/data';
 const config = (await getConfig()).data?.config ?? null;
 const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
 
-const services = [
+const defaultServices = [
 	{
 		title: 'Kinesiología',
 		image: '/assets/enfoque-kinesiologia.jpg',
 		description: 'Rehabilitación y recuperación de la movilidad en cada etapa.',
+		link: 'https://www.instagram.com/consultoriosmarzi',
 	},
 	{
 		title: 'Osteopatía',
 		image: '/assets/enfoque-osteopatia.jpg',
 		description: 'Abordaje integral del cuerpo para restaurar el equilibrio funcional.',
+		link: 'https://www.instagram.com/consultoriosmarzi',
 	},
 	{
 		title: 'Fisioterapia',
 		image: '/assets/enfoque-fisioterapia.jpg',
 		description: 'Tratamientos físicos enfocados en aliviar el dolor y recuperar función.',
+		link: 'https://www.instagram.com/consultoriosmarzi',
 	},
 	{
 		title: 'Drenaje Linfático',
 		image: '/assets/enfoque-drenaje-linfatico.jpg',
 		description: 'Técnicas manuales para mejorar la circulación y reducir la inflamación.',
+		link: 'https://www.instagram.com/consultoriosmarzi',
 	},
 ];
+
+const rawServices = (config as any)?.services;
+const services = (rawServices && rawServices.length > 0)
+	? rawServices.filter(Boolean)
+	: defaultServices;
 
 const rawFaqs = config?.faqs;
 const faqs = (rawFaqs && rawFaqs.length > 0)
@@ -101,16 +110,57 @@ const faqs = (rawFaqs && rawFaqs.length > 0)
 							<div class="w-full sm:w-1/2 lg:w-1/3 shrink-0 px-3 flex flex-col">
 								<div class="group bg-white rounded-2xl p-5 flex flex-col h-full shadow-xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 border border-neutral-100/80">
 									<div class="aspect-4/3 w-full overflow-hidden rounded-xl bg-neutral-100 mb-4">
-										<img
-											src={service.image}
-											alt={service.title}
-											class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-											loading="lazy"
-										/>
+										{service.link ? (
+											<a
+												href={service.link}
+												target="_blank"
+												rel="noopener noreferrer"
+												class="block h-full w-full"
+												tabindex="-1"
+												aria-hidden="true"
+											>
+												<img
+													src={service.image}
+													alt={service.title}
+													class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+													loading="lazy"
+												/>
+											</a>
+										) : (
+											<img
+												src={service.image}
+												alt={service.title}
+												class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+												loading="lazy"
+											/>
+										)}
 									</div>
-									<h3 class="text-lg font-bold text-[#1c1c1c] mb-2 group-hover:text-[#824f91] transition-colors">
-										{service.title}
-									</h3>
+									
+									{service.link ? (
+										<a
+											href={service.link}
+											target="_blank"
+											rel="noopener noreferrer"
+											class="group/link inline-flex items-center gap-1.5 text-lg font-bold text-[#1c1c1c] hover:text-[#824f91] transition-colors mb-2"
+											aria-label={`Abrir ${service.title} en otra pestaña`}
+										>
+											<span>{service.title}</span>
+											<svg
+												class="size-4 shrink-0 text-neutral-400 group-hover/link:text-[#824f91] transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+												fill="none"
+												stroke="currentColor"
+												stroke-width="2"
+												viewBox="0 0 24 24"
+												aria-hidden="true"
+											>
+												<path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+											</svg>
+										</a>
+									) : (
+										<h3 class="text-lg font-bold text-[#1c1c1c] mb-2 group-hover:text-[#824f91] transition-colors">
+											{service.title}
+										</h3>
+									)}
 									<p class="text-xs sm:text-sm text-neutral-500 leading-relaxed line-clamp-2 min-h-[2.5rem] mt-auto">
 										{service.description}
 									</p>
