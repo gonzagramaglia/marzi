@@ -51,7 +51,7 @@ const action = data?.action;
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
 			{cards.map((card) => (
 				<a
-					href={card.link || '#'}
+					href={card.link || '/nosotros#servicios'}
 					class="group bg-white rounded-2xl p-3 flex flex-col transition-all duration-300 hover:shadow-xl hover:-translate-y-1 text-[#222222]"
 					data-tina-field={tinaField(card)}
 				>
@@ -82,7 +82,7 @@ const action = data?.action;
 		{action?.label && (
 			<div class="flex justify-center">
 				<a
-					href={action.link || '/faq'}
+					href={action.link || '/nosotros#servicios'}
 					class="inline-flex items-center justify-center rounded-md border border-white/80 bg-transparent px-6 py-2.5 text-xs sm:text-sm font-medium text-white transition-all duration-200 hover:bg-white hover:text-[#824f91]"
 					data-tina-field={data?.action ? tinaField(data.action, 'label') : undefined}
 				>

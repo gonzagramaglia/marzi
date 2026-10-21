@@ -167,7 +167,7 @@ export const GlobalConfigCollection: Collection = {
     },
     {
       name: "services",
-      label: "Servicios (Carrusel en /faq)",
+      label: "Servicios (/nosotros)",
       type: "object",
       list: true,
       ui: {
@@ -194,7 +194,7 @@ export const GlobalConfigCollection: Collection = {
         },
         {
           name: "link",
-          label: "Enlace externo (se abre en nueva pestaña)",
+          label: "Enlace al hacer clic (ej. /faq)",
           type: "string",
         },
       ],

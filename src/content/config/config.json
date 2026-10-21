@@ -95,26 +95,26 @@
     {
       "title": "Kinesiología",
       "image": "/assets/enfoque-kinesiologia.jpg",
-      "description": "Rehabilitación y recuperación de la movilidad en cada etapa.",
-      "link": "https://www.instagram.com/consultoriosmarzi"
+      "description": "Rehabilitación y recuperación de la movilidad para cada etapa de la vida.",
+      "link": "/faq"
     },
     {
       "title": "Osteopatía",
       "image": "/assets/enfoque-osteopatia.jpg",
       "description": "Abordaje integral del cuerpo para restaurar el equilibrio funcional.",
-      "link": "https://www.instagram.com/consultoriosmarzi"
+      "link": "/faq"
     },
     {
       "title": "Fisioterapia",
       "image": "/assets/enfoque-fisioterapia.jpg",
-      "description": "Tratamientos físicos enfocados en aliviar el dolor y recuperar función.",
-      "link": "https://www.instagram.com/consultoriosmarzi"
+      "description": "Tratamientos físicos especializados para aliviar el dolor y recuperar función.",
+      "link": "/faq"
     },
     {
       "title": "Drenaje Linfático",
       "image": "/assets/enfoque-drenaje-linfatico.jpg",
       "description": "Técnicas manuales para mejorar la circulación y reducir la inflamación.",
-      "link": "https://www.instagram.com/consultoriosmarzi"
+      "link": "/faq"
     }
   ]
 }

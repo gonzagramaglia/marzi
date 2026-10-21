@@ -48,27 +48,27 @@ export const enfoquesBlockSchema: Template = {
 				{
 					image: { src: '/assets/service-card-one.jpg', alt: 'Kinesiología' },
 					title: 'Kinesiología',
-					link: '/#kinesiologia',
+					link: '/nosotros#servicios',
 				},
 				{
 					image: { src: '/assets/service-card-two.jpg', alt: 'Osteopatía' },
 					title: 'Osteopatía',
-					link: '/#osteopatia',
+					link: '/nosotros#servicios',
 				},
 				{
 					image: { src: '/assets/service-card-three.jpg', alt: 'Fisioterapia' },
 					title: 'Fisioterapia',
-					link: '/#fisioterapia',
+					link: '/nosotros#servicios',
 				},
 				{
 					image: { src: '/assets/service-card-four.jpg', alt: 'Drenaje Linfático' },
 					title: 'Drenaje Linfático',
-					link: '/#drenaje-linfatico',
+					link: '/nosotros#servicios',
 				},
 			],
 			action: {
 				label: 'Conocé Todos',
-				link: '/servicios',
+				link: '/nosotros#servicios',
 			},
 		},
 	},

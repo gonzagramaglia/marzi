@@ -167,7 +167,8 @@ const allTags = Array.from(tagCounts.keys()).sort((a, b) => a.localeCompare(b));
 									<img
 										src={post.heroImage}
 										alt={post.title ?? ''}
-										class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+										class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+										style={`object-position: ${((post as any)?.heroImageCustomPosition || '').trim() || (post as any)?.heroImagePosition || 'center'};`}
 										loading="lazy"
 									/>
 								) : (

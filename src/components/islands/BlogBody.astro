@@ -66,7 +66,8 @@ const categoryText = (data as any)?.category || 'OSTEOPATÍA';
 					<img
 						src={data.heroImage}
 						alt={data.title ?? ''}
-						class="h-full w-full object-cover object-center"
+						class="h-full w-full object-cover"
+						style={`object-position: ${((data as any)?.heroImageCustomPosition || '').trim() || (data as any)?.heroImagePosition || 'center'};`}
 						loading="eager"
 					/>
 				</div>
