@@ -5,8 +5,14 @@ export const heroBlockSchema: Template = {
 	label: 'Banner Principal (Hero)',
 	fields: [
 		{
+			type: 'image',
+			label: 'Video de Fondo (Opcional - MP4 / WebM)',
+			name: 'videoSrc',
+			description: 'Opcional: Si seleccionás un video, se reproducirá automáticamente en bucle silenciado. La imagen de abajo actuará como poster mientras carga.',
+		},
+		{
 			type: 'object',
-			label: 'Imagen Principal',
+			label: 'Imagen Principal (o Portada del Video)',
 			name: 'image',
 			fields: [
 				{ name: 'src', label: 'Archivo de Imagen', type: 'image' },

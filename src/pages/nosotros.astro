@@ -157,23 +157,25 @@ const careers = (config as any)?.careers ?? {
 								)}
 
 								<!-- Title -->
-								<h3
-									class="text-lg sm:text-xl font-bold text-[#161616] mb-3 group-hover:text-[#824f91] transition-colors"
-									data-tina-field={tinaField(service, 'title')}
-								>
-									{service.title}
-								</h3>
+								<div class="min-h-[3rem] sm:min-h-[3.5rem] mb-3 flex items-start">
+									<h3
+										class="text-lg sm:text-xl font-bold text-[#161616] group-hover:text-[#824f91] transition-colors leading-snug"
+										data-tina-field={tinaField(service, 'title')}
+									>
+										{service.title}
+									</h3>
+								</div>
 
 								<!-- Description with multi-paragraph support -->
 								<div
-									class="text-xs sm:text-[13px] text-neutral-600 leading-relaxed space-y-2.5 mt-auto"
+									class="text-sm sm:text-base text-neutral-600 leading-relaxed space-y-3 flex-1"
 									data-tina-field={tinaField(service, 'description')}
 								>
 									{typeof service.description === 'string'
 										? service.description.split('\n\n').filter(Boolean).map((para: string) => (
-											<p>{para.trim()}</p>
+											<p class="text-sm sm:text-base text-neutral-600 leading-relaxed">{para.trim()}</p>
 										  ))
-										: <p>{service.description}</p>
+										: <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">{service.description}</p>
 									}
 								</div>
 							</CardTag>
@@ -389,9 +391,8 @@ const careers = (config as any)?.careers ?? {
 							<button
 								type="submit"
 								id="career-submit-btn"
-								class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#824f91] px-7 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-[#693977] hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+								class="w-full inline-flex items-center justify-center rounded-xl bg-[#824f91] px-7 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-[#693977] hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
 							>
-								<Icon name="tabler:send" class="size-4.5" />
 								<span>Enviar postulación</span>
 							</button>
 						</div>

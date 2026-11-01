@@ -56,7 +56,7 @@ En el menú lateral izquierdo encontrarás tres secciones principales:
 Al ingresar a **Pages → home.mdx**, verás el sitio web en tiempo real. Podés hacer clic en cualquier sección o utilizar la lista de bloques en la barra lateral para editar:
 
 ### Bloques disponibles:
-- **Hero**: Título principal del consultorio e imagen de bienvenida.
+- **Hero**: Imagen o video de fondo de portada (admite video MP4/WebM en reproducción continua y silenciada, usando la imagen como portada mientras carga).
 - **Enfoques**: Título, texto descriptivo y tarjetas de Kinesiología, Osteopatía, Fisioterapia y Drenaje Linfático.
 - **Nuestros Espacios / Salón Multiusos**: Descripción del espacio y listado de próximas actividades/talleres (con fecha, título y detalles).
 - **Quiénes Somos**: Reseña del equipo y trayectoria.
