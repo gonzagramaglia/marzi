@@ -61,6 +61,13 @@ export const GlobalConfigCollection: Collection = {
           name: "email",
           label: "Correo Electrónico de Contacto / Postulaciones",
           type: "string",
+          ui: {
+            validate: (value) => {
+              if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                return "Por favor ingresá un correo electrónico válido.";
+              }
+            },
+          },
         },
       ],
     },

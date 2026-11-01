@@ -4,9 +4,13 @@ import { Icon } from 'astro-icon/components';
 import { tinaField } from '@tinacms/astro/tina-field';
 import { getConfig } from '../lib/data';
 
+const DEFAULT_EMAIL = 'consultorio@juanmarzi.com.ar';
+const isValidEmail = (val?: string | null): boolean =>
+	Boolean(val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
+
 const config = (await getConfig()).data?.config ?? null;
 const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
-const contactEmail = config?.seo?.email || 'consultorio@juanmarzi.com.ar';
+const contactEmail = isValidEmail(config?.seo?.email) ? config!.seo!.email! : DEFAULT_EMAIL;
 
 const defaultServices = [
 	{
@@ -172,8 +176,8 @@ const careers = (config as any)?.careers ?? {
 									data-tina-field={tinaField(service, 'description')}
 								>
 									{typeof service.description === 'string'
-										? service.description.split('\n\n').filter(Boolean).map((para: string) => (
-											<p class="text-sm sm:text-base text-neutral-600 leading-relaxed">{para.trim()}</p>
+										? service.description.split(/\n\s*\n/).map((para: string) => para.trim()).filter(Boolean).map((para: string) => (
+											<p class="text-sm sm:text-base text-neutral-600 leading-relaxed">{para}</p>
 										  ))
 										: <p class="text-sm sm:text-base text-neutral-600 leading-relaxed">{service.description}</p>
 									}
@@ -360,7 +364,7 @@ const careers = (config as any)?.careers ?? {
 
 						<!-- Adjuntar CV -->
 						<div>
-							<label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+							<label for="career-cv" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
 								Curriculum Vitae (PDF, DOC o DOCX) *
 							</label>
 							<div class="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-neutral-300 bg-white p-6 transition-all hover:border-[#824f91] hover:bg-neutral-50/50 group cursor-pointer text-center">
@@ -473,8 +477,21 @@ const careers = (config as any)?.careers ?? {
 				return;
 			}
 
+			// Validate file extension (.pdf, .doc, .docx)
+			const file = fileInput.files[0];
+			const allowedExtensions = ['.pdf', '.doc', '.docx'];
+			const fileName = file.name.toLowerCase();
+			const hasValidExtension = allowedExtensions.some(ext => fileName.endsWith(ext));
+
+			if (!hasValidExtension) {
+				statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-red-50 text-red-700 border border-red-200';
+				statusDiv.textContent = 'Formato de archivo no válido. Solo se permiten archivos en formato PDF, DOC o DOCX.';
+				statusDiv.classList.remove('hidden');
+				return;
+			}
+
 			// Validate file size (< 10MB)
-			if (fileInput.files[0].size > 10 * 1024 * 1024) {
+			if (file.size > 10 * 1024 * 1024) {
 				statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-red-50 text-red-700 border border-red-200';
 				statusDiv.textContent = 'El archivo supera el tamaño máximo permitido de 10 MB.';
 				statusDiv.classList.remove('hidden');
@@ -492,6 +509,9 @@ const careers = (config as any)?.careers ?? {
 			`;
 			statusDiv.classList.add('hidden');
 
+			const controller = new AbortController();
+			const timeoutId = setTimeout(() => controller.abort(), 25000);
+
 			try {
 				const formData = new FormData(form);
 				const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
@@ -499,7 +519,8 @@ const careers = (config as any)?.careers ?? {
 					body: formData,
 					headers: {
 						'Accept': 'application/json'
-					}
+					},
+					signal: controller.signal
 				});
 
 				const result = await response.json();
@@ -525,9 +546,11 @@ const careers = (config as any)?.careers ?? {
 					throw new Error(result.message || 'Error al procesar el envío');
 				}
 			} catch (err) {
-				// Fallback to standard form submission if AJAX fails
-				form.submit();
+				statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-red-50 text-red-700 border border-red-200';
+				statusDiv.textContent = 'No se pudo confirmar el envío de tu postulación. Por favor verificá tu conexión e intentalo nuevamente.';
+				statusDiv.classList.remove('hidden');
 			} finally {
+				clearTimeout(timeoutId);
 				submitBtn.disabled = false;
 				submitBtn.innerHTML = originalHtml;
 			}

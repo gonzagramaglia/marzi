@@ -133,8 +133,8 @@ La sección laboral se encuentra al pie de `/nosotros` (debajo de *Nuestro Equip
 2. El sistema envía la postulación y el archivo adjunto directamente al correo configurado en **Global Config → Correo Electrónico** (`consultorio@juanmarzi.com.ar`).
 3. El postulante recibe confirmación inmediata en pantalla sin salir de la página.
 
-> 📧 **Activación inicial de recepción (FormSubmit):**
-> La primera vez que el formulario envía una postulación al correo electrónico de destino, el servicio enviará un email con el asunto *"Activate your form"*. Solo es necesario abrir ese correo una única vez y hacer clic en el botón de confirmación para que todas las futuras postulaciones lleguen directamente a la bandeja de entrada.
+> 📧 **Activación inicial y cambio de dirección de correo (FormSubmit):**
+> La primera vez que el formulario envía una postulación al correo electrónico de destino —o cada vez que se modifique la dirección de correo en la configuración—, el servicio FormSubmit enviará un email con el asunto *"Activate your form"*. Es indispensable abrir ese correo y hacer clic en el botón de confirmación; las postulaciones dirigidas a la nueva dirección pueden permanecer sin confirmarse hasta que dicho correo sea validado. Una vez confirmado, todas las futuras postulaciones llegarán directamente a la bandeja de entrada.
 
 ---
 
