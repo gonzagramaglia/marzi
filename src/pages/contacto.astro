@@ -1,10 +1,19 @@
 ---
 import Base from '../layouts/Base.astro';
 import { Icon } from 'astro-icon/components';
+import { tinaField } from '@tinacms/astro/tina-field';
 import { getConfig } from '../lib/data';
+
+const DEFAULT_EMAIL = 'consultorio@juanmarzi.com.ar';
+const isValidEmail = (val?: string | null): boolean =>
+	Boolean(val && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val));
 
 const config = (await getConfig()).data?.config ?? null;
 const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
+const email = isValidEmail(config?.seo?.email) ? config!.seo!.email! : DEFAULT_EMAIL;
+const address = config?.seo?.address || 'Virgen de la Merced 3019, Bº Alto Verde, Córdoba Capital';
+const encodedAddress = encodeURIComponent(address);
+const contactLinks = (config?.contactLinks ?? []).filter(item => item !== null);
 ---
 
 <Base
@@ -47,7 +56,7 @@ const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
 						<iframe
 							id="google-map-iframe"
 							title="Ubicación Consultorios Marzi Dall'Occhio"
-							src="https://maps.google.com/maps?q=Virgen+de+la+Merced+3019,+B%C2%BA+Alto+Verde,+C%C3%B3rdoba,+Argentina&t=&z=16&ie=UTF8&iwloc=&output=embed"
+							src={`https://maps.google.com/maps?q=${encodedAddress}&t=&z=16&ie=UTF8&iwloc=&output=embed`}
 							class="w-full h-full border-0 opacity-0 transition-opacity duration-700 ease-out"
 							loading="lazy"
 							allowfullscreen
@@ -88,9 +97,11 @@ const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
 							<span class="text-[11px] font-bold tracking-wider text-neutral-400 uppercase block mb-1">
 								Dirección
 							</span>
-							<p class="text-sm sm:text-base font-medium leading-relaxed">
-								Virgen de la Merced 3019<br />
-								Bº Alto Verde, Córdoba Capital
+							<p
+								class="text-sm sm:text-base font-medium leading-relaxed"
+								data-tina-field={config?.seo ? tinaField(config.seo, 'address') : undefined}
+							>
+								{address}
 							</p>
 						</div>
 
@@ -127,9 +138,13 @@ const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
 								Email
 							</span>
 							<p class="text-sm sm:text-base font-medium leading-relaxed">
-								<a href="mailto:consultorio@juanmarzi.com.ar" class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5">
+								<a
+									href={`mailto:${email}`}
+									class="hover:text-[#824f91] transition-colors inline-flex items-center gap-1.5"
+									data-tina-field={config?.seo ? tinaField(config.seo, 'email') : undefined}
+								>
 									<Icon name="tabler:mail" class="size-4 text-[#824f91]" />
-									<span>consultorio@juanmarzi.com.ar</span>
+									<span>{email}</span>
 								</a>
 							</p>
 						</div>

@@ -7,7 +7,8 @@
     "footerLogo": "/assets/logo-footer.png",
     "address": "Consultorios Marzi Virgen de la Merced 3019, Bº Alto Verde, Córdoba",
     "whatsappLink": "https://wa.me/5493510000000",
-    "whatsappLabel": "Contactanos"
+    "whatsappLabel": "Contactanos",
+    "email": "consultorio@juanmarzi.com.ar"
   },
   "nav": [
     {
@@ -49,8 +50,8 @@
       "link": "/faq"
     },
     {
-      "title": "Nosotros",
-      "link": "/nosotros"
+      "title": "Trabajá con Nosotros",
+      "link": "/nosotros#trabaja-con-nosotros"
     }
   ],
   "contactLinks": [
@@ -93,28 +94,65 @@
   ],
   "services": [
     {
-      "title": "Kinesiología",
-      "image": "/assets/enfoque-kinesiologia.jpg",
-      "description": "Rehabilitación y recuperación de la movilidad para cada etapa de la vida.",
-      "link": "/faq"
-    },
-    {
       "title": "Osteopatía",
       "image": "/assets/enfoque-osteopatia.jpg",
-      "description": "Abordaje integral del cuerpo para restaurar el equilibrio funcional.",
+      "description": "El tratamiento osteopático busca mejorar la movilidad y el funcionamiento del cuerpo, abordando posibles restricciones o alteraciones en las articulaciones, los músculos, la columna vertebral y otros sistemas corporales.\n\nPara ello, utiliza diferentes técnicas manuales, como movilizaciones, estiramientos y manipulaciones, adaptadas a las necesidades de cada persona.\n\nCada tratamiento comienza con una evaluación integral y se diseña de manera personalizada, teniendo en cuenta las características, los síntomas y las necesidades de cada paciente.",
       "link": "/faq"
     },
     {
-      "title": "Fisioterapia",
+      "title": "Fisioterapia / Kinesiología",
       "image": "/assets/enfoque-fisioterapia.jpg",
-      "description": "Tratamientos físicos especializados para aliviar el dolor y recuperar función.",
+      "description": "La kinesiología y la fisioterapia son disciplinas de la salud enfocadas en el estudio, la prevención y el tratamiento de alteraciones del movimiento y la función corporal. A través del ejercicio terapéutico, las técnicas manuales y el uso de agentes físicos, como el calor, el frío y la electroterapia, buscan aliviar el dolor, recuperar la movilidad y mejorar la fuerza y la funcionalidad.\n\nCada tratamiento se adapta a las necesidades y los objetivos de cada persona, favoreciendo su recuperación y calidad de vida. Suele recomendarse ante golpes, dolores musculares, desgarros, necesidad de fortalecimiento muscular, entre otros.",
+      "link": "/faq"
+    },
+    {
+      "title": "Osteopatía y Fisioterapia Pediátrica",
+      "image": "/assets/hero.jpg",
+      "description": "La fisioterapia y la osteopatía pediátrica acompañan el desarrollo y el bienestar de bebés y niños mediante técnicas adaptadas a cada etapa de crecimiento. Pueden ayudar a abordar alteraciones de la movilidad, tensiones musculares y molestias asociadas a determinadas disfunciones presentes desde el nacimiento, así como a acompañar la recuperación después de golpes o lesiones.\n\nTambién pueden formar parte de un abordaje interdisciplinario ante situaciones como dificultades de movimiento o ciertas molestias durante los primeros meses de vida. Cada tratamiento se adapta a las necesidades del niño y se realiza respetando su desarrollo, en coordinación con el equipo médico cuando es necesario.",
+      "link": "/faq"
+    },
+    {
+      "title": "Osteopatía y Fisioterapia en el Embarazo",
+      "image": "/assets/enfoque-kinesiologia.jpg",
+      "description": "La osteopatía y la fisioterapia durante el embarazo acompañan los cambios físicos del cuerpo a lo largo de la gestación, ayudando a aliviar molestias musculoesqueléticas y favorecer la movilidad y el bienestar. Mediante técnicas manuales suaves y ejercicios adaptados a cada etapa, pueden abordar molestias frecuentes como el dolor lumbar, las tensiones cervicales y las molestias pélvicas. Cada tratamiento se personaliza según las necesidades de la persona gestante, respetando los cambios propios del embarazo y complementando los controles obstétricos.",
+      "link": "/faq"
+    },
+    {
+      "title": "Pre y Post Quirúrgico",
+      "image": "/assets/consultas-banner.jpg",
+      "description": "El abordaje prequirúrgico suele combinar fisioterapia y osteopatía, permitiendo que el paciente llegue a la operación en mejores condiciones de movilidad, elasticidad y circulación. A nivel neurológico permiten entrenar ejercicios bajo buenos niveles de consciencia corporal y propiocepción, que serán disminuidos tras la operación y por lo tanto harán más difícil el aprendizaje del “movimiento normal”.\n\nLos postoperatorios facilitan la rápida recuperación del paciente tras una intervención quirúrgica. Ayudan a la recomposición de los tejidos, el fortalecimiento muscular, de la piel y los huesos.",
+      "link": "/faq"
+    },
+    {
+      "title": "Suelo Pélvico",
+      "image": "/assets/woman.jpg",
+      "description": "La fisioterapia del suelo pélvico permite abordar y aliviar síntomas como las pérdidas involuntarias de orina, el dolor y otras disfunciones de la zona, contribuyendo a mejorar la calidad de vida. El tratamiento se adapta a las necesidades de cada persona y puede incluir ejercicios específicos y técnicas terapéuticas. En casos de mayor gravedad, como determinados prolapsos o incontinencia severa, puede ser necesaria una evaluación médica para considerar otras alternativas, incluida la cirugía.",
       "link": "/faq"
     },
     {
       "title": "Drenaje Linfático",
       "image": "/assets/enfoque-drenaje-linfatico.jpg",
-      "description": "Técnicas manuales para mejorar la circulación y reducir la inflamación.",
+      "description": "El drenaje linfático manual es una técnica de masoterapia que se engloba en el campo de la fisioterapia y la estética, uno como técnica de masaje terapéutico, y el otro de masaje estético, ambos van orientados a la activación del funcionamiento del sistema linfático superficial para mejorar la eliminación de líquido intersticial y de las moléculas de gran tamaño y facilitar su evacuación.",
       "link": "/faq"
     }
-  ]
+  ],
+  "team": [
+    {
+      "name": "Juan J. Marzi",
+      "role": "Lic. en Kinesiología y Fisioterapia, Diplomado en Osteopatía (M.P. 2403)",
+      "image": "/assets/man.jpg",
+      "bio": "Más de 30 años de trayectoria acompañando a sus pacientes en osteopatía, kinesiología y fisioterapia, con un enfoque personalizado en cada tratamiento."
+    },
+    {
+      "name": "Tiziana Marzi",
+      "role": "Lic. en Kinesiología y Fisioterapia",
+      "image": "/assets/woman.jpg",
+      "bio": "Profesional del equipo que colabora en los tratamientos de kinesiología, fisioterapia y drenaje linfático, con capacitación continua en nuevas técnicas."
+    }
+  ],
+  "careers": {
+    "tag": "SUMATE AL EQUIPO",
+    "title": "Trabajá con Nosotros",
+    "description": "¿Sos kinesiólogo/a, fisioterapeuta o profesional de la salud? En Consultorios Marzi Dall'Occhio estamos en constante crecimiento. Dejanos tus datos y adjuntá tu CV para sumarte a futuras búsquedas."
+  }
 }

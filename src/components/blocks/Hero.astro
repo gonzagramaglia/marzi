@@ -7,6 +7,7 @@ interface Props {
 			src?: string | null;
 			alt?: string | null;
 		} | null;
+		videoSrc?: string | null;
 		headline?: string | null;
 		_template?: string;
 	} | null;
@@ -15,16 +16,31 @@ interface Props {
 const { data } = Astro.props;
 const imageSrc = data?.image?.src || '/assets/hero.jpg';
 const imageAlt = data?.image?.alt || 'Consultorios Marzi Dall’Occhio - Kinesiología, Osteopatía y Fisioterapia';
+const videoSrc = data?.videoSrc;
 ---
 
 <section id="inicio" class="relative w-full overflow-hidden bg-black scroll-mt-24">
 	<div class="relative w-full flex items-center justify-center">
-		<img
-			src={imageSrc}
-			alt={imageAlt}
-			class="w-full h-auto max-h-[85vh] object-cover object-center grayscale contrast-105"
-			loading="eager"
-			data-tina-field={data?.image ? tinaField(data.image, 'src') : undefined}
-		/>
+		{videoSrc ? (
+			<video
+				src={videoSrc}
+				poster={imageSrc}
+				autoplay
+				loop
+				muted
+				playsinline
+				controls
+				class="w-full h-auto max-h-[85vh] object-cover object-center contrast-105"
+				data-tina-field={data ? tinaField(data, 'videoSrc') : undefined}
+			></video>
+		) : (
+			<img
+				src={imageSrc}
+				alt={imageAlt}
+				class="w-full h-auto max-h-[85vh] object-cover object-center grayscale contrast-105"
+				loading="eager"
+				data-tina-field={data?.image ? tinaField(data.image, 'src') : undefined}
+			/>
+		)}
 	</div>
 </section>

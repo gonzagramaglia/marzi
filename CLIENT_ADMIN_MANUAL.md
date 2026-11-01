@@ -11,8 +11,10 @@ Bienvenido a la guía oficial de administración y edición de contenidos de tu 
 3. [Edición en Vivo de la Página de Inicio (Home)](#3-edición-en-vivo-de-la-página-de-inicio-home)
 4. [Gestión de Artículos del Blog](#4-gestión-de-artículos-del-blog)
 5. [Configuración Global y Redes Sociales](#5-configuración-global-y-redes-sociales)
-6. [Gestión de Preguntas Frecuentes (FAQ)](#6-gestión-de-preguntas-frecuentes-faq)
-7. [Guardado Seguro y Buenas Prácticas](#7-guardado-seguro-y-buenas-prácticas)
+6. [Gestión de Servicios (/nosotros)](#6-gestión-de-servicios-nosotros)
+7. [Gestión de Preguntas Frecuentes (FAQ)](#7-gestión-de-preguntas-frecuentes-faq)
+8. [Sección "Trabajá con Nosotros" y Recepción de CVs](#8-sección-trabajá-con-nosotros-y-recepción-de-cvs)
+9. [Guardado Seguro y Buenas Prácticas](#9-guardado-seguro-y-buenas-prácticas)
 
 ---
 
@@ -45,7 +47,7 @@ En el menú lateral izquierdo encontrarás tres secciones principales:
 | :--- | :--- |
 | **Pages (Páginas)** | Permite editar en vivo los bloques de la página de inicio (`home.mdx`) y otras páginas. |
 | **Posts (Blog)** | Creación, redacción, edición y eliminación de artículos médicos y novedades. |
-| **Global Config** | Datos generales del consultorio: WhatsApp de turnos, dirección, redes sociales y FAQs. |
+| **Global Config** | Datos generales del consultorio: WhatsApp de turnos, email de recepción de CVs, dirección, redes sociales, servicios (/nosotros), equipo profesional, sección laboral y FAQs. |
 
 ---
 
@@ -54,7 +56,7 @@ En el menú lateral izquierdo encontrarás tres secciones principales:
 Al ingresar a **Pages → home.mdx**, verás el sitio web en tiempo real. Podés hacer clic en cualquier sección o utilizar la lista de bloques en la barra lateral para editar:
 
 ### Bloques disponibles:
-- **Hero**: Título principal del consultorio e imagen de bienvenida.
+- **Hero**: Imagen o video de fondo de portada (admite video MP4/WebM en reproducción continua y silenciada, usando la imagen como portada mientras carga).
 - **Enfoques**: Título, texto descriptivo y tarjetas de Kinesiología, Osteopatía, Fisioterapia y Drenaje Linfático.
 - **Nuestros Espacios / Salón Multiusos**: Descripción del espacio y listado de próximas actividades/talleres (con fecha, título y detalles).
 - **Quiénes Somos**: Reseña del equipo y trayectoria.
@@ -87,6 +89,7 @@ El blog es ideal para posicionamiento en Google (SEO) y difusión de temas de sa
 Desde la sección **Global Config** se administran los datos que impactan en todo el sitio web:
 
 - **WhatsApp URL (`whatsappLink`)**: Número de WhatsApp al que llegan las consultas de turnos (formato: `https://wa.me/549351XXXXXXX`).
+- **Correo Electrónico (`email`)**: Dirección de email a la que se envían las postulaciones y CVs del formulario *Trabajá con Nosotros* (por defecto: `consultorio@juanmarzi.com.ar`).
 - **Dirección (`address`)**: Ubicación física del consultorio que figura en el footer.
 - **Logos**: Logotipos oficiales de cabecera y pie de página.
 - **Social / Contact Links**: Enlaces a perfiles oficiales:
@@ -95,7 +98,22 @@ Desde la sección **Global Config** se administran los datos que impactan en tod
 
 ---
 
-## 6. Gestión de Preguntas Frecuentes (FAQ)
+## 6. Gestión de Servicios (/nosotros)
+
+El catálogo de servicios visibles en la sección `/nosotros#servicios` se administra de manera 100% dinámica desde **Global Config → Servicios (/nosotros)**:
+
+- **Agregar nuevo servicio**: Hacé clic en **Add Item**.
+- **Título**: Nombre de la especialidad o disciplina (ej. *Osteopatía*, *Suelo Pélvico*, etc.).
+- **Imagen**: Fotografía ilustrativa del tratamiento.
+- **Descripción**: Texto explicativo detallado del tratamiento. Admite saltos de línea y múltiples párrafos para una lectura cómoda.
+- **Enlace al hacer clic**: Podés dirigir al paciente a `/faq` o a WhatsApp.
+- **Reordenar o eliminar**: Podés arrastrar los servicios para priorizar el orden en la grilla o eliminarlos con el ícono de papelera.
+
+*(También podés actualizarlos directamente desde el archivo `src/content/config/config.json`).*
+
+---
+
+## 7. Gestión de Preguntas Frecuentes (FAQ)
 
 El acordeón interactivo de la página `/faq` es completamente administrable desde **Global Config → Preguntas Frecuentes (FAQ)**:
 
@@ -106,7 +124,21 @@ El acordeón interactivo de la página `/faq` es completamente administrable des
 
 ---
 
-## 7. Guardado Seguro y Buenas Prácticas
+## 8. Sección "Trabajá con Nosotros" y Recepción de CVs
+
+La sección laboral se encuentra al pie de `/nosotros` (debajo de *Nuestro Equipo*) y cuenta con un enlace directo en el menú inferior del footer (*Trabajá con Nosotros*).
+
+### ¿Cómo funciona la recepción de postulaciones?
+1. El postulante completa sus datos (Nombre, Email, Teléfono, Especialidad, Mensaje) y adjunta su CV (en formato `.pdf`, `.doc` o `.docx`, hasta 10 MB).
+2. El sistema envía la postulación y el archivo adjunto directamente al correo configurado en **Global Config → Correo Electrónico** (`consultorio@juanmarzi.com.ar`).
+3. El postulante recibe confirmación inmediata en pantalla sin salir de la página.
+
+> 📧 **Activación inicial y cambio de dirección de correo (FormSubmit):**
+> La primera vez que el formulario envía una postulación al correo electrónico de destino —o cada vez que se modifique la dirección de correo en la configuración—, el servicio FormSubmit enviará un email con el asunto *"Activate your form"*. Es indispensable abrir ese correo y hacer clic en el botón de confirmación; las postulaciones dirigidas a la nueva dirección pueden permanecer sin confirmarse hasta que dicho correo sea validado. Una vez confirmado, todas las futuras postulaciones llegarán directamente a la bandeja de entrada.
+
+---
+
+## 9. Guardado Seguro y Buenas Prácticas
 
 ### ¿Cómo se guardan los cambios?
 1. Cada vez que realices una modificación, se activará el botón **Save** en la esquina superior derecha.

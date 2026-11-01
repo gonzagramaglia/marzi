@@ -14,7 +14,7 @@ const footerNav = (config?.footerNav ?? [
 	{ title: 'Blog', link: '/blog' },
 	{ title: 'Contacto', link: '/contacto' },
 	{ title: 'Preguntas Frecuentes', link: '/faq' },
-	{ title: 'Nosotros', link: '/nosotros' },
+	{ title: 'TrabajÃ¡ con Nosotros', link: '/nosotros#trabaja-con-nosotros' },
 ]).filter(item => item !== null);
 
 const contactLinks = (config?.contactLinks ?? []).filter(item => item !== null);
@@ -39,35 +39,35 @@ const address = seo?.address || 'Consultorios Marzi Virgen de la Merced 3019, BÂ
 			</div>
 		)}
 
-		<!-- Center Logo -->
-		<div class="py-2">
+		<!-- Center Logo & Social Links Group -->
+		<div class="flex flex-col items-center gap-5 sm:gap-6">
 			<a href="/" class="inline-block" aria-label={seo?.title || "Marzi Dall'Occhio Consultorio"}>
 				<img
 					src={footerLogoSrc}
 					alt={seo?.title || "Marzi Dall'Occhio Consultorio"}
-					class="h-14 sm:h-16 md:h-18 w-auto object-contain"
+					class="h-12 sm:h-14 md:h-15 w-auto object-contain"
 					data-tina-field={seo ? tinaField(seo, "footerLogo") : undefined}
 				/>
 			</a>
-		</div>
 
-		<!-- Social Icons -->
-		{contactLinks.length > 0 && (
-			<div class="flex justify-center items-center gap-4 text-neutral-400">
-				{contactLinks.map((link) => (
-					<a
-						href={link.link}
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label={link.title || 'Red social'}
-						class="flex size-9 items-center justify-center rounded-full text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
-						data-tina-field={tinaField(link, "title")}
-					>
-						{link.icon ? <Icon name={link.icon} class="size-5" /> : <span>{link.title}</span>}
-					</a>
-				))}
-			</div>
-		)}
+			<!-- Social Icons -->
+			{contactLinks.length > 0 && (
+				<div class="flex justify-center items-center gap-4 text-neutral-400">
+					{contactLinks.map((link) => (
+						<a
+							href={link.link}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={link.title || 'Red social'}
+							class="flex size-9 items-center justify-center rounded-full text-neutral-300 hover:text-white hover:bg-neutral-800 transition-colors"
+							data-tina-field={tinaField(link, "title")}
+						>
+							{link.icon ? <Icon name={link.icon} class="size-5" /> : <span>{link.title}</span>}
+						</a>
+					))}
+				</div>
+			)}
+		</div>
 
 		<!-- Address / Location Note -->
 		{address && (
