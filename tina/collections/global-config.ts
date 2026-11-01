@@ -57,6 +57,11 @@ export const GlobalConfigCollection: Collection = {
           label: "Texto del Botón de WhatsApp",
           type: "string",
         },
+        {
+          name: "email",
+          label: "Correo Electrónico de Contacto / Postulaciones",
+          type: "string",
+        },
       ],
     },
     {
@@ -191,11 +196,77 @@ export const GlobalConfigCollection: Collection = {
           name: "description",
           label: "Descripción",
           type: "string",
+          ui: {
+            component: "textarea",
+          },
         },
         {
           name: "link",
           label: "Enlace al hacer clic (ej. /faq)",
           type: "string",
+        },
+      ],
+    },
+    {
+      name: "team",
+      label: "Nuestro Equipo (/nosotros)",
+      type: "object",
+      list: true,
+      ui: {
+        itemProps: (item) => ({
+          label: item?.name ? `${item.name} (${item.role || ''})` : "Profesional",
+        }),
+      },
+      fields: [
+        {
+          name: "name",
+          label: "Nombre y Apellido",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "role",
+          label: "Título / Matrícula / Rol",
+          type: "string",
+          required: true,
+        },
+        {
+          name: "image",
+          label: "Foto del Profesional",
+          type: "image",
+        },
+        {
+          name: "bio",
+          label: "Biografía / Trayectoria",
+          type: "string",
+          ui: {
+            component: "textarea",
+          },
+        },
+      ],
+    },
+    {
+      name: "careers",
+      label: "Sección Trabajá con Nosotros (/nosotros)",
+      type: "object",
+      fields: [
+        {
+          name: "tag",
+          label: "Etiqueta superior (ej. SUMATE AL EQUIPO)",
+          type: "string",
+        },
+        {
+          name: "title",
+          label: "Título Principal",
+          type: "string",
+        },
+        {
+          name: "description",
+          label: "Texto Descriptivo",
+          type: "string",
+          ui: {
+            component: "textarea",
+          },
         },
       ],
     },

@@ -1,34 +1,54 @@
 ---
 import Base from '../layouts/Base.astro';
+import { Icon } from 'astro-icon/components';
 import { tinaField } from '@tinacms/astro/tina-field';
 import { getConfig } from '../lib/data';
 
 const config = (await getConfig()).data?.config ?? null;
 const whatsappLink = config?.seo?.whatsappLink || 'https://wa.me/5493510000000';
+const contactEmail = config?.seo?.email || 'consultorio@juanmarzi.com.ar';
 
 const defaultServices = [
 	{
-		title: 'Kinesiología',
-		image: '/assets/enfoque-kinesiologia.jpg',
-		description: 'Rehabilitación y recuperación de la movilidad para cada etapa de la vida.',
-		link: '/faq',
-	},
-	{
 		title: 'Osteopatía',
 		image: '/assets/enfoque-osteopatia.jpg',
-		description: 'Abordaje integral del cuerpo para restaurar el equilibrio funcional.',
+		description: 'El tratamiento osteopático busca mejorar la movilidad y el funcionamiento del cuerpo, abordando posibles restricciones o alteraciones en las articulaciones, los músculos, la columna vertebral y otros sistemas corporales.\n\nPara ello, utiliza diferentes técnicas manuales, como movilizaciones, estiramientos y manipulaciones, adaptadas a las necesidades de cada persona.\n\nCada tratamiento comienza con una evaluación integral y se diseña de manera personalizada, teniendo en cuenta las características, los síntomas y las necesidades de cada paciente.',
 		link: '/faq',
 	},
 	{
-		title: 'Fisioterapia',
+		title: 'Fisioterapia / Kinesiología',
 		image: '/assets/enfoque-fisioterapia.jpg',
-		description: 'Tratamientos físicos especializados para aliviar el dolor y recuperar función.',
+		description: 'La kinesiología y la fisioterapia son disciplinas de la salud enfocadas en el estudio, la prevención y el tratamiento de alteraciones del movimiento y la función corporal. A través del ejercicio terapéutico, las técnicas manuales y el uso de agentes físicos, como el calor, el frío y la electroterapia, buscan aliviar el dolor, recuperar la movilidad y mejorar la fuerza y la funcionalidad.\n\nCada tratamiento se adapta a las necesidades y los objetivos de cada persona, favoreciendo su recuperación y calidad de vida. Suele recomendarse ante golpes, dolores musculares, desgarros, necesidad de fortalecimiento muscular, entre otros.',
+		link: '/faq',
+	},
+	{
+		title: 'Osteopatía y Fisioterapia Pediátrica',
+		image: '/assets/hero.jpg',
+		description: 'La fisioterapia y la osteopatía pediátrica acompañan el desarrollo y el bienestar de bebés y niños mediante técnicas adaptadas a cada etapa de crecimiento. Pueden ayudar a abordar alteraciones de la movilidad, tensiones musculares y molestias asociadas a determinadas disfunciones presentes desde el nacimiento, así como a acompañar la recuperación después de golpes o lesiones.\n\nTambién pueden formar parte de un abordaje interdisciplinario ante situaciones como dificultades de movimiento o ciertas molestias durante los primeros meses de vida. Cada tratamiento se adapta a las necesidades del niño y se realiza respetando su desarrollo, en coordinación con el equipo médico cuando es necesario.',
+		link: '/faq',
+	},
+	{
+		title: 'Osteopatía y Fisioterapia en el Embarazo',
+		image: '/assets/enfoque-kinesiologia.jpg',
+		description: 'La osteopatía y la fisioterapia durante el embarazo acompañan los cambios físicos del cuerpo a lo largo de la gestación, ayudando a aliviar molestias musculoesqueléticas y favorecer la movilidad y el bienestar. Mediante técnicas manuales suaves y ejercicios adaptados a cada etapa, pueden abordar molestias frecuentes como el dolor lumbar, las tensiones cervicales y las molestias pélvicas. Cada tratamiento se personaliza según las necesidades de la persona gestante, respetando los cambios propios del embarazo y complementando los controles obstétricos.',
+		link: '/faq',
+	},
+	{
+		title: 'Pre y Post Quirúrgico',
+		image: '/assets/consultas-banner.jpg',
+		description: 'El abordaje prequirúrgico suele combinar fisioterapia y osteopatía, permitiendo que el paciente llegue a la operación en mejores condiciones de movilidad, elasticidad y circulación. A nivel neurológico permiten entrenar ejercicios bajo buenos niveles de consciencia corporal y propiocepción, que serán disminuidos tras la operación y por lo tanto harán más difícil el aprendizaje del “movimiento normal”.\n\nLos postoperatorios facilitan la rápida recuperación del paciente tras una intervención quirúrgica. Ayudan a la recomposición de los tejidos, el fortalecimiento muscular, de la piel y los huesos.',
+		link: '/faq',
+	},
+	{
+		title: 'Suelo Pélvico',
+		image: '/assets/woman.jpg',
+		description: 'La fisioterapia del suelo pélvico permite abordar y aliviar síntomas como las pérdidas involuntarias de orina, el dolor y otras disfunciones de la zona, contribuyendo a mejorar la calidad de vida. El tratamiento se adapta a las necesidades de cada persona y puede incluir ejercicios específicos y técnicas terapéuticas. En casos de mayor gravedad, como determinados prolapsos o incontinencia severa, puede ser necesaria una evaluación médica para considerar otras alternativas, incluida la cirugía.',
 		link: '/faq',
 	},
 	{
 		title: 'Drenaje Linfático',
 		image: '/assets/enfoque-drenaje-linfatico.jpg',
-		description: 'Técnicas manuales para mejorar la circulación y reducir la inflamación.',
+		description: 'El drenaje linfático manual es una técnica de masoterapia que se engloba en el campo de la fisioterapia y la estética, uno como técnica de masaje terapéutico, y el otro de masaje estético, ambos van orientados a la activación del funcionamiento del sistema linfático superficial para mejorar la eliminación de líquido intersticial y de las moléculas de gran tamaño y facilitar su evacuación.',
 		link: '/faq',
 	},
 ];
@@ -38,7 +58,7 @@ const services = (rawServices && rawServices.length > 0)
 	? rawServices.filter(Boolean)
 	: defaultServices;
 
-const team = [
+const defaultTeam = [
 	{
 		name: 'Juan J. Marzi',
 		role: 'Lic. en Kinesiología y Fisioterapia, Diplomado en Osteopatía (M.P. 2403)',
@@ -52,6 +72,17 @@ const team = [
 		bio: 'Profesional del equipo que colabora en los tratamientos de kinesiología, fisioterapia y drenaje linfático, con capacitación continua en nuevas técnicas.',
 	},
 ];
+
+const rawTeam = (config as any)?.team;
+const team = (rawTeam && rawTeam.length > 0)
+	? rawTeam.filter(Boolean)
+	: defaultTeam;
+
+const careers = (config as any)?.careers ?? {
+	tag: 'SUMATE AL EQUIPO',
+	title: 'Trabajá con Nosotros',
+	description: '¿Sos kinesiólogo/a, fisioterapeuta o profesional de la salud? En Consultorios Marzi Dall\'Occhio estamos en constante crecimiento. Dejanos tus datos y adjuntá tu CV para sumarte a futuras búsquedas.'
+};
 ---
 
 <Base
@@ -84,7 +115,7 @@ const team = [
 			</div>
 		</section>
 
-		<!-- Nuestros Servicios Section (4-column Grid matching mockup) -->
+		<!-- Nuestros Servicios Section -->
 		<section id="servicios" class="w-full pb-16 sm:pb-20 md:pb-24 px-6 sm:px-8 scroll-mt-24">
 			<div class="mx-auto max-w-7xl">
 				<div class="text-center mb-10 sm:mb-14">
@@ -93,8 +124,8 @@ const team = [
 					</h2>
 				</div>
 
-				<!-- Grid: 4 columns on desktop -->
-				<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-6 lg:gap-8">
+				<!-- Grid: Responsive columns for multi-paragraph service cards -->
+				<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-6 lg:gap-8">
 					{services.map((service: any) => {
 						const isLink = Boolean(service.link);
 						const CardTag = isLink ? 'a' : 'div';
@@ -103,41 +134,48 @@ const team = [
 							href: service.link,
 							target: isExternal ? '_blank' : undefined,
 							rel: isExternal ? 'noopener noreferrer' : undefined,
-							'aria-label': `${service.title} - Más información en Preguntas Frecuentes`,
+							'aria-label': `${service.title} - Más información`,
 						} : {};
 
 						return (
 							<CardTag
 								{...linkProps}
-								class="group flex flex-col bg-white rounded-2xl p-4 sm:p-5 border border-neutral-100 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 text-left"
+								class="group flex flex-col bg-white rounded-2xl p-5 sm:p-6 border border-neutral-100 shadow-2xs hover:shadow-md transition-all duration-300 hover:-translate-y-1 text-left"
 								data-tina-field={tinaField(service)}
 							>
 								<!-- Image Container -->
-								<div class="aspect-4/3 w-full overflow-hidden rounded-xl bg-neutral-100 mb-4">
-									<img
-										src={service.image}
-										alt={service.title}
-										class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
-										loading="lazy"
-										data-tina-field={tinaField(service, 'image')}
-									/>
-								</div>
+								{service.image && (
+									<div class="aspect-16/10 w-full overflow-hidden rounded-xl bg-neutral-100 mb-4.5">
+										<img
+											src={service.image}
+											alt={service.title}
+											class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+											loading="lazy"
+											data-tina-field={tinaField(service, 'image')}
+										/>
+									</div>
+								)}
 
 								<!-- Title -->
 								<h3
-									class="text-base sm:text-lg font-bold text-[#161616] mb-2 group-hover:text-[#824f91] transition-colors"
+									class="text-lg sm:text-xl font-bold text-[#161616] mb-3 group-hover:text-[#824f91] transition-colors"
 									data-tina-field={tinaField(service, 'title')}
 								>
 									{service.title}
 								</h3>
 
-								<!-- Description -->
-								<p
-									class="text-xs sm:text-[13px] text-neutral-600 leading-relaxed mt-auto"
+								<!-- Description with multi-paragraph support -->
+								<div
+									class="text-xs sm:text-[13px] text-neutral-600 leading-relaxed space-y-2.5 mt-auto"
 									data-tina-field={tinaField(service, 'description')}
 								>
-									{service.description}
-								</p>
+									{typeof service.description === 'string'
+										? service.description.split('\n\n').filter(Boolean).map((para: string) => (
+											<p>{para.trim()}</p>
+										  ))
+										: <p>{service.description}</p>
+									}
+								</div>
 							</CardTag>
 						);
 					})}
@@ -156,30 +194,211 @@ const team = [
 
 				<!-- Team Cards Grid (2 columns on desktop) -->
 				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-					{team.map((member) => (
-						<div class="flex flex-col bg-neutral-50/70 rounded-3xl p-6 sm:p-8 border border-neutral-100 transition-all hover:shadow-md">
-							<div class="overflow-hidden rounded-2xl bg-neutral-200 aspect-16/10 sm:aspect-16/9 mb-6 shadow-xs">
-								<img
-									src={member.image}
-									alt={member.name}
-									class="h-full w-full object-cover object-top"
-									loading="lazy"
-								/>
-							</div>
+					{team.map((member: any) => (
+						<div
+							class="flex flex-col bg-neutral-50/70 rounded-3xl p-6 sm:p-8 border border-neutral-100 transition-all hover:shadow-md"
+							data-tina-field={tinaField(member)}
+						>
+							{member.image && (
+								<div class="overflow-hidden rounded-2xl bg-neutral-200 aspect-16/10 sm:aspect-16/9 mb-6 shadow-xs">
+									<img
+										src={member.image}
+										alt={member.name}
+										class="h-full w-full object-cover object-top"
+										loading="lazy"
+										data-tina-field={tinaField(member, 'image')}
+									/>
+								</div>
+							)}
 
-							<h3 class="text-xl sm:text-2xl font-bold text-[#161616] mb-1">
+							<h3
+								class="text-xl sm:text-2xl font-bold text-[#161616] mb-1"
+								data-tina-field={tinaField(member, 'name')}
+							>
 								{member.name}
 							</h3>
 
-							<span class="text-xs sm:text-sm font-semibold text-[#188a7e] mb-4 block">
+							<span
+								class="text-xs sm:text-sm font-semibold text-[#188a7e] mb-4 block"
+								data-tina-field={tinaField(member, 'role')}
+							>
 								{member.role}
 							</span>
 
-							<p class="text-sm sm:text-base text-neutral-600 leading-relaxed">
+							<p
+								class="text-sm sm:text-base text-neutral-600 leading-relaxed"
+								data-tina-field={tinaField(member, 'bio')}
+							>
 								{member.bio}
 							</p>
 						</div>
 					))}
+				</div>
+			</div>
+		</section>
+
+		<!-- Sección Trabajá con Nosotros -->
+		<section id="trabaja-con-nosotros" class="w-full pb-20 sm:pb-24 md:pb-28 px-6 sm:px-8 scroll-mt-24">
+			<div class="mx-auto max-w-3xl">
+				<!-- Header -->
+				<div class="text-center mb-10 sm:mb-12">
+					<span
+						class="inline-block text-xs font-bold tracking-widest text-[#824f91] uppercase mb-2"
+						data-tina-field={tinaField(careers, 'tag')}
+					>
+						{careers.tag || 'SUMATE AL EQUIPO'}
+					</span>
+					<h2
+						class="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-[#161616] mb-4"
+						data-tina-field={tinaField(careers, 'title')}
+					>
+						{careers.title || 'Trabajá con Nosotros'}
+					</h2>
+					<p
+						class="text-neutral-600 text-sm sm:text-base leading-relaxed max-w-xl mx-auto text-balance"
+						data-tina-field={tinaField(careers, 'description')}
+					>
+						{careers.description || '¿Sos kinesiólogo/a, fisioterapeuta o profesional de la salud? En Consultorios Marzi Dall\'Occhio estamos en constante crecimiento. Dejanos tus datos y adjuntá tu CV para sumarte a futuras búsquedas.'}
+					</p>
+				</div>
+
+				<!-- Form Container -->
+				<div class="bg-neutral-50/80 rounded-3xl p-6 sm:p-10 border border-neutral-100 shadow-sm">
+					<form
+						id="careers-form"
+						action={`https://formsubmit.co/${contactEmail}`}
+						method="POST"
+						enctype="multipart/form-data"
+						data-email={contactEmail}
+						class="space-y-6"
+					>
+						<!-- Anti-spam & Form Configuration -->
+						<input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+						<input type="hidden" name="_subject" value="Nueva postulación laboral - Consultorios Marzi" />
+						<input type="hidden" name="_template" value="table" />
+						<input type="hidden" name="_captcha" value="false" />
+
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+							<!-- Nombre y Apellido -->
+							<div>
+								<label for="career-name" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+									Nombre y Apellido *
+								</label>
+								<input
+									type="text"
+									id="career-name"
+									name="nombre"
+									required
+									placeholder="Ej. Juan Pérez"
+									class="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder-neutral-400 shadow-2xs focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 focus:outline-none transition-all"
+								/>
+							</div>
+
+							<!-- Email -->
+							<div>
+								<label for="career-email" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+									Correo Electrónico *
+								</label>
+								<input
+									type="email"
+									id="career-email"
+									name="email"
+									required
+									placeholder="tuemail@ejemplo.com"
+									class="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder-neutral-400 shadow-2xs focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 focus:outline-none transition-all"
+								/>
+							</div>
+						</div>
+
+						<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+							<!-- Teléfono -->
+							<div>
+								<label for="career-phone" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+									Teléfono / WhatsApp *
+								</label>
+								<input
+									type="tel"
+									id="career-phone"
+									name="telefono"
+									required
+									placeholder="Ej. +54 9 351 123 4567"
+									class="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder-neutral-400 shadow-2xs focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 focus:outline-none transition-all"
+								/>
+							</div>
+
+							<!-- Profesión / Especialidad -->
+							<div>
+								<label for="career-role" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+									Profesión / Especialidad *
+								</label>
+								<input
+									type="text"
+									id="career-role"
+									name="especialidad"
+									required
+									placeholder="Ej. Kinesiólogo/a, Osteópata, etc."
+									class="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder-neutral-400 shadow-2xs focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 focus:outline-none transition-all"
+								/>
+							</div>
+						</div>
+
+						<!-- Mensaje / Presentación -->
+						<div>
+							<label for="career-message" class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+								Mensaje o presentación breve (opcional)
+							</label>
+							<textarea
+								id="career-message"
+								name="mensaje"
+								rows="3"
+								placeholder="Contanos sobre tu experiencia o disponibilidad horaria..."
+								class="w-full rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-800 placeholder-neutral-400 shadow-2xs focus:border-[#824f91] focus:ring-2 focus:ring-[#824f91]/20 focus:outline-none transition-all resize-none"
+							></textarea>
+						</div>
+
+						<!-- Adjuntar CV -->
+						<div>
+							<label class="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-2">
+								Curriculum Vitae (PDF, DOC o DOCX) *
+							</label>
+							<div class="relative flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-neutral-300 bg-white p-6 transition-all hover:border-[#824f91] hover:bg-neutral-50/50 group cursor-pointer text-center">
+								<input
+									type="file"
+									id="career-cv"
+									name="attachment"
+									required
+									accept=".pdf,.doc,.docx"
+									class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+								/>
+								<div class="flex flex-col items-center pointer-events-none">
+									<div class="size-11 rounded-full bg-purple-50 text-[#824f91] flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+										<Icon name="tabler:upload" class="size-5" />
+									</div>
+									<p id="file-label" class="text-sm font-medium text-neutral-700 group-hover:text-[#824f91] transition-colors">
+										Hacé clic acá o arrastrá tu CV
+									</p>
+									<span class="text-xs text-neutral-400 mt-1">
+										Formatos permitidos: PDF, Word (máx. 10 MB)
+									</span>
+								</div>
+							</div>
+						</div>
+
+						<!-- Submit Button -->
+						<div class="pt-2">
+							<button
+								type="submit"
+								id="career-submit-btn"
+								class="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#824f91] px-7 py-3.5 text-sm font-semibold text-white shadow-md hover:bg-[#693977] hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5 cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+							>
+								<Icon name="tabler:send" class="size-4.5" />
+								<span>Enviar postulación</span>
+							</button>
+						</div>
+
+						<!-- Status Alert Messages -->
+						<div id="form-status" class="hidden rounded-xl p-4 text-sm font-medium transition-all"></div>
+					</form>
 				</div>
 			</div>
 		</section>
@@ -219,3 +438,98 @@ const team = [
 	</section>
 </Base>
 
+<script>
+	const form = document.getElementById('careers-form') as HTMLFormElement | null;
+	const fileInput = document.getElementById('career-cv') as HTMLInputElement | null;
+	const fileLabel = document.getElementById('file-label');
+	const submitBtn = document.getElementById('career-submit-btn') as HTMLButtonElement | null;
+	const statusDiv = document.getElementById('form-status');
+
+	if (fileInput && fileLabel) {
+		fileInput.addEventListener('change', () => {
+			if (fileInput.files && fileInput.files.length > 0) {
+				const file = fileInput.files[0];
+				fileLabel.textContent = `Archivo seleccionado: ${file.name}`;
+				fileLabel.classList.add('text-[#824f91]', 'font-semibold');
+			} else {
+				fileLabel.textContent = 'Hacé clic acá o arrastrá tu CV';
+				fileLabel.classList.remove('text-[#824f91]', 'font-semibold');
+			}
+		});
+	}
+
+	if (form && submitBtn && statusDiv) {
+		const targetEmail = form.dataset.email || 'consultorio@juanmarzi.com.ar';
+
+		form.addEventListener('submit', async (e) => {
+			e.preventDefault();
+
+			// Validate file is present
+			if (!fileInput?.files || fileInput.files.length === 0) {
+				statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-red-50 text-red-700 border border-red-200';
+				statusDiv.textContent = 'Por favor adjuntá tu Curriculum Vitae antes de enviar.';
+				statusDiv.classList.remove('hidden');
+				return;
+			}
+
+			// Validate file size (< 10MB)
+			if (fileInput.files[0].size > 10 * 1024 * 1024) {
+				statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-red-50 text-red-700 border border-red-200';
+				statusDiv.textContent = 'El archivo supera el tamaño máximo permitido de 10 MB.';
+				statusDiv.classList.remove('hidden');
+				return;
+			}
+
+			submitBtn.disabled = true;
+			const originalHtml = submitBtn.innerHTML;
+			submitBtn.innerHTML = `
+				<svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+					<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+					<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+				</svg>
+				<span>Enviando postulación...</span>
+			`;
+			statusDiv.classList.add('hidden');
+
+			try {
+				const formData = new FormData(form);
+				const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+					method: 'POST',
+					body: formData,
+					headers: {
+						'Accept': 'application/json'
+					}
+				});
+
+				const result = await response.json();
+
+				if (response.ok && (result.success === 'true' || result.success === true)) {
+					form.reset();
+					if (fileLabel) {
+						fileLabel.textContent = 'Hacé clic acá o arrastrá tu CV';
+						fileLabel.classList.remove('text-[#824f91]', 'font-semibold');
+					}
+					statusDiv.className = 'rounded-xl p-4 text-sm font-medium bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-start gap-2.5';
+					statusDiv.innerHTML = `
+						<svg class="size-5 shrink-0 text-emerald-600 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+						</svg>
+						<div>
+							<p class="font-bold text-emerald-900">¡Muchas gracias por postularte!</p>
+							<p class="text-emerald-700 text-xs sm:text-sm mt-0.5">Recibimos tus datos y tu CV correctamente. Revisaremos tu perfil y nos comunicaremos con vos a la brevedad.</p>
+						</div>
+					`;
+					statusDiv.classList.remove('hidden');
+				} else {
+					throw new Error(result.message || 'Error al procesar el envío');
+				}
+			} catch (err) {
+				// Fallback to standard form submission if AJAX fails
+				form.submit();
+			} finally {
+				submitBtn.disabled = false;
+				submitBtn.innerHTML = originalHtml;
+			}
+		});
+	}
+</script>
